@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{D41FFD75-1816-4BE7-B90D-2A51D6693934}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CraftEngine-Core", "CraftEngine-Core\CraftEngine-Core.vcxproj", "{536DFE9A-C734-4C96-A261-55D7C7B9095E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Craft", "Craft\Craft.vcxproj", "{536DFE9A-C734-4C96-A261-55D7C7B9095E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
