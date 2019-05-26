@@ -7,7 +7,7 @@ int main(int argv, char** args)
 {
 	Craft::Log::Init();
 	CR_CORE_WARN("Logger initialized!");
-	CR_INFO("Hello! Var={0}", 213);
+	CR_INFO("Hello! Var={0}");
 
 	Craft::Application* App = Craft::CreateApplication();
 	App->Run();
