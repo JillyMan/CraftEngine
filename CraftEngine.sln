@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{D41FFD75-1816-4BE7-B90D-2A51D6693934}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CraftEngine-Core", "CraftEngine-Core\CraftEngine-Core.vcxproj", "{536DFE9A-C734-4C96-A261-55D7C7B9095E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{536DFE9A-C734-4C96-A261-55D7C7B9095E}.Debug|x64.ActiveCfg = Debug|x64
+		{536DFE9A-C734-4C96-A261-55D7C7B9095E}.Debug|x64.Build.0 = Debug|x64
+		{536DFE9A-C734-4C96-A261-55D7C7B9095E}.Release|x64.ActiveCfg = Release|x64
+		{536DFE9A-C734-4C96-A261-55D7C7B9095E}.Release|x64.Build.0 = Release|x64
+		{D41FFD75-1816-4BE7-B90D-2A51D6693934}.Debug|x64.ActiveCfg = Debug|x64
+		{D41FFD75-1816-4BE7-B90D-2A51D6693934}.Debug|x64.Build.0 = Debug|x64
+		{D41FFD75-1816-4BE7-B90D-2A51D6693934}.Release|x64.ActiveCfg = Release|x64
+		{D41FFD75-1816-4BE7-B90D-2A51D6693934}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3F3B027-12C4-4253-80F6-A7F1B1EDB25E}
+	EndGlobalSection
+EndGlobal
