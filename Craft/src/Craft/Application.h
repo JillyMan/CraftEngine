@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Core.h"
+#include "Event\Event.h"
 
 namespace Craft {
 

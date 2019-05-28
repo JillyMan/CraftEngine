@@ -1,19 +1,21 @@
 #pragma once
 
-#include "Craft/Types.h"
 #include "Event.h"
+#include "Craft/Types.h"
+
+#include <sstream>
 
 namespace Craft
 {
-	
-	class CRAFT_API KeyEvent : public Event
+	class CRAFT_API KeyEvent : public Craft::Event
 	{
-	public: 
-		inline s32 GetKeyCode() { return m_KeyCode; }
-		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+	public:
+		inline s32 GetKeyCode() const { return m_KeyCode; }
 
+		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(s32 keyCode) : m_KeyCode(keyCode)
+		KeyEvent(s32 keycode) : 
+			m_KeyCode(keycode) 
 		{
 		}
 
@@ -22,17 +24,23 @@ namespace Craft
 
 	class CRAFT_API KeyPressedEvent : public KeyEvent
 	{
-	public: 
-		EVENT_CLASS_TYPE(KeyPressed)
-
-		KeyPressedEvent(s32 keyCode, u32 repeatCount) : 
-			KeyEvent(keyCode),
-			m_RepeatCount(repeatCount)
+	public:
+		KeyPressedEvent(s32 keycode, u32 repeatCount) : 
+			KeyEvent(keycode), 
+			m_RepeatCount(repeatCount) 
 		{
 		}
 
-		inline u32 GetRpeatCount() { return m_RepeatCount; }
+		inline u32 GetRepeatCount() const { return m_RepeatCount; }
 
+		String ToString() override
+		{
+			std::stringstream ss;
+			ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyPressed)
 	private:
 		u32 m_RepeatCount;
 	};
@@ -40,17 +48,18 @@ namespace Craft
 	class CRAFT_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		EVENT_CLASS_TYPE(KeyRelease)
-
-		KeyReleasedEvent(s32 keyCode, u32 repeatCount) :
-			KeyEvent(keyCode),
-			m_RepeatCount(repeatCount)
+		KeyReleasedEvent(s32 keycode) : 
+			KeyEvent(keycode) 
 		{
 		}
 
-		inline u32 GetRpeatCount() { return m_RepeatCount; }
+		String ToString() override
+		{
+			std::stringstream ss;
+			ss << "KeyReleasedEvent: " << m_KeyCode;
+			return ss.str();
+		}
 
-	private:
-		u32 m_RepeatCount;
+		EVENT_CLASS_TYPE(KeyReleased)
 	};
 }

@@ -6,11 +6,11 @@ extern Craft::Application* Craft::CreateApplication();
 int main(int argv, char** args)
 {
 	Craft::Log::Init();
-	CR_CORE_WARN("Logger initialized!");
-	CR_INFO("Hello! Var={0}");
+	CR_CORE_WARN("Run");
 
 	Craft::Application* App = Craft::CreateApplication();
 	App->Run();
 	return 0;
 }
+
 #endif

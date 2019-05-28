@@ -22,6 +22,11 @@
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Event\Event.h" />
+    <ClInclude Include="src\Craft\Event\MouseEvent.h" />
+    <ClInclude Include="src\Craft\Event\KeyEvent.h" />
+    <ClInclude Include="src\Craft\Event\ApplicationEvent.h" />
+    <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -30,5 +35,6 @@
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
+    <ClCompile Include="src\crpch.cpp" />
   </ItemGroup>
 </Project>
