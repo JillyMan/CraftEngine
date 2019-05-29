@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Event.h"
-#include "Craft/Types.h"
+#include "crpch.h"
 
-#include <sstream>
+#include "Event.h"
 
 namespace Craft
 {
@@ -33,7 +32,7 @@ namespace Craft
 
 		inline u32 GetRepeatCount() const { return m_RepeatCount; }
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
@@ -53,7 +52,7 @@ namespace Craft
 		{
 		}
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyReleasedEvent: " << m_KeyCode;

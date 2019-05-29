@@ -1,11 +1,11 @@
 #pragma once
 
-#include <functional>
+#include "crpch.h"
+
 #include "Craft/Core.h"
 
 namespace Craft
 {
-	//<enum class> vs <enum>
 	enum class EventType
 	{
 		None = 0,
@@ -27,7 +27,7 @@ namespace Craft
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
 								virtual EventType GetEventType() override { return GetStaticType(); }\
-								virtual const char* GetName() override { return #type; }
+								virtual const char* GetName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) inline virtual int GetCategoryFlags() override { return category; }
 
@@ -38,9 +38,9 @@ namespace Craft
 
 	public:
 		virtual EventType GetEventType() = 0;
-		virtual const char* GetName() = 0;
+		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() = 0;
-		virtual String ToString() { return GetName(); }
+		virtual String ToString() const { return String(GetName()); }
 		
 		inline bool InCategory(EventCategory category)
 		{
@@ -78,8 +78,9 @@ namespace Craft
 		}
 	};
 
-	inline std::ostream& operator<< (std::ostream& os, Event& e)
+	inline std::ostream& operator <<(std::ostream& os, const Event& e)
 	{
-		return os << e.ToString();
+		os << e.ToString();
+		return os;
 	}
 }

@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Event.h"
-#include "Craft\Types.h"
+#include "crpch.h"
 
-#include <sstream>
+#include "Event.h"
 
 namespace Craft
 {
@@ -21,7 +20,7 @@ namespace Craft
 		inline s32 GetWidth() { return m_Width; }
 		inline s32 GetHeight() { return m_Height; }
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Window resize: (" << m_Width << ", " << m_Height << ")";
@@ -42,7 +41,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Window close";
@@ -60,7 +59,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(AppTick)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 		
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Application tick";
@@ -78,7 +77,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(AppRender)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 		
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Application render";
@@ -96,7 +95,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(AppUpdate)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Application update";

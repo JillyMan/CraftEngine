@@ -23,7 +23,8 @@ project "Craft"
 	}
 
 	includedirs {
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/src"
 	}
 
 	filter "system:windows"
@@ -31,6 +32,9 @@ project "Craft"
 		staticruntime "On"
 		systemversion "latest"
 
+		pchheader "crpch.h"
+		pchsource "Craft/src/crpch.cpp"
+		
 		defines {
 			"CRAFT_PLATFORM_WINDOWS",
 			"CRAFT_BUILD_DLL"
@@ -38,6 +42,11 @@ project "Craft"
 
 		postbuildcommands {
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+		}
+
+		--aren't work..
+		buildoptions { 
+			"/FI " .. "crpch.h"
 		}
 
 		filter "configurations:Debug"
@@ -52,7 +61,6 @@ project "Craft"
 			defines "CR_DIST"
 			symbols "On"
 		
-
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"

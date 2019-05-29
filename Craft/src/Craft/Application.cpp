@@ -1,6 +1,6 @@
-#include "Application.h"
+#include "crpch.h"
 
-#include "Log.h"
+#include "Application.h"
 #include "Event\ApplicationEvent.h"
 
 namespace Craft

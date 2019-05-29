@@ -1,7 +1,8 @@
 #pragma once
 
+#include "crpch.h"
+
 #include "Event.h"
-#include "Craft\Types.h"
 
 namespace Craft
 {
@@ -19,7 +20,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(MouseScrolled)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Mouse srcolled: (" << m_XOffset << ", " << m_YOffset << ")";
@@ -41,7 +42,7 @@ namespace Craft
 		EVENT_CLASS_TYPE(MouseMoved)
 		EVENT_CLASS_CATEGORY(EventCategoryMouse)
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Mouse button moved: (" << x << ", " << y << ")";
@@ -79,7 +80,7 @@ namespace Craft
 		{
 		}
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Mouse button pressed: " << m_Button;
@@ -97,7 +98,7 @@ namespace Craft
 		{
 		}
 
-		String ToString() override
+		String ToString() const override
 		{
 			std::stringstream ss;
 			ss << "Mouse button released: " << m_Button;

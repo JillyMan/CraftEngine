@@ -4,6 +4,9 @@
     <Filter Include="Craft">
       <UniqueIdentifier>{5597FB0C-C1AB-23BE-8A2D-C71DF60020EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Event">
+      <UniqueIdentifier>{6684EC38-D239-652E-5B2E-5F05C7E25B32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
@@ -16,16 +19,24 @@
     <ClInclude Include="src\Craft\EntryPoint.h">
       <Filter>Craft</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Event\ApplicationEvent.h">
+      <Filter>Craft\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Event\Event.h">
+      <Filter>Craft\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Event\KeyEvent.h">
+      <Filter>Craft\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Event\MouseEvent.h">
+      <Filter>Craft\Event</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Event\Event.h" />
-    <ClInclude Include="src\Craft\Event\MouseEvent.h" />
-    <ClInclude Include="src\Craft\Event\KeyEvent.h" />
-    <ClInclude Include="src\Craft\Event\ApplicationEvent.h" />
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
