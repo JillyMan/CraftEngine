@@ -153,16 +153,19 @@
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
+    <ClInclude Include="src\Craft\Graphics\Window.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Window.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
     <ClCompile Include="src\crpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\Win32Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

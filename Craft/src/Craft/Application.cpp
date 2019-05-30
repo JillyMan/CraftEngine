@@ -15,9 +15,6 @@ namespace Craft
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1024, 768);
-		CR_TRACE(e);
-
 		while (true)
 		{
 		}

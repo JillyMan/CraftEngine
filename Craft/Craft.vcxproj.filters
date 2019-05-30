@@ -38,6 +38,7 @@
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Craft\Graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -47,5 +48,7 @@
       <Filter>Craft</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Window.cpp" />
+    <ClCompile Include="src\Platform\Win32Window.cpp" />
   </ItemGroup>
 </Project>
