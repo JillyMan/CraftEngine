@@ -3,7 +3,7 @@
 
 namespace Craft
 {
-	std::map<void*, Window*> Window::s_Handles;
+	std::map<WindowHandle, Window*> Window::s_Handles;
 
 	Window::Window(String& title, WindowSetting& setting) :
 		m_Title(title), m_Setting(setting)
@@ -13,12 +13,17 @@ namespace Craft
 			CR_ERROR("Oops, window not inititialize !!");
 			return;
 		}
-		CR_WARN("Window inititialize");
+
+		CR_WARN(m_Title + " : - window inititialized");
+		m_Running = true;
 	}
 
 	Window::~Window()
 	{
-
+		if (!IsClose())
+		{
+			Close();
+		}
 	}
 
 	bool Window::Init()
@@ -31,7 +36,6 @@ namespace Craft
 		return true;
 	}
 
-
 	void Window::Clear()
 	{
 	}
@@ -41,27 +45,28 @@ namespace Craft
 		PlatformUpdate();
 	}
 
-	void Window::ToogleFullScreenMode()
-	{
-		PlatformToogleFullScreenMode();
-	}
-
-	const void* Window::GetNativeWindowHandle()
+	const WindowHandle Window::GetWindowHandle()
 	{
 		return m_Handle;
 	}
 
-	bool Window::Closed()
+	void Window::Close()
 	{
-		return m_Closed;
+		m_Running = false;
+		PlatormClose();
 	}
 
-	void Window::RegisterWindowClass(void* handle, Window* window)
+	bool Window::IsClose()
+	{
+		return !m_Running;
+	}
+
+	void Window::RegisterWindowClass(WindowHandle handle, Window* window)
 	{
 		s_Handles[handle] = window;
 	}
 
-	Window* Window::GetWindowClass(void* handle)
+	Window* Window::GetWindowClass(WindowHandle handle)
 	{
 		return s_Handles[handle];
 	}

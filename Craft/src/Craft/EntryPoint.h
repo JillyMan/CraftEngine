@@ -6,7 +6,7 @@ extern Craft::Application* Craft::CreateApplication();
 int main(int argv, char** args)
 {
 	Craft::Log::Init();
-	CR_CORE_WARN("Run");
+	CR_CORE_INFO("Log init.");
 
 	Craft::Application* App = Craft::CreateApplication();
 	App->Run();

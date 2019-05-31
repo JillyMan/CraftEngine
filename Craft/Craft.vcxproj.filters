@@ -7,6 +7,12 @@
     <Filter Include="Craft\Event">
       <UniqueIdentifier>{6684EC38-D239-652E-5B2E-5F05C7E25B32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Graphics">
+      <UniqueIdentifier>{356F6B85-213D-5F8B-0AD1-CFB1F63D3BF0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
@@ -31,6 +37,15 @@
     <ClInclude Include="src\Craft\Event\MouseEvent.h">
       <Filter>Craft\Event</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Window.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\WindowHandle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\WindowStyle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -38,17 +53,20 @@
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Window.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Win32Window.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Window.cpp" />
-    <ClCompile Include="src\Platform\Win32Window.cpp" />
   </ItemGroup>
 </Project>

@@ -11,8 +11,11 @@ local outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "Craft"
 	location "Craft"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	characterset "MBCS"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -28,7 +31,6 @@ project "Craft"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 
@@ -40,10 +42,6 @@ project "Craft"
 			"CRAFT_BUILD_DLL"
 		}
 
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
-
 		--aren't work..
 		buildoptions { 
 			"/FI " .. "crpch.h"
@@ -51,20 +49,23 @@ project "Craft"
 
 		filter "configurations:Debug"
 			defines "CR_DEBUG"
-			symbols "On"
+			symbols "on"
 
 		filter "configurations:Release"
 			defines "CR_RELEASE"
-			optimize "On"
+			optimize "on"
 		
 		filter "configurations:Dist"
 			defines "CR_DIST"
-			symbols "On"
+			symbols "on"
 		
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	characterset "MBCS"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -84,19 +85,17 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 		defines { "CRAFT_PLATFORM_WINDOWS" }
 
 	filter "configurations:Debug"
 		defines "CR_DEBUG"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "CR_RELEASE"
-		optimize "On"
+		optimize "on"
 		
 	filter "configurations:Dist"
 		defines "CR_DIST"
-		symbols "On"
+		symbols "on"

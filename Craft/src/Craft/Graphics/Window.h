@@ -2,48 +2,57 @@
 
 #include "crpch.h"
 
+#include "Craft/Event/Event.h"
+#include "Craft/Graphics/WindowStyle.h"
+#include "Craft/Graphics/WindowHandle.h"
+
 namespace Craft
 {
-	struct WindowSetting
+	struct CRAFT_API WindowSetting
 	{
-		int Width, Height;
+		s32 Width, Height;
 		bool IsFullscreen;
-
-		//My default values
+		u32 Style;
+		
 		WindowSetting() :
-			Width(1024), Height(768), IsFullscreen(true)
+			Width(1024),
+			Height(768),
+			IsFullscreen(false),
+			Style(Style::Default)
 		{
 		}
 	};
 
 	class CRAFT_API Window
 	{
-	private: 
-		static std::map<void*, Window*> s_Handles;
+	private:
+		static std::map<WindowHandle, Window*> s_Handles;
 		WindowSetting& m_Setting;
 		String m_Title;
-		bool m_Closed;
-		void* m_Handle;
+		bool m_Running;
+		WindowHandle m_Handle;
 
 	public:
 		Window(String& title, WindowSetting& setting);
 		~Window();
 
-		bool Closed();
+		void Close();
 		void Clear();
 		void Update();
-		void ToogleFullScreenMode();
+		bool IsClose();
+		const WindowHandle GetWindowHandle();
 
-		const void* GetNativeWindowHandle();
+		void ToogleFullScreenMode();
+		void SetTitle(String& title);
 
 	private:
 		bool Init();
 		bool PlatformInit();
+		void PlatormClose();
 		void PlatformUpdate();
-		void PlatformToogleFullScreenMode();
 
 	public:
-		static void RegisterWindowClass(void* handle, Window* window);
-		static Window* GetWindowClass(void* handle);
+		static void RegisterWindowClass(WindowHandle handle, Window* window);
+		static Window* GetWindowClass(WindowHandle handle);
 	};
 }
