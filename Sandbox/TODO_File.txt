@@ -1,0 +1,9 @@
+@TODO
+	#create fullscreen mode,
+	#resize event
+	#layer system
+		.receive any events
+
+
+@Bugs
+	#close window bag,

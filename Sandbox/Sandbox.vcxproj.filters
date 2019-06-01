@@ -10,4 +10,7 @@
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO_File.txt" />
+  </ItemGroup>
 </Project>

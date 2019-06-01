@@ -10,10 +10,12 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 namespace Craft {
 
 	static LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
+
 	static HINSTANCE s_HInstance;
-	static LPCSTR WindowClassName = "Craft Engine Window";
-	static bool IsPlatformInit = false;
 	static WNDCLASS WinClass = {};
+	static bool IsPlatformInit = false;
+	static LPCSTR WindowClassName = "Craft Engine Window";
+	static std::map<WindowHandle, WINDOWPLACEMENT> PrevWindowPlace;
 
 	void Window::SetTitle(String& title)
 	{
@@ -23,7 +25,6 @@ namespace Craft {
 	static bool WinClassInit()
 	{
 		s_HInstance = HINS_THISCOMPONENT;
-
 		WinClass.hInstance = s_HInstance;
 		WinClass.lpfnWndProc = WindowProc;
 		WinClass.hbrBackground = WHITE_BRUSH;
@@ -37,14 +38,13 @@ namespace Craft {
 			CR_CORE_INFO("Can't regiser window class");
 			return false;
 		}
-		IsPlatformInit = true;
+
 		return true;
 	}
 
-	//work only with anci string, unicode not support
 	bool Window::PlatformInit()
 	{
-		if (!IsPlatformInit && !WinClassInit())
+		if (!(IsPlatformInit || WinClassInit()))
 		{
 			return false;
 		}
@@ -94,8 +94,11 @@ namespace Craft {
 
 		RegisterWindowClass(m_Handle, this);
 		ShowWindow(m_Handle, SW_SHOW);
+		
+		PrevWindowPlace[m_Handle] = { };
 
-		return true;
+		IsPlatformInit = true;
+		return IsPlatformInit;
 	}
 
 	void Window::PlatformUpdate()
@@ -116,6 +119,32 @@ namespace Craft {
 
 	void Window::ToogleFullScreenMode()
 	{
+		WINDOWPLACEMENT& g_wpPrev = PrevWindowPlace[m_Handle];
+		DWORD dwStyle = GetWindowLong(m_Handle, GWL_STYLE);
+
+		if (dwStyle & WS_OVERLAPPEDWINDOW) 
+		{
+			MONITORINFO mi = { sizeof(mi) };
+			if (GetWindowPlacement(m_Handle, &g_wpPrev) &&
+				GetMonitorInfo(MonitorFromWindow(m_Handle,
+					MONITOR_DEFAULTTOPRIMARY), &mi)) 
+			{
+				SetWindowLong(m_Handle, GWL_STYLE,
+					dwStyle & ~WS_OVERLAPPEDWINDOW);
+				SetWindowPos(m_Handle, HWND_TOP,
+					mi.rcMonitor.left, mi.rcMonitor.top,
+					mi.rcMonitor.right - mi.rcMonitor.left,
+					mi.rcMonitor.bottom - mi.rcMonitor.top,
+					SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+			}
+		}
+		else {
+			SetWindowLong(m_Handle, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
+			SetWindowPlacement(m_Handle, &g_wpPrev);
+			SetWindowPos(m_Handle, NULL, 0, 0, 0, 0,
+				SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+				SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+		}
 	}
 
 	void Window::PlatormClose()
@@ -124,9 +153,11 @@ namespace Craft {
 		CR_CORE_INFO("Window close");
 	}
 
-	LRESULT CALLBACK WindowProc(HWND window, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	LRESULT CALLBACK WindowProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		LRESULT Result = 0;
+		Window* window = Window::GetWindowClass(hWindow);
+
 		switch (uMsg)
 		{
 			case WM_CREATE:
@@ -137,22 +168,39 @@ namespace Craft {
 			case WM_PAINT:
 			{
 				PAINTSTRUCT ps;
-				HDC hdc = BeginPaint(window, &ps);
-				FillRect(hdc, &ps.rcPaint, (HBRUSH)COLOR_GRADIENTACTIVECAPTION + 1);
-				EndPaint(window, &ps);
+				HDC hdc = BeginPaint(hWindow, &ps);
+				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+				FillRect(hdc, &ps.rcPaint, brush);
+				EndPaint(hWindow, &ps);
 				break;
 			}
 			case WM_CLOSE:
 			{
-				//Window::GetWindowClass(window)->Close();
+				window->Close();
+				break;
+			}
+			case WM_SYSKEYDOWN:
+			case WM_SYSKEYUP:
+			case WM_KEYUP:
+			case WM_KEYDOWN:
+			{
+				int VKCode = wParam;
+				bool WasDown = ((lParam & (1 << 30)) != 0);
+				bool IsDown = ((lParam & (1 << 31)) == 0);
+
+				if (VKCode == VK_F1 && WasDown)
+				{
+					window->ToogleFullScreenMode();
+				}
 				break;
 			}
 			default:
 			{
-				Result = DefWindowProc(window, uMsg, wParam, lParam);
+				Result = DefWindowProc(hWindow, uMsg, wParam, lParam);
 				break;
 			}
 		}
+
 		return Result;
 	}
 }
