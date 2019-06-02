@@ -1,7 +1,5 @@
 #pragma once
 
-#include "crpch.h"
-
 #ifdef CRAFT_PLATFORM_WINDOWS
 #ifdef CRAFT_DYNAMIC_LINK
 	#ifdef CRAFT_BUILD_DLL

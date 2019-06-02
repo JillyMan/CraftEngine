@@ -17,3 +17,5 @@ typedef char sbyte;
 typedef short s16;
 typedef int s32;
 typedef long long s64;
+
+typedef unsigned char byte;

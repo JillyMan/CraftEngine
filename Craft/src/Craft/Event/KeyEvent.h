@@ -9,22 +9,22 @@ namespace Craft
 	class CRAFT_API KeyEvent : public Craft::Event
 	{
 	public:
-		inline s32 GetKeyCode() const { return m_KeyCode; }
+		inline s64 GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(s32 keycode) : 
+		KeyEvent(s64 keycode) : 
 			m_KeyCode(keycode) 
 		{
 		}
 
-		s32 m_KeyCode;
+		s64 m_KeyCode;
 	};
 
 	class CRAFT_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(s32 keycode, u32 repeatCount) : 
+		KeyPressedEvent(s64 keycode, u32 repeatCount) : 
 			KeyEvent(keycode), 
 			m_RepeatCount(repeatCount) 
 		{
@@ -47,7 +47,7 @@ namespace Craft
 	class CRAFT_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(s32 keycode) : 
+		KeyReleasedEvent(s64 keycode) : 
 			KeyEvent(keycode) 
 		{
 		}

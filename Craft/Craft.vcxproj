@@ -138,18 +138,26 @@
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
-    <ClInclude Include="src\Craft\Graphics\Window.h" />
-    <ClInclude Include="src\Craft\Graphics\WindowHandle.h" />
-    <ClInclude Include="src\Craft\Graphics\WindowStyle.h" />
+    <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
+    <ClInclude Include="src\Craft\Graphics\Layer.h" />
+    <ClInclude Include="src\Craft\Graphics\CGContext.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\Window.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\WindowHandle.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\WindowManager.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\WindowStyle.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Window.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CGContext.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Window\WindowManager.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
-    <ClCompile Include="src\Platform\Win32Window.cpp" />
+    <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\crpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -37,15 +37,6 @@
     <ClInclude Include="src\Craft\Event\MouseEvent.h">
       <Filter>Craft\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Window.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\WindowHandle.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\WindowStyle.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -53,20 +44,35 @@
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\Window.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Window\WindowHandle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Window\WindowStyle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Layer.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
+    <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Craft\Graphics\Window\WindowManager.h" />
+    <ClInclude Include="src\Craft\Graphics\CGContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Window.cpp">
-      <Filter>Craft\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Win32Window.cpp">
+    <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Window\WindowManager.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CGContext.cpp" />
   </ItemGroup>
 </Project>

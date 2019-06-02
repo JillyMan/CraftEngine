@@ -1,5 +1,4 @@
 #pragma once
-#include "crpch.h"
 
 #include "Core.h"
 #include "spdlog/spdlog.h"

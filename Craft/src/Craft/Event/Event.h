@@ -55,7 +55,7 @@ namespace Craft
 	{
 	private:
 		template<typename T>
-		using EventFn = std::function<bool(T&)>&;
+		using EventFn = std::function<bool(T&)>;
 	
 		Event& m_Event;
 

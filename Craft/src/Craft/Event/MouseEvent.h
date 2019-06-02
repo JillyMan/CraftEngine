@@ -34,7 +34,7 @@ namespace Craft
 	class CRAFT_API MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(u32 x, u32 y) :
+		MouseMovedEvent(s32 x, s32 y) :
 			x(x), y(y)
 		{
 		}
@@ -50,7 +50,7 @@ namespace Craft
 		}
 
 	private:
-		u32 x, y;
+		s32 x, y;
 	};
 
 
