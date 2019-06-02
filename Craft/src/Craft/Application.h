@@ -3,10 +3,13 @@
 #include "crpch.h"
 
 #include "Core.h"
-#include "Event\Event.h"
+
+#include "Craft\Event\Event.h"
+#include "Craft\Event\KeyEvent.h"
+#include "Craft\Event\ApplicationEvent.h"
+
 #include "Craft\Graphics\Layer.h"
 #include "Craft\Graphics\Window\Window.h"
-#include "Event\ApplicationEvent.h"
 
 namespace Craft {
 
@@ -32,6 +35,7 @@ namespace Craft {
 		void OnUpdate(f32 deltaTime);
 		void OnEvent(Event& event);
 
+		bool OnKeyEvent(KeyPressedEvent& e);
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 	};

@@ -12,8 +12,6 @@ namespace Craft
 		~WindowsWindow();
 
 		void Update();
-		void Close();
-		bool IsClose();
 		void ToogleFullScreenMode();
 		void SetTitle(String& title);
 

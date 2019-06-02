@@ -74,6 +74,7 @@ namespace Craft
 	{
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyEvent));
 
 		CR_INFO(event);
 
@@ -115,6 +116,16 @@ namespace Craft
 		return true;
 	}
 	
+	bool Application::OnKeyEvent(KeyPressedEvent& e)
+	{
+		if (e.GetKeyCode() == VK_F1)
+		{
+			m_MainWindow->ToogleFullScreenMode();
+		}
+
+		return true;
+	}
+
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
 		CR_INFO(e);

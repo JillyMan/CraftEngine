@@ -39,13 +39,6 @@ namespace Craft {
 		MSG Message;
 		while (PeekMessage(&Message, NULL, NULL, NULL, PM_REMOVE) > 0)
 		{
-			if (Message.message == WM_CLOSE)
-			{
-				Shutdown();
-				CR_INFO("WM_CLOSE");
-				return;
-			}
-
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
@@ -115,17 +108,6 @@ namespace Craft {
 	{
 		DestroyWindow(m_WindowHandle);
 		CR_CORE_INFO("Window close");
-	}
-
-	void WindowsWindow::Close() 
-	{
-		m_IsClosed = false;
-		Shutdown();
-	}
-
-	bool WindowsWindow::IsClose()
-	{
-		return m_IsClosed;
 	}
 
 	void WindowsWindow::SetTitle(String& title)

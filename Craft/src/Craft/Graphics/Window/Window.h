@@ -30,9 +30,7 @@ namespace Craft
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-		virtual void Close() = 0;
 		virtual void Update() = 0;
-		virtual bool IsClose() = 0;
 		virtual void ToogleFullScreenMode() = 0;
 
 		virtual u32 GetWidth() = 0;
