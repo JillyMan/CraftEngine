@@ -74,9 +74,8 @@ namespace Craft
 	{
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyEvent));
-
-		CR_INFO(event);
 
 		for (auto layer = begin(m_pLayers);
 			layer != end(m_pLayers);

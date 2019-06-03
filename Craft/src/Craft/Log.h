@@ -24,11 +24,11 @@ namespace Craft {
 #ifndef DEBUG_BUILD_DLL
 
 // Core log macros
-#define CR_CORE_INFO(...)   ::Craft::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define CR_CORE_WARN(...)   ::Craft::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CR_CORE_ERROR(...)  ::Craft::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define CR_CORE_TRACE(...)  ::Craft::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define CR_CORE_FATAL(...)  ::Craft::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define CR_CORE_INFO(...)	::Craft::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define CR_CORE_WARN(...)	::Craft::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define CR_CORE_ERROR(...)	::Craft::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define CR_CORE_TRACE(...)	::Craft::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define CR_CORE_FATAL(...)	::Craft::Log::GetCoreLogger()->fatal(__VA_ARGS__)
 
 // Client log macros
 #define CR_INFO(...)		::Craft::Log::GetClientLogger()->info(__VA_ARGS__)

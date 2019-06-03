@@ -1,9 +1,6 @@
 @TODO
-	#create fullscreen mode,
-	#resize event
+	#need make event queue how in SFML ---- ??
 	#layer system
-		.receive any events
-
 
 @Bugs
-	#close window bag,
+	#twice send message about close window!!

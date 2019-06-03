@@ -30,7 +30,6 @@ namespace Craft {
 
 	WindowsWindow::~WindowsWindow()
 	{
-		CR_INFO("Window destroy");
 		Shutdown();
 	}
 
@@ -91,7 +90,7 @@ namespace Craft {
 			int error = GetLastError();
 			String str("Can't create Window handle error=");
 			str += std::to_string(error);
-			CR_CORE_INFO(str);
+			CR_INFO(str);
 			return false;
 		}
 
@@ -107,7 +106,7 @@ namespace Craft {
 	void WindowsWindow::Shutdown()
 	{
 		DestroyWindow(m_WindowHandle);
-		CR_CORE_INFO("Window close");
+		CR_WARN("Window close");
 	}
 
 	void WindowsWindow::SetTitle(String& title)
@@ -271,7 +270,8 @@ namespace Craft {
 			case WM_LBUTTONUP:
 			case WM_RBUTTONUP:
 			case WM_MBUTTONUP:
-			{				
+			{
+				CR_INFO("mouse button click");
 				break;
 			}
 			case WM_SIZE:
