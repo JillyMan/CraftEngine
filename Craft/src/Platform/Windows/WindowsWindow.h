@@ -2,6 +2,7 @@
 
 #include "Craft\Core.h"
 #include "Craft\Window\Window.h"
+#include "Craft\Graphics\GraphicsContext.h"
 
 namespace Craft
 {

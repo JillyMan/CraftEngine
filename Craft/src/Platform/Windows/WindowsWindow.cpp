@@ -107,7 +107,7 @@ namespace Craft {
 	void WindowsWindow::Shutdown()
 	{
 		DestroyWindow(m_WindowHandle);
-		CR_WARN("Window close");
+		CR_FATAL("Window close");
 	}
 
 	void WindowsWindow::SetTitle(String& title)
@@ -220,7 +220,7 @@ namespace Craft {
 		{
 			case WM_CREATE:
 			{
-				CR_CORE_INFO("Window is created");
+				CR_INFO("Window is created");
 				break;
 			}
 			case WM_PAINT:

@@ -44,21 +44,21 @@
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Graphics\Window\Window.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Window\WindowHandle.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Window\WindowStyle.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Layer.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\Craft\Graphics\Window\WindowManager.h" />
     <ClInclude Include="src\Craft\Graphics\CGContext.h" />
+    <ClInclude Include="src\Craft\Window\Window.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Window\WindowHandle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Window\WindowManager.h" />
+    <ClInclude Include="src\Craft\Window\WindowStyle.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -72,7 +72,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Window\WindowManager.cpp" />
     <ClCompile Include="src\Craft\Graphics\CGContext.cpp" />
+    <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
   </ItemGroup>
 </Project>

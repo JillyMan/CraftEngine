@@ -5,7 +5,7 @@
 
 #include "Craft\Event\KeyEvent.h"
 #include "Craft\Event\MouseEvent.h"
-#include "Craft\Graphics\Window\Window.h"
+#include "Craft\Window\Window.h"
 
 //--------------------------------------
 #include "Craft\EntryPoint.h"
