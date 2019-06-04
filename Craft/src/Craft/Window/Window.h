@@ -2,10 +2,9 @@
 
 #include "crpch.h"
 
-#include "Craft/Event/Event.h"
-#include "Craft/Graphics/GraphicsContext.h"
-#include "Craft/Graphics/Window/WindowStyle.h"
-#include "Craft/Graphics/Window/WindowHandle.h"
+#include "Craft\Event\Event.h"
+#include "Craft\Window\WindowStyle.h"
+#include "Craft\Window\WindowHandle.h"
 
 namespace Craft
 {

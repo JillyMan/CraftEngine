@@ -4,7 +4,8 @@
 
 namespace Craft { namespace Graphics {
 
-	CGContext::CGContext()
+	CGContext::CGContext(WindowHandle windowHandle) :
+		m_WindowHandle(windowHandle)
 	{
 	}
 

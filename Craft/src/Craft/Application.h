@@ -4,12 +4,12 @@
 
 #include "Core.h"
 
+#include "Craft\Window\Window.h"
+#include "Craft\Graphics\Layer.h"
+
 #include "Craft\Event\Event.h"
 #include "Craft\Event\KeyEvent.h"
 #include "Craft\Event\ApplicationEvent.h"
-
-#include "Craft\Graphics\Layer.h"
-#include "Craft\Graphics\Window\Window.h"
 
 namespace Craft {
 

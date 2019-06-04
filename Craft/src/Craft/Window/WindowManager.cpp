@@ -24,7 +24,7 @@ namespace Craft
 #if CRAFT_PLATFORM_WINDOWS
 		return new WindowsWindow(setting);
 #elif
-		return NULL;
+	#error only windows support
 #endif
 	}
 

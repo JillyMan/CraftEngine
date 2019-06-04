@@ -1,17 +1,20 @@
 #pragma once
 
 #include "GraphicsContext.h"
+#include "Craft\Window\WindowHandle.h"
 
 namespace Craft { namespace Graphics {
 	
-	// craft graphics
-	class CRAFT_API CGContext : public GraphicsContext
+	class CGContext : public GraphicsContext
 	{
 	public:
-		CGContext();
+		CGContext(WindowHandle windowHanle);
 		~CGContext();
 
 		void Init() override;
 		void SwapBuffers() override;
+
+	private:
+		WindowHandle m_WindowHandle;
 	};
 }}

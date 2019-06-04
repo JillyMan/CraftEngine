@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Craft/Core.h"
-#include "Craft\Graphics\Window\Window.h"
+#include "Craft\Core.h"
+#include "Craft\Window\Window.h"
 
 namespace Craft
 {

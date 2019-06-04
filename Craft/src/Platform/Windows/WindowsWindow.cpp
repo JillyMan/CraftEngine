@@ -5,7 +5,7 @@
 #include "Craft/Event/KeyEvent.h"
 #include "Craft/Event/MouseEvent.h"
 #include "Craft/Event/ApplicationEvent.h"
-#include "Craft/Graphics/Window/WindowManager.h"
+#include "Craft/Window/WindowManager.h"
 #include "Craft/Graphics/CGContext.h"
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -97,7 +97,8 @@ namespace Craft {
 		WindowManager::RegisterWindowClass(m_WindowHandle, this);
 		ShowWindow(m_WindowHandle, SW_SHOW);
 
-		m_GraphicsContext = new Graphics::CGContext();
+		//TODO: Create graphics factory!
+		m_GraphicsContext = new Graphics::CGContext(m_WindowHandle);
 		m_GraphicsContext->Init();
 
 		return true;

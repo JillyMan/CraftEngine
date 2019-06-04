@@ -2,7 +2,8 @@
 
 #include "Application.h"
 #include "Utils\Timer.h"
-#include "Craft\Graphics\Window\WindowManager.h"
+
+#include "Craft\Window\WindowManager.h"
 
 namespace Craft
 {
@@ -58,14 +59,13 @@ namespace Craft
 			f32 elapsedTime = timer.ElapsedMillisecond();
 			if (elapsedTime - resetInterval > 1000.0f)
 			{
-				//FIX debug str.
-				String debug = "FPS: " + std::to_string(frames) + \
+#ifdef CR_DEBUG
+				String debug = m_WindowSetting.Title + " : FPS: " + std::to_string(frames) + \
 					" Updates: " + std::to_string(updates) + " \n";
-
 				m_MainWindow->SetTitle(debug);
+#endif
 				resetInterval += 1000.0f;
 				frames = updates = 0;
-				//CR_INFO(debug);
 			}
 		}
 	}
