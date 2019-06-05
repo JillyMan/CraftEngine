@@ -2,11 +2,13 @@
 
 #include "WindowsWindow.h"
 
+#include "Craft/Window/WindowManager.h"
+
 #include "Craft/Event/KeyEvent.h"
 #include "Craft/Event/MouseEvent.h"
 #include "Craft/Event/ApplicationEvent.h"
-#include "Craft/Window/WindowManager.h"
-#include "Craft/Graphics/CGContext.h"
+
+#include "Craft/Graphics/CraftGL/CraftGLContext.h"
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
