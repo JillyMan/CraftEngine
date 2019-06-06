@@ -7,5 +7,7 @@
 #include "Craft\Event\MouseEvent.h"
 #include "Craft\Window\Window.h"
 
+#include "Craft\Math\Math.h"
+
 //--------------------------------------
 #include "Craft\EntryPoint.h"

@@ -2,7 +2,7 @@
 
 #include "CraftGLContext.h"
 
-namespace Craft { namespace Graphics {
+namespace Craft {
 
 	CraftGLContext::CraftGLContext(WindowHandle windowHandle) :
 		m_WindowHandle(windowHandle)
@@ -22,4 +22,4 @@ namespace Craft { namespace Graphics {
 	{
 		//Craft no support swap buffers
 	}
-}}
+}

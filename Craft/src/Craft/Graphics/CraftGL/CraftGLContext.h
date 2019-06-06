@@ -3,7 +3,7 @@
 #include "Craft\Window\WindowHandle.h"
 #include "Craft\Graphics\GraphicsContext.h"
 
-namespace Craft { namespace Graphics {
+namespace Craft {
 	
 	class CraftGLContext : public GraphicsContext
 	{
@@ -17,4 +17,4 @@ namespace Craft { namespace Graphics {
 	private:
 		WindowHandle m_WindowHandle;
 	};
-}}
+}

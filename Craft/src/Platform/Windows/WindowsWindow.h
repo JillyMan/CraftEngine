@@ -28,7 +28,7 @@ namespace Craft
 		virtual void Shutdown();
 
 	private:
-		Graphics::GraphicsContext* m_GraphicsContext;
+		GraphicsContext* m_GraphicsContext;
 
 		bool m_IsClosed;
 		WindowSetting m_Setting;

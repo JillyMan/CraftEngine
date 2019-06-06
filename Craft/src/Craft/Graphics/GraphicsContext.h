@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Craft { namespace Graphics {
+namespace Craft {
 
 	enum class CRAFT_API RenderApi
 	{
@@ -16,4 +16,4 @@ namespace Craft { namespace Graphics {
 		virtual void Init() = 0;
 		virtual void SwapBuffers() = 0;
 	};
-} }
+}

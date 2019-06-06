@@ -100,7 +100,7 @@ namespace Craft {
 		ShowWindow(m_WindowHandle, SW_SHOW);
 
 		//TODO: Create graphics factory!
-		m_GraphicsContext = new Graphics::CGContext(m_WindowHandle);
+		m_GraphicsContext = new CraftGLContext(m_WindowHandle);
 		m_GraphicsContext->Init();
 
 		return true;
