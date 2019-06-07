@@ -8,7 +8,10 @@
 #include "Craft/Event/MouseEvent.h"
 #include "Craft/Event/ApplicationEvent.h"
 
+//--------delete dependency
+#include "Platform\OpenGL\OpenGLContext.h"
 #include "Craft/Graphics/CraftGL/CraftGLContext.h"
+//--------
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
@@ -100,7 +103,8 @@ namespace Craft {
 		ShowWindow(m_WindowHandle, SW_SHOW);
 
 		//TODO: Create graphics factory!
-		m_GraphicsContext = new CraftGLContext(m_WindowHandle);
+//		m_GraphicsContext = new CraftGLContext(m_WindowHandle);
+		m_GraphicsContext = new OpengGLContext(m_WindowHandle);
 		m_GraphicsContext->Init();
 
 		return true;
@@ -225,15 +229,17 @@ namespace Craft {
 				CR_INFO("Window is created");
 				break;
 			}
-			case WM_PAINT:
-			{
-				PAINTSTRUCT ps;
-				HDC hdc = BeginPaint(hWindow, &ps);
-				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
-				FillRect(hdc, &ps.rcPaint, brush);
-				EndPaint(hWindow, &ps);
-				break;
-			}
+//			case WM_PAINT:
+//			{
+//#if 0
+//				PAINTSTRUCT ps;
+//				HDC hdc = BeginPaint(hWindow, &ps);
+//				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+//				FillRect(hdc, &ps.rcPaint, brush);
+//				EndPaint(hWindow, &ps);
+//#endif
+//				break;
+//			}
 			case WM_CLOSE:
 			{
 				OnWindowClose(window);

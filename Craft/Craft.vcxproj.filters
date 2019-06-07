@@ -10,8 +10,29 @@
     <Filter Include="Craft\Graphics">
       <UniqueIdentifier>{356F6B85-213D-5F8B-0AD1-CFB1F63D3BF0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Graphics\CraftGL">
+      <UniqueIdentifier>{2716C369-1310-ECBB-FC7C-82CCE8155228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Craft\Math">
+      <UniqueIdentifier>{4ED99666-3A91-D8B3-A398-B10F8F6F73A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Craft\Window">
+      <UniqueIdentifier>{9C72937F-88D5-2224-315B-5BDA1D9DEEA6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows\Win32OpenGL">
+      <UniqueIdentifier>{8BCC2E24-7787-1ED0-203F-971A0CD96860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,42 +58,87 @@
     <ClInclude Include="src\Craft\Event\MouseEvent.h">
       <Filter>Craft\Event</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Buffer.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h">
+      <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h">
+      <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h">
+      <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\GraphicsContext.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Layer.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Math\Math.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Math\Vec4.h">
+      <Filter>Craft\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
     </ClInclude>
-    <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Graphics\Layer.h" />
-    <ClInclude Include="src\Utils\Timer.h" />
-    <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\Craft\Graphics\CGContext.h" />
     <ClInclude Include="src\Craft\Window\Window.h">
-      <Filter>Craft\Graphics</Filter>
+      <Filter>Craft\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Window\WindowHandle.h">
-      <Filter>Craft\Graphics</Filter>
+      <Filter>Craft\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Window\WindowManager.h" />
+    <ClInclude Include="src\Craft\Window\WindowManager.h">
+      <Filter>Craft\Window</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Window\WindowStyle.h">
-      <Filter>Craft\Graphics</Filter>
+      <Filter>Craft\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\Win32OpenGL\Win32OpenGL.h">
+      <Filter>Platform\Windows\Win32OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp">
+      <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp">
+      <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
     </ClCompile>
-    <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Platform</Filter>
+    <ClCompile Include="src\Craft\Window\WindowManager.cpp">
+      <Filter>Craft\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\CGContext.cpp" />
-    <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\Win32Timer.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\crpch.cpp" />
   </ItemGroup>
 </Project>

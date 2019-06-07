@@ -56,8 +56,7 @@ namespace Craft
 			OnRender();
 			m_MainWindow->Update();
 
-			f32 elapsedTime = timer.ElapsedMillisecond();
-			if (elapsedTime - resetInterval > 1000.0f)
+			if (timer.ElapsedMillisecond() - resetInterval > 1000.0f)
 			{
 #ifdef CR_DEBUG
 				String debug = m_WindowSetting.Title + " : FPS: " + std::to_string(frames) + \
@@ -127,7 +126,6 @@ namespace Craft
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
-		CR_INFO(e);
 		return true;
 	}
 }

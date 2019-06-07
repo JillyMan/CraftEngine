@@ -88,6 +88,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -110,6 +113,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -128,6 +134,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
@@ -138,24 +147,33 @@
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
+    <ClInclude Include="src\Craft\Graphics\Buffer.h" />
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h" />
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h" />
+    <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Craft\Graphics\Layer.h" />
-    <ClInclude Include="src\Craft\Graphics\CGContext.h" />
+    <ClInclude Include="src\Craft\Log.h" />
+    <ClInclude Include="src\Craft\Math\Math.h" />
+    <ClInclude Include="src\Craft\Math\Vec4.h" />
+    <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
     <ClInclude Include="src\Craft\Window\WindowManager.h" />
     <ClInclude Include="src\Craft\Window\WindowStyle.h" />
-    <ClInclude Include="src\Craft\Log.h" />
-    <ClInclude Include="src\Craft\Types.h" />
-    <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\Windows\Win32OpenGL\Win32OpenGL.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Utils\Timer.h" />
+    <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp" />
-    <ClCompile Include="src\Craft\Graphics\CGContext.cpp" />
-    <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
+    <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\crpch.cpp">

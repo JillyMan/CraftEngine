@@ -33,6 +33,8 @@ project "Craft"
 	filter "system:windows"
 		staticruntime "On"
 		systemversion "latest"
+		
+		links{ "OpenGL32" }
 
 		pchheader "crpch.h"
 		pchsource "Craft/src/crpch.cpp"
