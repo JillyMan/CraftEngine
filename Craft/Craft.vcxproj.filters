@@ -103,9 +103,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\Win32OpenGL\Win32OpenGL.h">
-      <Filter>Platform\Windows\Win32OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -113,6 +110,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -140,5 +139,7 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
+    <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
   </ItemGroup>
 </Project>

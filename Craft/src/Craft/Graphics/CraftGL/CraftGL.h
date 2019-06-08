@@ -5,7 +5,6 @@
 
 namespace Craft
 {
-
 	enum class DrawType
 	{
 		Points = 0,
@@ -17,14 +16,11 @@ namespace Craft
 		Array = 0
 	};
 
-	static std::map<WindowHandle, BackBuffer(> TableBuffers;
-
 	struct BackBuffer
 	{
 		u32 Width;
 		u32 Height;
 		u32 BytesPerPixel;
-
 		void* Pixels;
 
 #ifdef CRAFT_PLATFORM_WINDOWS
@@ -32,17 +28,15 @@ namespace Craft
 #endif
 	};
 
-	void InitGLContext(WindowHandle handle)
-	{
-		Window* window = WindowManager::GetWindowClass(handle);
-		TableBuffers[handle] = {};
+	static BackBuffer* CurrentBackBuffer;
 
-#ifdef CRAFT_PLATFORM_WINDOWS
-		WindowsContextInit(TableBuffers[handle], window->GetWidth(), window->GetHeight());
-#else
-		#error only windows support
-#endif
-	}
+	void InitGLContext(WindowHandle handle);
+	void BindVertexBuffer(u32& bufferId, f32* verticies, u32 size);
+	void UnbindVertexBuffer(u32 bufferId, f32* verticies, u32 size);
+	void BindIndicesBuffer(u32& bufferId, f32* verticies, u32 size);
+	void UnbindIndicesBuffer(f32* verticies, u32 size);
+	void DrawArrays(DrawType mode, u32 first, u32 count);
+
 
 	static void WindowsContextInit(BackBuffer* screenBuffer, u32 width, u32 height)
 	{
@@ -67,22 +61,11 @@ namespace Craft
 		int BitmapMemorySize = (width * height) * BytesPerPixel;
 		screenBuffer->Pixels = VirtualAlloc(0, BitmapMemorySize, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 	}
-
-	void BindVertexBuffer(u32& bufferId, f32* verticies, u32 size);
-	void UnbindVertexBuffer(u32 bufferId, f32* verticies, u32 size);
-
-	void BindIndicesBuffer(u32& bufferId, f32* verticies, u32 size);
-	void UnbindIndicesBuffer(f32* verticies, u32 size);
-
-	void DrawArrays(DrawType mode, u32 first, u32 count);
-
 	static void DrawTriangles();
 	static void DrawPoints();
 
-	void FlushPixels(WindowHandle window)
+	void Win32DisplayBufferInWindow(BackBuffer* screenBuffer, WindowHandle window)
 	{
-		BackBuffer* screenBuffer = TableBuffers[window];
-
 #ifdef CRAFT_PLATFORM_WINDOWS
 		HDC DeviceContext = GetDC(window);
 

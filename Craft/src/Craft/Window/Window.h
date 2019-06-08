@@ -10,14 +10,15 @@ namespace Craft
 {
 	struct CRAFT_API WindowSetting
 	{
-		s32 Width, Height;
+		bool IsVSync;
 		bool IsFullscreen;
-		String Title;
 		u32 Style;
-		
+		s32 Width, Height;
+		String Title;
+
 		WindowSetting() :
-			Width(1024),
-			Height(768),
+			Width(1280),
+			Height(720),
 			IsFullscreen(false),
 			Style(Style::Default),
 			Title("Craft game engine")
@@ -37,6 +38,8 @@ namespace Craft
 
 		virtual String GetTitle() = 0;
 		virtual void SetTitle(String& title) = 0;
+		virtual void SetVSync(bool enabled) = 0;
+		virtual bool IsVSync() = 0;
 		virtual void SetEventCallback(const EventCallbackFn& eventCallback) = 0;
 
 		virtual WindowHandle GetWindowHandle() = 0;

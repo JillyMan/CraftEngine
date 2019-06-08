@@ -1,11 +1,10 @@
-#pragma once
-#include <gl\GL.h>
+#include "crpch.h"
+
+#include "Platform\OpenGL\OpenGL.h"
 
 namespace Craft
 {
-	static HDC WindowDC;
-
-	bool Win32InitOpenGL(HWND Window)
+	bool glInit(WindowHandle Window)
 	{
 		bool Result = true;
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat;
@@ -17,7 +16,7 @@ namespace Craft
 		DesiredPixelFormat.cAlphaBits = 8;
 		DesiredPixelFormat.iLayerType = PFD_MAIN_PLANE;
 
-		WindowDC = GetDC(Window);
+		HDC WindowDC = GetDC(Window);
 		u32 SuggestedPixelFormatIndex = ChoosePixelFormat(WindowDC, &DesiredPixelFormat);
 		PIXELFORMATDESCRIPTOR SuggestedPixelFormat;
 		DescribePixelFormat(WindowDC, SuggestedPixelFormatIndex, sizeof(SuggestedPixelFormat), &SuggestedPixelFormat);
@@ -28,23 +27,41 @@ namespace Craft
 		{
 			Result = false;
 		}
-		
+
+		glewInit();
+
 		return Result;
 	}
 
-	void Win32SwapBuffers(HWND Window)
-	{		
-		glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-	
-		glBegin(GL_LINES);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex2f(10.0f, 10.f);
-		glVertex2f(100.0f, 100.f);
-		glEnd();
-
-		glDrawArrays(GL_LINES, 0, 1);
-
+	void glSwapBuffers()
+	{
+		HDC WindowDC = wglGetCurrentDC();
 		SwapBuffers(WindowDC);
+	}
+
+	void glVSync(bool enabled)
+	{
+
+	}
+
+	void glDestroyContext()
+	{
+		HGLRC OpenGLRC = wglGetCurrentContext();
+		wglDeleteContext(OpenGLRC);
+		//TODO: (debut this moment)
+		HDC WindowDC = wglGetCurrentDC();
+	}
+
+	opengl_info glGetInfo(bool ModernContext)
+	{
+		opengl_info Result = {};
+
+		Result.ModernContext = ModernContext;
+		Result.Vendor = (char*)glGetString(GL_VENDOR);
+		Result.Version = (char*)glGetString(GL_VERSION);
+		Result.Renderer = (char*)glGetString(GL_RENDERER);
+		Result.Extensions = (char*)glGetString(GL_EXTENSIONS);
+
+		return Result;
 	}
 }

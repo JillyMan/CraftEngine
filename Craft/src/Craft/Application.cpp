@@ -20,6 +20,11 @@ namespace Craft
 	Application::~Application()
 	{
 		WindowManager::Destroy(m_MainWindow);
+		
+		for (int i = 0; i < m_pLayers.size(); ++i)
+		{
+			delete m_pLayers[i];
+		}
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -86,24 +91,17 @@ namespace Craft
 
 	void Application::OnUpdate(f32 deltaTime)
 	{
-		for (auto layer = begin(m_pLayers); 
-			layer != end(m_pLayers); 
-			++layer)
+		for (u32 i = 0; i < m_pLayers.size(); ++i)
 		{
-			(*layer)->OnUpdate(deltaTime);
+			m_pLayers[i]->OnUpdate(deltaTime);
 		}
 	}
 
 	void Application::OnRender()
 	{
-		for (auto layer = end(m_pLayers);
-			layer != begin(m_pLayers);
-			--layer)
+		for(s32 i = m_pLayers.size() - 1; i >= 0; --i)
 		{
-			if ((*layer)->IsVisible())
-			{
-				(*layer)->OnRender();
-			}
+			m_pLayers[i]->OnRender();
 		}
 	}
 

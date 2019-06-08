@@ -1,6 +1,14 @@
 @TODO
-	#need make event queue how in SFML ---- ??
-	#layer system
+	#need make event queue how in SFML ---- ??????????
+	#mouse button click dispatch
+	#layer system #in progress
+	#render api (look at a4 list)
+	#entity component system(ECS)
+		#allocators
 
 @Bugs
-	#twice send message about close window!!
+	#what if graphics context can't init ???
+
+
+@NEED-learn
+	how stretchDIB.. work ??? move to gpu and monitor, or across cpu??

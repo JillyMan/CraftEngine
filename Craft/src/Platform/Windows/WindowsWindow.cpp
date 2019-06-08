@@ -102,9 +102,13 @@ namespace Craft {
 		WindowManager::RegisterWindowClass(m_WindowHandle, this);
 		ShowWindow(m_WindowHandle, SW_SHOW);
 
-		//TODO: Create graphics factory!
-//		m_GraphicsContext = new CraftGLContext(m_WindowHandle);
-		m_GraphicsContext = new OpengGLContext(m_WindowHandle);
+//--------------------
+		GLInitData setting; 
+		setting.VSync = m_Setting.IsVSync;
+		setting.Handle = m_WindowHandle;
+		m_GraphicsContext = new OpengGLContext(setting);
+//--------------------
+
 		m_GraphicsContext->Init();
 
 		return true;
@@ -113,6 +117,7 @@ namespace Craft {
 	void WindowsWindow::Shutdown()
 	{
 		DestroyWindow(m_WindowHandle);
+		delete m_GraphicsContext;
 		CR_FATAL("Window close");
 	}
 
@@ -120,6 +125,15 @@ namespace Craft {
 	{
 		m_Setting.Title = title;
 		SetWindowTextA(m_WindowHandle, title.c_str());
+	}
+
+	void WindowsWindow::SetVSync(bool enabled)
+	{
+	}
+	
+	bool WindowsWindow::IsVSync()
+	{
+		return false;
 	}
 
 	void WindowsWindow::ToogleFullScreenMode()
@@ -229,17 +243,6 @@ namespace Craft {
 				CR_INFO("Window is created");
 				break;
 			}
-//			case WM_PAINT:
-//			{
-//#if 0
-//				PAINTSTRUCT ps;
-//				HDC hdc = BeginPaint(hWindow, &ps);
-//				HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
-//				FillRect(hdc, &ps.rcPaint, brush);
-//				EndPaint(hWindow, &ps);
-//#endif
-//				break;
-//			}
 			case WM_CLOSE:
 			{
 				OnWindowClose(window);

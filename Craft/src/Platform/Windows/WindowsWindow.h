@@ -12,9 +12,11 @@ namespace Craft
 		WindowsWindow(WindowSetting& setting);
 		~WindowsWindow();
 
-		void Update();
-		void ToogleFullScreenMode();
-		void SetTitle(String& title);
+		virtual void Update() override;
+		virtual void ToogleFullScreenMode() override;
+		virtual void SetTitle(String& title) override;
+		virtual void SetVSync(bool enabled) override;
+		virtual bool IsVSync() override;
 
 		u32 GetWidth() override { return m_Setting.Width; }
 		u32 GetHeight() override { return m_Setting.Height; }
@@ -44,8 +46,8 @@ namespace Craft
 		friend void OnKeyReleased(WindowsWindow* window, u64 vkCode);
 
 		friend void OnWindowClose(WindowsWindow* window);
-
 		friend void OnResizeWindow(WindowsWindow* window, u32 width, u32 height);
+
 		friend void OnMouseMove(WindowsWindow* window, s32 x, s32 y);
 		friend void OnMouseButtonPressed(WindowsWindow* window, u32 button);
 		friend void OnMouseButtonReleased(WindowsWindow* window, u32 button);

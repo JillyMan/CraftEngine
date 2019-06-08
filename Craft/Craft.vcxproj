@@ -161,8 +161,9 @@
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
     <ClInclude Include="src\Craft\Window\WindowManager.h" />
     <ClInclude Include="src\Craft\Window\WindowStyle.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Platform\Windows\Win32OpenGL\Win32OpenGL.h" />
+    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\crpch.h" />
@@ -174,6 +175,8 @@
     <ClCompile Include="src\Craft\Log.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
+    <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\crpch.cpp">

@@ -1,6 +1,7 @@
 #include "crpch.h"
 
 #include "CraftGLContext.h"
+#include "Craft\Graphics\CraftGL\CraftGL.h"
 
 namespace Craft {
 
@@ -20,6 +21,5 @@ namespace Craft {
 	
 	void CraftGLContext::SwapBuffers()
 	{
-		//Craft no support swap buffers
 	}
 }

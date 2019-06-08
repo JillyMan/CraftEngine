@@ -1,24 +1,40 @@
 #include "crpch.h"
+
+#include "OpenGL.h"
 #include "OpenGLContext.h"
-#include "Platform\Windows\Win32OpenGL\Win32OpenGL.h"
 
 namespace Craft
 {
-	OpengGLContext::OpengGLContext(WindowHandle handle) : 
-		m_WindowHandle(handle)
+	OpengGLContext::OpengGLContext(GLInitData initData) :
+		m_InitData(initData)
 	{
+	}
+
+	OpengGLContext::~OpengGLContext()
+	{
+		glDestroyContext();
 	}
 
 	void OpengGLContext::Init()
 	{
-		if (!Win32InitOpenGL(m_WindowHandle))
+		if (!glInit(m_InitData.Handle))
 		{
 			CR_CORE_ERROR("Can't init Windows-OpenGL");
 		}
+		else
+		{
+			opengl_info info = glGetInfo();
+			CR_CORE_TRACE("OpenGL init successed: ");
+			CR_CORE_TRACE(info.Vendor);
+			CR_CORE_TRACE(info.Version);
+			CR_CORE_TRACE(info.Renderer);
+		}
+
+		glVSync(m_InitData.VSync);
 	}
 
 	void OpengGLContext::SwapBuffers()
 	{
-		Win32SwapBuffers(m_WindowHandle);
+		glSwapBuffers();
 	}
 }

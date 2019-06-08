@@ -5,16 +5,22 @@
 
 namespace Craft
 {
+	struct GLInitData
+	{
+		bool VSync;
+		WindowHandle Handle;
+	};
+
 	class OpengGLContext : public GraphicsContext
 	{
 	public:
-		OpengGLContext(WindowHandle handle);
+		OpengGLContext(GLInitData initData);
+		~OpengGLContext();
 
 		virtual void Init();
 		virtual void SwapBuffers();
 
-
 	private:
-		WindowHandle m_WindowHandle;
+		GLInitData m_InitData;
 	};
 }
