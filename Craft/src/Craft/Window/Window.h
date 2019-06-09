@@ -1,10 +1,11 @@
 #pragma once
 
-#include "crpch.h"
-
 #include "Craft\Event\Event.h"
 #include "Craft\Window\WindowStyle.h"
 #include "Craft\Window\WindowHandle.h"
+
+#define DEFAULT_WINDOW_WIDTH 1280
+#define DEFAULT_WINDOW_HEIGHT 720
 
 namespace Craft
 {
@@ -17,8 +18,8 @@ namespace Craft
 		String Title;
 
 		WindowSetting() :
-			Width(1280),
-			Height(720),
+			Width(DEFAULT_WINDOW_WIDTH),
+			Height(DEFAULT_WINDOW_HEIGHT),
 			IsFullscreen(false),
 			Style(Style::Default),
 			Title("Craft game engine")

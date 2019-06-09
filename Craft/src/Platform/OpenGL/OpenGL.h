@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Craft\Window\WindowHandle.h"
-#include "Platform\OpenGL\Glew\Glew.h"
+//#include "Glew\Glew.h"
+
+#include <glad\glad.h>
+#include <Craft\Window\WindowHandle.h>
 
 namespace Craft
 {

@@ -6,7 +6,7 @@ namespace Craft
 {
 	bool glInit(WindowHandle Window)
 	{
-		bool Result = true;
+		bool Result = false;
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat;
 		DesiredPixelFormat.nSize = sizeof(PIXELFORMATDESCRIPTOR);
 		DesiredPixelFormat.nVersion = 1;
@@ -23,12 +23,11 @@ namespace Craft
 		SetPixelFormat(WindowDC, SuggestedPixelFormatIndex, &SuggestedPixelFormat);
 		HGLRC OpenGLRC = wglCreateContext(WindowDC);
 
-		if (!wglMakeCurrent(WindowDC, OpenGLRC))
+		if (wglMakeCurrent(WindowDC, OpenGLRC))
 		{
-			Result = false;
+			Result = gladLoadGL();
+			glVSync(1);
 		}
-
-		glewInit();
 
 		return Result;
 	}
@@ -41,7 +40,17 @@ namespace Craft
 
 	void glVSync(bool enabled)
 	{
-
+		//if (glSwapInterval)
+		//{
+		//	if (enabled)
+		//	{
+		//		glSwapInterval(1);
+		//	}
+		//	else
+		//	{
+		//		glSwapInterval(0);
+		//	}
+		//}
 	}
 
 	void glDestroyContext()

@@ -5,10 +5,10 @@
 
 #include "Craft\Window\WindowManager.h"
 
-namespace Craft
-{
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+namespace Craft
+{
 	Application::Application(f32 fps) :
 		m_Running(false),
 		m_FPS(fps)
@@ -91,7 +91,7 @@ namespace Craft
 
 	void Application::OnUpdate(f32 deltaTime)
 	{
-		for (u32 i = 0; i < m_pLayers.size(); ++i)
+		for (u64 i = 0; i < m_pLayers.size(); ++i)
 		{
 			m_pLayers[i]->OnUpdate(deltaTime);
 		}
@@ -99,7 +99,7 @@ namespace Craft
 
 	void Application::OnRender()
 	{
-		for(s32 i = m_pLayers.size() - 1; i >= 0; --i)
+		for(s64 i = m_pLayers.size() - 1; i >= 0; --i)
 		{
 			m_pLayers[i]->OnRender();
 		}

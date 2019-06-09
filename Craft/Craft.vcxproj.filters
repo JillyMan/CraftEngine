@@ -25,11 +25,11 @@
     <Filter Include="Platform\OpenGL">
       <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\OpenGL\Glew">
+      <UniqueIdentifier>{5CA7F816-4836-82E0-F154-96DBDDC29286}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platform\Windows\Win32OpenGL">
-      <UniqueIdentifier>{8BCC2E24-7787-1ED0-203F-971A0CD96860}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
@@ -100,6 +100,12 @@
     <ClInclude Include="src\Craft\Window\WindowStyle.h">
       <Filter>Craft\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h">
+      <Filter>Platform\OpenGL\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGL.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
@@ -110,8 +116,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
+    <ClInclude Include="src\Craft\Graphics\Shader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -129,8 +135,14 @@
     <ClCompile Include="src\Craft\Window\WindowManager.cpp">
       <Filter>Craft\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp">
+      <Filter>Platform\OpenGL\Glew</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp">
       <Filter>Platform\Windows</Filter>
@@ -139,7 +151,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
-    <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
   </ItemGroup>
 </Project>

@@ -28,6 +28,7 @@ namespace Craft
 			CR_CORE_TRACE(info.Vendor);
 			CR_CORE_TRACE(info.Version);
 			CR_CORE_TRACE(info.Renderer);
+		//	CR_CORE_TRACE(info.Extensions);
 		}
 
 		glVSync(m_InitData.VSync);
