@@ -1,4 +1,5 @@
 @TODO
+	#Win32Opengl gladLoad not cool
 	#need make event queue how in SFML ---- ??????????
 	#mouse button click dispatch
 	#layer system #in progress

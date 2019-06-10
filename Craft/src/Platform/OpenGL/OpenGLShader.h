@@ -17,7 +17,6 @@ namespace Craft
 			glShaderSource(fragmentShaderId, 1, &fragmentShader, NULL);
 
 			glCompileShader(vertexShaderId);
-
 			glCompileShader(fragmentShaderId);
 
 #if CR_DEBUG

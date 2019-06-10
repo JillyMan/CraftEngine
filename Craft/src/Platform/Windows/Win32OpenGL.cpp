@@ -26,7 +26,6 @@ namespace Craft
 		if (wglMakeCurrent(WindowDC, OpenGLRC))
 		{
 			Result = gladLoadGL();
-			glVSync(1);
 		}
 
 		return Result;
@@ -34,22 +33,19 @@ namespace Craft
 
 	void glSwapBuffers()
 	{
-		HDC WindowDC = wglGetCurrentDC();
+		static HDC WindowDC = wglGetCurrentDC();
 		SwapBuffers(WindowDC);
 	}
 
 	void glVSync(bool enabled)
 	{
-		//if (glSwapInterval)
+		//if (enabled)
 		//{
-		//	if (enabled)
-		//	{
-		//		glSwapInterval(1);
-		//	}
-		//	else
-		//	{
-		//		glSwapInterval(0);
-		//	}
+		//	glSwapInterval(1);
+		//}
+		//else
+		//{
+		//	glSwapInterval(0);
 		//}
 	}
 
