@@ -118,6 +118,7 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Graphics\Shader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Craft\System\FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -151,5 +152,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
   </ItemGroup>
 </Project>

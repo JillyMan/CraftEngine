@@ -27,14 +27,14 @@ namespace Craft
 		{
 			Result = gladLoadGL();
 		}
-
+		ReleaseDC(Window, WindowDC);
 		return Result;
 	}
 
 	void glSwapBuffers()
 	{
-		static HDC WindowDC = wglGetCurrentDC();
-		SwapBuffers(WindowDC);
+		HDC WindowDC = wglGetCurrentDC();
+		BOOL Result = SwapBuffers(WindowDC);
 	}
 
 	void glVSync(bool enabled)
@@ -53,7 +53,7 @@ namespace Craft
 	{
 		HGLRC OpenGLRC = wglGetCurrentContext();
 		wglDeleteContext(OpenGLRC);
-		//TODO: (debut this moment)
+		//TODO: (debug this moment)
 		HDC WindowDC = wglGetCurrentDC();
 	}
 
