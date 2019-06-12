@@ -1,8 +1,12 @@
 #pragma once
 
-//#include "Glew\Glew.h"
+#include "Glew\Glew.h"
+//#include <glad\glad.h>
 
-#include <glad\glad.h>
+//#include <gl/GL.h>
+//#include <gl/WGLext.h>
+//#include <gl/GLext.h>
+
 #include <Craft\Window\WindowHandle.h>
 
 namespace Craft
@@ -17,7 +21,7 @@ namespace Craft
 		char* Extensions;
 	};
 
-	opengl_info glGetInfo(bool ModernContext = true);
+	opengl_info glGetInfo();
 	bool glInit(WindowHandle handle);
 	void glSwapBuffers();
 	void glVSync(bool enabled);

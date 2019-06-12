@@ -7,7 +7,7 @@ namespace Craft
 	bool glInit(WindowHandle Window)
 	{
 		bool Result = false;
-		PIXELFORMATDESCRIPTOR DesiredPixelFormat;
+		PIXELFORMATDESCRIPTOR DesiredPixelFormat = {};
 		DesiredPixelFormat.nSize = sizeof(PIXELFORMATDESCRIPTOR);
 		DesiredPixelFormat.nVersion = 1;
 		DesiredPixelFormat.iPixelType = PFD_TYPE_RGBA;
@@ -21,13 +21,40 @@ namespace Craft
 		PIXELFORMATDESCRIPTOR SuggestedPixelFormat;
 		DescribePixelFormat(WindowDC, SuggestedPixelFormatIndex, sizeof(SuggestedPixelFormat), &SuggestedPixelFormat);
 		SetPixelFormat(WindowDC, SuggestedPixelFormatIndex, &SuggestedPixelFormat);
-		HGLRC OpenGLRC = wglCreateContext(WindowDC);
+		HGLRC TempOpenGLRC = wglCreateContext(WindowDC);
 
-		if (wglMakeCurrent(WindowDC, OpenGLRC))
+		if (wglMakeCurrent(WindowDC, TempOpenGLRC))
 		{
-			Result = gladLoadGL();
+			Result = glLoad();//gladLoadGL();
+			if (Result)
+			{
+				int attributes[] =
+				{
+					WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
+					WGL_CONTEXT_MINOR_VERSION_ARB, 5,
+					WGL_CONTEXT_FLAGS_ARB,         WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+					0
+				};
+
+				HGLRC OpenGLRC = wglCreateContextAttribsARB(WindowDC, 0, attributes);
+
+				if (!OpenGLRC)
+				{
+					CR_CORE_INFO("Can't init opengl 4.5 context");
+					wglDeleteContext(TempOpenGLRC);
+					return false;
+				}
+
+				if (!wglMakeCurrent(WindowDC, OpenGLRC))
+				{
+					wglDeleteContext(TempOpenGLRC);
+					wglDeleteContext(OpenGLRC);
+					return false;
+				}
+				wglDeleteContext(TempOpenGLRC);
+			}
 		}
-		ReleaseDC(Window, WindowDC);
+
 		return Result;
 	}
 
@@ -57,11 +84,11 @@ namespace Craft
 		HDC WindowDC = wglGetCurrentDC();
 	}
 
-	opengl_info glGetInfo(bool ModernContext)
+	opengl_info glGetInfo()
 	{
 		opengl_info Result = {};
 
-		Result.ModernContext = ModernContext;
+		Result.ModernContext = true;
 		Result.Vendor = (char*)glGetString(GL_VENDOR);
 		Result.Version = (char*)glGetString(GL_VERSION);
 		Result.Renderer = (char*)glGetString(GL_RENDERER);

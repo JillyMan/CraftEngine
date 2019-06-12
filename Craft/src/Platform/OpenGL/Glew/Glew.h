@@ -1,13 +1,15 @@
 #pragma once
 
 #include <gl\GL.h>
+#include <gl\GLext.h>
+#include <gl\WGLext.h>
 
 #ifndef APIENTRY
-	#define APIENTRY
+#define APIENTRY
 #endif
 
 #ifndef APIENTRYP
-	#define APIENTRYP APIENTRY *
+#define APIENTRYP APIENTRY *
 #endif
 
 #ifndef GL_STATIC_LIB
@@ -36,10 +38,6 @@
 # endif
 #endif
 
-typedef char GLchar;
-typedef ptrdiff_t GLintptr;
-typedef ptrdiff_t GLsizeiptr;
-
 #define GL_ARRAY_BUFFER						0x8892
 #define GL_STREAM_DRAW						0x88E0
 #define GL_STATIC_DRAW						0x88E4
@@ -48,42 +46,62 @@ typedef ptrdiff_t GLsizeiptr;
 #define GL_VERTEX_SHADER					0x8B31
 #define GL_COMPILE_STATUS					0x8B81
 
-
 //-----------begin defines functions---------
 
-typedef void (APIENTRYP PFNGLGETSHADERIVPROC) (GLuint shader, GLenum pname, GLint *params);
-GLAPI PFNGLGETSHADERIVPROC glGetShaderiv;
+GLAPI PFNGLCREATEPROGRAMPROC _glCreateProgram;
+GLAPI PFNGLCREATEBUFFERSPROC _glCreateBuffers;
+GLAPI PFNGLCREATEVERTEXARRAYSPROC _glCreateVertexArrays;
 
-typedef void (APIENTRYP PFNGLCOMPILESHADERPROC) (GLuint shader);
-GLAPI PFNGLCOMPILESHADERPROC glCompileShader;
+GLAPI PFNGLBINDBUFFERPROC _glBindBuffer;
+GLAPI PFNGLBUFFERDATAPROC _glBufferData;
+GLAPI PFNGLBINDVERTEXARRAYPROC _glBindVertexArray;
 
-typedef void (APIENTRYP PFNGLSHADERSOURCEPROC)(GLuint shader, GLsizei count, const GLchar *const*string, const GLint *length);
-GLAPI PFNGLSHADERSOURCEPROC glShaderSource;
+GLAPI PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
+GLAPI PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray;
 
-typedef GLuint(APIENTRYP PFNGLCREATESHADERPROC) (GLenum type);
-GLAPI PFNGLCREATESHADERPROC glCreateShader;
+GLAPI PFNGLCREATESHADERPROC _glCreateShader;
+GLAPI PFNGLSHADERSOURCEPROC _glShaderSource;
+GLAPI PFNGLCOMPILESHADERPROC _glCompileShader;
+GLAPI PFNGLATTACHSHADERPROC _glAttachShader;
+GLAPI PFNGLLINKPROGRAMPROC _glLinkProgram;
+GLAPI PFNGLDELETESHADERPROC _glDeleteShader;
+GLAPI PFNGLUSEPROGRAMPROC _glUseProgram;
 
-typedef void (APIENTRYP PFNGLBUFFERDATAPROC) (GLenum target, GLsizeiptr size, const void *data, GLenum usage);
-GLAPI PFNGLBUFFERDATAPROC glBufferData;
+GLAPI  PFNGLDRAWARRAYSEXTPROC  _glDrawArraysEXT;
 
-typedef void (APIENTRYP PFNGLBINDVERTEXBUFFERPROC)(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride);
-GLAPI PFNGLBINDVERTEXBUFFERPROC glBindVertexBuffer;
+GLAPI PFNGLGETSHADERIVPROC _glGetShaderiv;
+GLAPI PFNGLGENBUFFERSPROC _glGenBuffers;
+GLAPI PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT;
 
-typedef void (APIENTRYP PFNGLGENBUFFERSPROC)(GLsizei, GLuint*);
-GLAPI PFNGLGENBUFFERSPROC glGenBuffers;
+GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 
-typedef void (APIENTRYP PFNGLBINDBUFFERPROC) (GLenum target, GLuint buffer);
-GLAPI PFNGLBINDBUFFERPROC glBindBuffer;
+#define glBindVertexArray					_glBindVertexArray
+#define glCreateShader						_glCreateShader
+#define glShaderSource						_glShaderSource
+#define glCompileShader						_glCompileShader
+#define glCreateProgram						_glCreateProgram
+#define glAttachShader						_glAttachShader
+#define glLinkProgram						_glLinkProgram
+#define glDeleteShader						_glDeleteShader
+#define glCreateVertexArrays				_glCreateVertexArrays
+#define glCreateBuffers						_glCreateBuffers
+#define glBindBuffer						_glBindBuffer
+#define glBufferData						_glBufferData
+#define glVertexAttribPointer				_glVertexAttribPointer
+#define glEnableVertexAttribArray			_glEnableVertexAttribArray
+#define glUseProgram						_glUseProgram
+#define glDrawArraysEXT						_glDrawArraysEXT 
+#define glSwapIntervalEXT					_glSwapIntervalEXT
 
-typedef	bool(APIENTRY *PFNWGLSWAPINTERVALFARPROC)(GLint);
-GLAPI PFNWGLSWAPINTERVALFARPROC glSwapInterval;
+#ifdef _WIN32
+#define wglCreateContextAttribsARB _wglCreateContextAttribsARB
+#endif
 
-int glewLoadGL();
+//-----------end defines functions---------
 
 typedef void* (*GLEWloadproc)(const char *name);
 GLAPI void glewLoadGLLoader(GLEWloadproc);
 
 typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
 static PFNWGLGETPROCADDRESSPROC_PRIVATE glewGetProcAddressPtr;
-
-//-----------end defines functions---------
+int glLoad();

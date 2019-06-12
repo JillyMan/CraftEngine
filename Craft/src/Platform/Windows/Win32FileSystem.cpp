@@ -45,7 +45,7 @@ namespace Craft
 				s64 FileSize64 = FileSize.QuadPart;
 				Result = (byte*)malloc(FileSize64);
 				s64 BytesRead;
-				if (ReadFile(FileHandle, Result, FileSize64, &BytesRead, 0))
+				//if (ReadFile(FileHandle, Result, FileSize64, &BytesRead, 0))
 				{
 
 				}
@@ -75,5 +75,6 @@ namespace Craft
 		{
 			DWORD WriteSize = 0;
 		}
+		return Result;
 	}
 }
