@@ -16,8 +16,14 @@
     <Filter Include="Craft\Math">
       <UniqueIdentifier>{4ED99666-3A91-D8B3-A398-B10F8F6F73A4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\System">
+      <UniqueIdentifier>{C9586377-B5BB-F21B-5E41-2BD24A83BE9E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Window">
       <UniqueIdentifier>{9C72937F-88D5-2224-315B-5BDA1D9DEEA6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{25F339C1-1195-6497-FA4F-78EBE690EBE7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
@@ -76,6 +82,9 @@
     <ClInclude Include="src\Craft\Graphics\Layer.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Shader.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -84,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Math\Vec4.h">
       <Filter>Craft\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\System\FileSystem.h">
+      <Filter>Craft\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
@@ -100,6 +112,9 @@
     <ClInclude Include="src\Craft\Window\WindowStyle.h">
       <Filter>Craft\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\Logger\CRLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h">
       <Filter>Platform\OpenGL\Glew</Filter>
     </ClInclude>
@@ -109,6 +124,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -116,9 +134,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Graphics\Shader.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Craft\System\FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -142,6 +157,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -152,6 +170,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
   </ItemGroup>
 </Project>

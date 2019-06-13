@@ -9,5 +9,7 @@
 
 #include "Craft\Math\Math.h"
 
+#include "Craft\System\FileSystem.h"
+
 //--------------------------------------
 #include "Craft\EntryPoint.h"

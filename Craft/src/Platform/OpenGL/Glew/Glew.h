@@ -75,6 +75,9 @@ GLAPI PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT;
 
 GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 
+GLAPI PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays;
+GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+
 #define glBindVertexArray					_glBindVertexArray
 #define glCreateShader						_glCreateShader
 #define glShaderSource						_glShaderSource
@@ -92,6 +95,9 @@ GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 #define glUseProgram						_glUseProgram
 #define glDrawArraysEXT						_glDrawArraysEXT 
 #define glSwapIntervalEXT					_glSwapIntervalEXT
+#define glDeleteVertexArrays				_glDeleteVertexArrays
+#define glDeleteBuffers						_glDeleteBuffers
+
 
 #ifdef _WIN32
 #define wglCreateContextAttribsARB _wglCreateContextAttribsARB

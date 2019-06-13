@@ -1,4 +1,6 @@
 #include <Craft.h>
+
+#define GL_GLEXT_PROTOTYPES
 #include "Platform\OpenGL\OpenGL.h"
 #include "Platform\OpenGL\OpenGLShader.h"
 
@@ -10,6 +12,8 @@ private:
 	String m_VertexShader;
 	String m_FragmentShader;
 	
+	GLuint m_ShaderProgram;
+
 	Craft::Shader* m_Shader;
 	
 	GLfloat* m_Vertices;	
@@ -19,35 +23,68 @@ private:
 public:
 	ExampleLayer()
 	{
-		m_VertexShader = R"(#version 330 core
-						layout (location = 0) in vec3 pos;
-						void main()
-						{
-							gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
-						})";
+		String fileName = "F:";
+		byte* info = "hello world";
+		bool result = Craft::FileSystem::WriteToFile(fileName, info, sizeof(info));
 
-		m_FragmentShader = R"(#version 330 core
-						out vec4 color;
-						void main()
-						{
-							color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
-						})";
+		//m_VertexShader = R"(#version 330 core
+		//				layout (location = 0) in vec3 pos;
+		//				void main()
+		//				{
+		//					gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
+		//				})";
 
-		m_Shader = new Craft::OpenGLShader(m_VertexShader.c_str(), m_FragmentShader.c_str());
+		//m_FragmentShader = R"(#version 330 core
+		//				out vec4 color;
+		//				void main()
+		//				{
+		//					color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+		//				})";
+
+		//m_Shader = new Craft::OpenGLShader(m_VertexShader.c_str(), m_FragmentShader.c_str());
+
+		const GLchar* vertexShaderSource = "#version 330 core\n"
+			"layout (location = 0) in vec3 position;\n"
+			"void main()\n"
+			"{\n"
+			"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+			"}\0";
+		const GLchar* fragmentShaderSource = "#version 330 core\n"
+			"out vec4 color;\n"
+			"void main()\n"
+			"{\n"
+			"color = vec4(0.0f, 0.0f, 0.0f, 0.0f);\n"
+			"}\n\0";
+
+		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+		glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+
+		glCompileShader(fragmentShader);
+		glCompileShader(vertexShader);
+
+		m_ShaderProgram = glCreateProgram();
+		glAttachShader(m_ShaderProgram, vertexShader);
+		glAttachShader(m_ShaderProgram, fragmentShader);
+		glLinkProgram(m_ShaderProgram);
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
 
 		m_Vertices = new GLfloat[9]
 		{
-			-0.5f, -0.5f, 0.0f, // Left  
-			0.5f, -0.5f, 0.0f, // Right 
-			0.0f,  0.5f, 0.0f  // Top   
+			-0.5f, -0.5f, 0.0f, 
+			0.5f, -0.5f, 0.0f, 
+			0.0f,  0.5f, 0.0f  
 		};
 
 		glCreateVertexArrays(1, &m_VAO);
 		glCreateBuffers(1, &m_VBO);
-
 		glBindVertexArray(m_VAO);
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Vertices), m_Vertices, GL_STATIC_DRAW);
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
@@ -55,6 +92,8 @@ public:
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+
+
 	}
 
 	~ExampleLayer()
@@ -66,15 +105,16 @@ public:
 
 	virtual void OnRender() override
 	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glUseProgram(m_ShaderProgram);
 		glBindVertexArray(m_VAO);
-		m_Shader->Use();
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);		
-		
+		glDrawArraysEXT(GL_TRIANGLES, 0, 3);
+
 		glBindVertexArray(0);
+		GLenum error = glGetError();
 	}
 
 	virtual void OnEvent(Craft::Event& event) override

@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
+#include "Logger\CRLogger.h"
 
 namespace Craft {
 
@@ -11,12 +10,12 @@ namespace Craft {
 	public:
 		static void Init();
 
-		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_Core_Logger; }
-		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_Client_Logger; }
+		inline static crlogger::Logger* GetCoreLogger() { return s_Core_Logger; }
+		inline static crlogger::Logger* GetClientLogger() { return s_Client_Logger; }
 
 	private:
-		static std::shared_ptr<spdlog::logger> s_Core_Logger;
-		static std::shared_ptr<spdlog::logger> s_Client_Logger;
+		static crlogger::Logger* s_Core_Logger;
+		static crlogger::Logger* s_Client_Logger;
 	};
 }
 
@@ -24,18 +23,18 @@ namespace Craft {
 #ifndef DEBUG_BUILD_DLL
 
 // Core log macros
-#define CR_CORE_INFO(...)	::Craft::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define CR_CORE_WARN(...)	::Craft::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CR_CORE_ERROR(...)	::Craft::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define CR_CORE_TRACE(...)	::Craft::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define CR_CORE_FATAL(...)	::Craft::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define CR_CORE_INFO(...)	::Craft::Log::GetCoreLogger()->Info(__VA_ARGS__)
+#define CR_CORE_WARN(...)	::Craft::Log::GetCoreLogger()->Warn(__VA_ARGS__)
+#define CR_CORE_ERROR(...)	::Craft::Log::GetCoreLogger()->Error(__VA_ARGS__)
+#define CR_CORE_TRACE(...)	::Craft::Log::GetCoreLogger()->Trace(__VA_ARGS__)
+#define CR_CORE_FATAL(...)	::Craft::Log::GetCoreLogger()->Fatal(__VA_ARGS__)
 
 // Client log macros
-#define CR_INFO(...)		::Craft::Log::GetClientLogger()->info(__VA_ARGS__)
-#define CR_WARN(...)		::Craft::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define CR_ERROR(...)		::Craft::Log::GetClientLogger()->error(__VA_ARGS__)
-#define CR_TRACE(...)		::Craft::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define CR_FATAL(...)		::Craft::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define CR_INFO(...)		::Craft::Log::GetClientLogger()->Info(__VA_ARGS__)
+#define CR_WARN(...)		::Craft::Log::GetClientLogger()->Warn(__VA_ARGS__)
+#define CR_ERROR(...)		::Craft::Log::GetClientLogger()->Error(__VA_ARGS__)
+#define CR_TRACE(...)		::Craft::Log::GetClientLogger()->Trace(__VA_ARGS__)
+#define CR_FATAL(...)		::Craft::Log::GetClientLogger()->Fatal(__VA_ARGS__)
 
 #else 
 // Core log macros

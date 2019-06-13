@@ -7,7 +7,11 @@ workspace "Craft"
 		"Dist"
 	}
 
-local outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+IncludeDir = {} 
+IncludeDir["Glad"] = "Craft/vendor/Glad/include"
+include "Craft/vendor/Glad"
 
 project "Craft"
 	location "Craft"
@@ -26,15 +30,18 @@ project "Craft"
 	}
 
 	includedirs {
-		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{IncludeDir.Glad}",
+	}
+
+	links { 
+		"Glad",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
 		staticruntime "On"
-		systemversion "latest"
-		
-		links{ "OpenGL32" }
+		systemversion "latest"		
 
 		pchheader "crpch.h"
 		pchsource "Craft/src/crpch.cpp"
@@ -78,8 +85,8 @@ project "Sandbox"
 	}
 
 	includedirs {
-		"Craft/vendor/spdlog/include",
-		"Craft/src"
+		"Craft/src",
+		"%{IncludeDir.Glad}",
 	}
 
 	links {

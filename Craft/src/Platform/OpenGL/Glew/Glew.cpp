@@ -68,18 +68,24 @@ PFNGLUSEPROGRAMPROC _glUseProgram = NULL;
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT = NULL;
 
-#ifdef _WIN32
+PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
+PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
+
 PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB = NULL;
-#endif
 
 void glewLoadGLLoader(GLEWloadproc load)
 {
 #if defined(_WIN32) || defined(__CYGWIN__)
-	glSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("glSwapIntervalEXT");
 	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)load("wglCreateContextAttribsARB");
 #else
 #	error not supported
 #endif
+
+	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
+	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
+
+	glSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("glSwapIntervalEXT");
+
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)load("glBindVertexArray");
 	glCreateShader = (PFNGLCREATESHADERPROC)load("glCreateShader");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)load("glShaderSource");
@@ -95,7 +101,6 @@ void glewLoadGLLoader(GLEWloadproc load)
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)load("glVertexAttribPointer");
 	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)load("glEnableVertexAttribArray");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
-
 	glDrawArraysEXT = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArraysEXT");
 }
 
