@@ -1,7 +1,6 @@
 #include "crpch.h"
 
 #include "Log.h"
-#include "Logger\CRLogger.h"
 
 namespace Craft {
 
@@ -10,7 +9,7 @@ namespace Craft {
 
 	void Log::Init()
 	{
-		s_Core_Logger = crlogger::Logger::GetConsoleLogger("CRAFT");
-		s_Client_Logger = crlogger::Logger::GetConsoleLogger("APP");
+		s_Core_Logger = crlogger::CreateConsoleLogger("CRAFT");
+		s_Client_Logger = crlogger::CreateConsoleLogger("APP");
 	}
 }

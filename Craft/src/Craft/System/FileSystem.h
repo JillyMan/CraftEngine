@@ -8,7 +8,7 @@ namespace Craft
 		static bool FileExist(String& fileName);
 		static s64 GetFileSize(String& fileName);
 
-		static byte* ReadFromFile(String& fileName, u64& size);
-		static bool WriteToFile(String& fileName, byte* buffer, u64 bytesToWrite);
+		static u8* ReadFromFile(String& fileName, u64& size);
+		static bool WriteToFile(String& fileName, u8* buffer, u64 bytesToWrite);
 	};
 }

@@ -107,7 +107,7 @@ namespace Craft
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		CR_INFO(e);
+		CR_INFO(e.ToString());
 		m_Running = false;
 		return true;
 	}

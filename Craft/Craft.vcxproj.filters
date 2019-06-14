@@ -170,5 +170,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Logger\CRLogger.cpp" />
   </ItemGroup>
 </Project>
