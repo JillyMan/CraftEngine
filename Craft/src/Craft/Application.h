@@ -1,7 +1,5 @@
 #pragma once
 
-#include "crpch.h"
-
 #include "Core.h"
 
 #include "Craft\Window\Window.h"

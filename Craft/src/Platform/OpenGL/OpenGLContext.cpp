@@ -25,9 +25,9 @@ namespace Craft
 		{
 			opengl_info info = glGetInfo();
 			CR_CORE_TRACE("OpenGL init successed: ");
-			CR_CORE_TRACE(info.Vendor);
-			CR_CORE_TRACE(info.Version);
-			CR_CORE_TRACE(info.Renderer);
+			CR_CORE_TRACE("Vendor: %s", info.Vendor);
+			CR_CORE_TRACE("Version: %s", info.Version);
+			CR_CORE_TRACE("Render device: %s", info.Renderer);
 		//	CR_CORE_TRACE(info.Extensions);
 		}
 

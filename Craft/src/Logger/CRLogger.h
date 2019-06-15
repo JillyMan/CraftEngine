@@ -5,7 +5,6 @@
 namespace crlogger
 {
 	static const char* LogNames[] = { "Info", "Fatal", "Warn", "Error", "Trace" };
-	static const int Colors[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
 	enum ConsoleColor
 	{
@@ -35,6 +34,7 @@ namespace crlogger
 	{
 	private:
 		FILE* m_File;
+		std::map<LevelLog, ConsoleColor> m_LogColors;
 
 	public:
 		ConsoleLogStream();
@@ -54,31 +54,31 @@ namespace crlogger
 		template<typename... Args>
 		void Info(const char* msg, const Args&... args)
 		{
-			Log(ConsoleColor::WHITE, LevelLog::Info, msg, args...);
+			Log(LevelLog::Info, msg, args...);
 		}
 
 		template<typename... Args>
 		void Warn(const char* msg, const Args&... args)
 		{
-			Log(ConsoleColor::BLUE, LevelLog::Warn, msg, args...);
+			Log(LevelLog::Warn, msg, args...);
 		}
 
 		template<typename... Args>
 		void Error(const char* msg, const Args&... args)
 		{
-			Log(ConsoleColor::RED, LevelLog::Error, msg, args...);
+			Log(LevelLog::Error, msg, args...);
 		}
 
 		template<typename... Args>
 		void Trace(const char* msg, const Args&... args)
 		{
-			Log(ConsoleColor::YELLOW, LevelLog::Trace, msg, args...);
+			Log(LevelLog::Trace, msg, args...);
 		}
 
 		template<typename... Args>
 		void Fatal(const char* msg, const Args&... args)
 		{
-			Log(ConsoleColor::GRAY, LevelLog::Fatal, msg, args...);
+			Log(LevelLog::Fatal, msg, args...);
 		}
 
 		template<typename... Args>
@@ -112,7 +112,7 @@ namespace crlogger
 		}
 
 		template<typename... Args>
-		void Log(ConsoleColor color, LevelLog level, const char* msg, const Args&... args)
+		void Log(LevelLog level, const char* msg, const Args&... args)
 		{
 			std::stringstream ss;
 

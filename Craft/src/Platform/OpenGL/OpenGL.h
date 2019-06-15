@@ -1,12 +1,6 @@
 #pragma once
 
 #include "Glew\Glew.h"
-//#include <glad\glad.h>
-
-//#include <gl/GL.h>
-//#include <gl/WGLext.h>
-//#include <gl/GLext.h>
-
 #include <Craft\Window\WindowHandle.h>
 
 namespace Craft

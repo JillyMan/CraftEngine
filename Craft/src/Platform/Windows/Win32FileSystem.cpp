@@ -36,43 +36,44 @@ namespace Craft
 		return Result;
 	}
 
-	//When Result unused her need a clear (call free(data));
-	u8* FileSystem::ReadFromFile(String& fileName, u64& size)
+	//When Result unused, need call free(data);
+	s8* FileSystem::ReadFromFile(String& fileName, u64& size)
 	{
 		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-		u8* Result = nullptr;
+		s8* Result = nullptr;
 
 		if (FileHandle)
 		{
 			s64 FileSize = GetFileSizeInternal(FileHandle);
 			if (FileSize)
 			{	
-				//TODO(use another allocator)
-				Result = (u8*)malloc(FileSize);
+				//TODO (use another allocator)
+				Result = (s8*)malloc(FileSize);
 
 				DWORD BytesRead;
-				if (!ReadFile(FileHandle, Result, FileSize, &BytesRead, 0) && 
-					FileSize != BytesRead)
+				if (ReadFile(FileHandle, Result, FileSize, &BytesRead, 0) && 
+					FileSize == BytesRead)
 				{
+					size = FileSize;
+				}
+				else
+				{
+					CR_WARN("Can't read, win32-error-code: [%d]", GetLastError());
 					free(Result);
 				}
-			}
-			else
-			{
-				//TODO need handle.... GetLastError() 
 			}
 
 			CloseHandle(FileHandle);
 		}
 		else
 		{
-			//CR_ERROR("Can't find file {0}", fileName);
+			CR_ERROR("Can't find file [%d]", fileName);
 		}
 
 		return Result;
 	}
 	
-	bool FileSystem::WriteToFile(String& fileName, u8* buffer, u64 bytesToWrite)
+	bool FileSystem::WriteToFile(String& fileName, s8* buffer, u64 bytesToWrite)
 	{
 		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
 		BOOL Result = FALSE;
@@ -80,13 +81,18 @@ namespace Craft
 		if (FileHandle)
 		{
 			DWORD WriteSize = 0;
-			if (!WriteFile(FileHandle, buffer, bytesToWrite, &WriteSize, 0) &&
-				WriteSize != bytesToWrite)
+			if (!WriteFile(FileHandle, buffer, bytesToWrite, &WriteSize, 0))
 			{
 				CR_ERROR("Can't write to file");
 			}	
 
+			Result = WriteSize == bytesToWrite;
+
 			CloseHandle(FileHandle);
+		}
+		else
+		{
+			CR_WARN("Can't find file [%s]", fileName.c_str());
 		}
 		return Result;
 	}

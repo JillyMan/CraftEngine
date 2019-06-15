@@ -98,7 +98,6 @@ GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
 
-
 #ifdef _WIN32
 #define wglCreateContextAttribsARB _wglCreateContextAttribsARB
 #endif
