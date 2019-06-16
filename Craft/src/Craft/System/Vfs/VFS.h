@@ -1,46 +1,67 @@
-#pragma once
-//============================================================================
-//    Types
-//============================================================================
-typedef bool						VFS_BOOL;
-typedef unsigned char				VFS_BYTE;
-typedef unsigned short				VFS_WORD;
-typedef unsigned long				VFS_DWORD;
-typedef long						VFS_LONG;
-typedef __int64						VFS_LONGLONG;
+//****************************************************************************
+//**
+//**	VFS.H
+//**	Header - Virtual File System
+//**
+//**	Project:	VFS
+//**	Component:	VFS
+//**	Author:		Michael Walter
+//**
+//**	History:
+//**		18.06.2001		Created (Michael Walter)
+//**
+//**	Note:
+//**		There may only be 32 used Filters per Archive.
+//**		The length of an Archive Entity's Names may not exceed VFS_MAX_NAME_LENGTH
+//**			UNICODE Characters.
+//**		Never use file names like ../../bla/bla.txt or something like that, because the VFS
+//**			doesn't have something like a current drive and/or directory.
+//**		Never use file names like "bla.vfsa" or "bla." + VFS_ARCHIVE_FILE_EXTENSION.
+//**		Archives that have been created on Little Endian Machines can't be used under
+//**			Big Endian Machines and vice versa.
+//**
+//**	New:
+//**		If the VFS_File_Read() or the VFS_FilterReadProc is called for EOF, it returns just VFS_FALSE
+//**			WITHOUT settings an Error Code. This allows nice loops like
+//**				while( Read( ... ) ) Write( ... );
+//**			Check for the VFS_GetLastError() == VFS_ERROR_NONE after such a loop!
+//**		For small global Information, use the SaveConfigData() and LoadConfigData() functions. For
+//**			other, dynamic issues you'd also just use the Encode()/Decode() Callbacks to store for
+//**			for instance a decryption md5 in front of each file.
+//**
+//**	Note:
+//**		Though VFS is designed for platform independence, it will be the job of the readers of the
+//**		tutorial to write a version of it that supports case-sensitive file system.
+//**
+//****************************************************************************
+#ifndef VFS_VFS_H
+#define VFS_VFS_H
 
-// Numeric Macros.
-#define VFS_TRUE					true
-#define VFS_FALSE					false
-
-// String types.
-typedef wchar_t						VFS_CHAR;
-typedef std::wstring				VFS_String;
-
-// String Macros.
-#define VFS_TEXT( String )			L ## String
-
-//============================================================================
-//    INTERFACE DEFINITIONS / ENUMERATIONS / SIMPLE TYPEDEFS
-//============================================================================
+#include "VFS_Config.h"
 
 enum VFS_Handle
 {
 	VFS_HANDLE_FORCE_DWORD = 0xFFFFFFFF
 };
 
-const VFS_DWORD  VFS_VERSION = 0x0100;
-const VFS_CHAR   VFS_PATH_SEPARATOR = VFS_TEXT('/');
-const VFS_CHAR*  VFS_ARCHIVE_FILE_EXTENSION = VFS_TEXT("PAK");
-const VFS_Handle VFS_INVALID_HANDLE = (VFS_Handle)0;
-const VFS_DWORD  VFS_ERROR = 0xFFFFFFFF;
+// Various Constants.
+static const VFS_WORD		VFS_VERSION = VFS_MAKE_WORD(0, 1);	// Version 1.0
+static const VFS_CHAR		VFS_PATH_SEPARATOR = VFS_TEXT('/');
+static const VFS_CHAR*		VFS_ARCHIVE_FILE_EXTENSION = VFS_TEXT("VFSA");
+static const VFS_INT		VFS_MAX_NAME_LENGTH = 64;
+static const VFS_Handle		VFS_INVALID_HANDLE_VALUE = (VFS_Handle)0;
+static const VFS_DWORD		VFS_INVALID_DWORD_VALUE = 0xFFFFFFFF;
+static const VFS_LONG		VFS_INVALID_LONG_VALUE = -1;
+#define						VFS_INVALID_POINTER_VALUE	NULL
 
+// The File_Open/Create() Flags.
 enum VFS_OpenFlags
 {
 	VFS_READ = 0x0001,
 	VFS_WRITE = 0x0002
 };
 
+// The File_Seek() Origin.
 enum VFS_SeekOrigin
 {
 	VFS_SET,
@@ -48,6 +69,7 @@ enum VFS_SeekOrigin
 	VFS_END
 };
 
+// The Error Constants.
 enum VFS_ErrorCode
 {
 	VFS_ERROR_NONE,
@@ -57,7 +79,14 @@ enum VFS_ErrorCode
 	VFS_ERROR_NOT_FOUND,
 	VFS_ERROR_INVALID_PARAMETER,
 	VFS_ERROR_GENERIC,
-	VFS_ERROR_READ_ONLY,
+	VFS_ERROR_INVALID_ERROR_CODE,
+	VFS_ERROR_NO_ROOT_PATHS_DEFINED,
+	VFS_ERROR_PERMISSION_DENIED,
+	VFS_ERROR_IN_USE,
+	VFS_ERROR_CANT_MANIPULATE_ARCHIVES,
+	VFS_ERROR_NOT_AN_ARCHIVE,
+	VFS_ERROR_INVALID_ARCHIVE_FORMAT,
+	VFS_ERROR_MISSING_FILTERS,
 	VFS_NUM_ERRORS
 };
 
@@ -65,23 +94,23 @@ enum VFS_ErrorCode
 enum VFS_EntityType
 {
 	VFS_FILE,
-	VFS_DIRECTORY,
-	VFS_ARCHIVE_FILE
+	VFS_DIR,
+	VFS_ARCHIVE
 };
 
 // The Filter Reader and Writer Procedures.
 typedef VFS_BOOL(*VFS_FilterReadProc)(VFS_BYTE* pBuffer, VFS_DWORD dwBytesToRead, VFS_DWORD* pBytesRead = NULL);
-typedef VFS_BOOL(*VFS_FilterWriteProc)(VFS_BYTE* pBuffer, VFS_DWORD dwBytesToWrite, VFS_DWORD* pBytesWritten = NULL);
+typedef VFS_BOOL(*VFS_FilterWriteProc)(const VFS_BYTE* pBuffer, VFS_DWORD dwBytesToWrite, VFS_DWORD* pBytesWritten = NULL);
 
-// An Iteration Procedure.
-typedef VFS_BOOL(*VFS_DirIterationProc)(struct VFS_EntityInfo* pInfo);
+// An Iteration Procedure (return VFS_FALSE to cancel Iteration).
+typedef VFS_BOOL(*VFS_DirIterationProc)(const struct VFS_EntityInfo& Info, void* pParam);
 
 // A List of Filter Names.
-typedef std::vector< class VFS_Filter* > VFS_FilterList;
+typedef std::vector< const class VFS_Filter* > VFS_FilterList;
 typedef std::vector< VFS_String > VFS_FilterNameList;
 typedef std::vector< VFS_String > VFS_RootPathList;
 typedef std::vector< struct VFS_EntityInfo > VFS_EntityInfoList;
-typedef std::vector< VFS_String > VFS_FileNameList;
+typedef std::map< VFS_String, VFS_String > VFS_FileNameMap;
 
 //============================================================================
 //    INTERFACE COMPONENT HEADERS
@@ -96,24 +125,24 @@ typedef std::vector< VFS_String > VFS_FileNameList;
 class VFS_Filter
 {
 public:
-	// Constructor.
-	VFS_Filter(const VFS_String& strName, const VFS_String& strDescription)
-		: m_strName(strName), m_strDescription(strDescription)
+	// Constructor / Destructor.
+	VFS_Filter()
+	{}
+	virtual ~VFS_Filter()
 	{}
 
-	// The Filter's Name.
-	VFS_String m_strName;
-
-	// The Filter's Description.
-	VFS_String m_strDescription;
-
 	// Encoding / Decoding Procedures.
-	virtual VFS_BOOL Encode(VFS_FilterReadProc Reader, VFS_FilterWriteProc Writer);
-	virtual VFS_BOOL Decode(VFS_FilterReadProc Reader, VFS_FilterWriteProc Writer);
+	virtual VFS_BOOL Encode(VFS_FilterReadProc Reader, VFS_FilterWriteProc Writer, const struct VFS_EntityInfo& DecodedInfo) const = 0;
+	virtual VFS_BOOL Decode(VFS_FilterReadProc Reader, VFS_FilterWriteProc Writer, const struct VFS_EntityInfo& EncodedInfo) const = 0;
 
-	// Filter State Management.
-	virtual VFS_BOOL LoadData(VFS_FilterReadProc Reader);
-	virtual VFS_BOOL SaveData(VFS_FilterWriteProc Writer);
+	// Filter Configuration Data Management.
+	virtual VFS_BOOL LoadConfigData(VFS_FilterReadProc Reader) = 0;
+	virtual VFS_BOOL SaveConfigData(VFS_FilterWriteProc Writer) const = 0;
+	virtual VFS_DWORD GetConfigDataSize() const = 0;
+
+	// Information.
+	virtual VFS_PCSTR GetName() const = 0;
+	virtual VFS_PCSTR GetDescription() const = 0;
 };
 
 // Information about a VFS Entity.
@@ -125,31 +154,12 @@ struct VFS_EntityInfo
 	// Is the Entity archived (Archive files are NEVER archived)?
 	VFS_BOOL bArchived;
 
-	// The complete Path and the Name.
+	// The complete Path (including the Name) and the Name.
 	VFS_String strPath;
 	VFS_String strName;
 
 	// The Size ( 0 for Directories ).
-	VFS_LONGLONG dwSize;
-};
-
-// A tree entry of an entity information tree.
-struct VFS_ContentTreeEntry
-{
-	// A pointer to the parent.
-	VFS_ContentTreeEntry* pParent;
-
-	// A pointer to the previous sibling.
-	VFS_ContentTreeEntry* pPrev;
-
-	// A pointer to the next sibling.
-	VFS_ContentTreeEntry* pNext;
-
-	// A pointer to the first child entry ( NULL for files ).
-	VFS_ContentTreeEntry* pChild;
-
-	// The entity information record.
-	VFS_EntityInfo Info;
+	VFS_LONG lSize;
 };
 
 //============================================================================
@@ -159,7 +169,7 @@ struct VFS_ContentTreeEntry
 //    INTERFACE FUNCTION PROTOTYPES
 //============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-// Basic VFS Interface.
+// Basic VFS Interface (the error handling functions and the VFS_GetVersion() function may be called even if the VFS isn't initialized yet. The VFS_GetErrorString() function returns the string associated with VFS_ERROR_INVALID_ERROR_CODE if the parameter eError is invalid. You can't get Information about Archives using the VFS_GetEntityInfo() structure because it will report information about the virtual Directory the Archive represents instead).
 ///////////////////////////////////////////////////////////////////////////////
 // Initialize / Shutdown the VFS.
 VFS_BOOL VFS_Init();
@@ -196,105 +206,102 @@ VFS_WORD VFS_GetVersion();
 
 // Error Handling.
 VFS_ErrorCode VFS_GetLastError();
-VFS_BOOL VFS_GetErrorString(VFS_ErrorCode eError, VFS_String& Error);
+VFS_PCSTR VFS_GetErrorString(VFS_ErrorCode eError);
 
 ///////////////////////////////////////////////////////////////////////////////
-// The File Interface (the file interface will try to create a file in each root path. If no root path has been added, the current directory will be used instead).
+// The File Interface (the file interface will try to create a file in each root path. If no root path has been added, the current directory will be used instead. You can't manipulate Archive Files.).
 ///////////////////////////////////////////////////////////////////////////////
 // Create / Open / Close a File.
-VFS_Handle VFS_File_Create(const VFS_String& strFile, VFS_DWORD dwFlags);
-VFS_Handle VFS_File_Open(const VFS_String& strFile, VFS_DWORD dwFlags);
-VFS_BOOL VFS_File_Close(VFS_Handle hHandle);
+VFS_Handle VFS_File_Create(const VFS_String& strFileName, VFS_DWORD dwFlags);
+VFS_Handle VFS_File_Open(const VFS_String& strFileName, VFS_DWORD dwFlags);
+VFS_BOOL VFS_File_Close(VFS_Handle hFile);
 
 // Read / Write from / to the File.
-VFS_BOOL VFS_File_Read(VFS_Handle hHandle, VFS_BYTE* pBuffer, VFS_DWORD dwToRead, VFS_DWORD* pRead = NULL);
-VFS_BOOL VFS_File_Write(VFS_Handle hHandle, const VFS_BYTE* pBuffer, VFS_DWORD dwToWrite, VFS_DWORD* pWritten = NULL);
+VFS_BOOL VFS_File_Read(VFS_Handle hFile, VFS_BYTE* pBuffer, VFS_DWORD dwToRead, VFS_DWORD* pRead = NULL);
+VFS_BOOL VFS_File_Write(VFS_Handle hFile, const VFS_BYTE* pBuffer, VFS_DWORD dwToWrite, VFS_DWORD* pWritten = NULL);
 
 // Direct File Reading / Writing.
-VFS_BOOL VFS_File_ReadEntireFile(const VFS_String& strFile, VFS_BYTE* pByte);
-VFS_BOOL VFS_File_WriteEntireFile(const VFS_String& strFile, const VFS_BYTE* pBuffer, VFS_DWORD dwToWrite, VFS_DWORD* dwWritten);
+VFS_BOOL VFS_File_ReadEntireFile(const VFS_String& strFileName, VFS_BYTE* pBuffer, VFS_DWORD dwToRead = VFS_INVALID_DWORD_VALUE, VFS_DWORD* pRead = NULL);
+VFS_BOOL VFS_File_WriteEntireFile(const VFS_String& strFileName, const VFS_BYTE* pBuffer, VFS_DWORD dwToWrite, VFS_DWORD* pWritten = NULL);
 
 // Positioning.
-VFS_BOOL VFS_File_Seek(VFS_Handle hHandle, VFS_LONGLONG dwPos, VFS_SeekOrigin eOrigin = VFS_SET);
-VFS_LONGLONG VFS_File_Tell(VFS_Handle hHandle);
+VFS_BOOL VFS_File_Seek(VFS_Handle hFile, VFS_LONG lPosition, VFS_SeekOrigin eOrigin = VFS_SET);
+VFS_LONG VFS_File_Tell(VFS_Handle hFile);
 
 // Sizing.
-VFS_BOOL VFS_File_Resize(VFS_Handle hHandle, VFS_LONGLONG dwSize);
-VFS_LONGLONG VFS_File_GetSize(VFS_Handle hHandle);
+VFS_BOOL VFS_File_Resize(VFS_Handle hFile, VFS_LONG lSize);
+VFS_LONG VFS_File_GetSize(VFS_Handle hFile);
 
 // Information.
-VFS_BOOL VFS_File_Exists(const VFS_String& strFile);
-VFS_BOOL VFS_File_GetInfo(const VFS_String& strFile, VFS_EntityInfo& Info);
-VFS_BOOL VFS_File_GetInfo(VFS_Handle hHandle, VFS_EntityInfo& Info);
+VFS_BOOL VFS_File_Exists(const VFS_String& strFileName);
+VFS_BOOL VFS_File_GetInfo(const VFS_String& strFileName, VFS_EntityInfo& Info);
+VFS_BOOL VFS_File_GetInfo(VFS_Handle hFile, VFS_EntityInfo& Info);
 
 // File Management.
-VFS_BOOL VFS_File_Delete(const VFS_String& strFile);
+VFS_BOOL VFS_File_Delete(const VFS_String& strFileName);
 VFS_BOOL VFS_File_Copy(const VFS_String& strFrom, const VFS_String& strTo);
 VFS_BOOL VFS_File_Move(const VFS_String& strFrom, const VFS_String& strTo);
-VFS_BOOL VFS_File_Rename(const VFS_String& strFrom, const VFS_String& strTo);    // pszTo has to be a single File Name without a Path.
-
-// Set the Filters used by a File (file must exist be an Archive).
-VFS_BOOL VFS_File_SetUsedFilters(const VFS_String& strFile, const VFS_FilterNameList& Filters);
-VFS_BOOL VFS_File_GetUsedFilters(const VFS_String& strFile, VFS_FilterNameList& Filters);
+VFS_BOOL VFS_File_Rename(const VFS_String& strFrom, const VFS_String& strTo);				// pszTo has to be a single File Name without a Path.
 
 ///////////////////////////////////////////////////////////////////////////////
-// The Archive Interface (Never provide a extension for the archive, instead, change the VFS_ARCHIVE_EXTENSION definition and recompile; I removed some functions because they seemed to become to slow, such as VFS_AddFile() and so. You can only create archives in the first root path).
+// The Archive Interface (Never provide a extension for the archive, instead, 
+//change the VFS_ARCHIVE_EXTENSION definition and recompile; 
+// You can only create archives in the first root path. You can't manipulate Archives. 
+//Each entry VFS_FileNameMap consists of the source file name and the file name in the archive, 
+//for instance "alpha/beta/gamma.txt" => "abg.txt").
 ///////////////////////////////////////////////////////////////////////////////
 // Create an Archive.
-VFS_BOOL VFS_Archive_CreateFromDirectory(const VFS_String& strArchive, const VFS_String& strDirectory, const VFS_FilterNameList& DefaultFilters, VFS_BOOL bRecursive = VFS_TRUE);
-VFS_BOOL VFS_Archive_CreateFromFileList(const VFS_String& strArchive, const VFS_FileNameList& Files, const VFS_FilterNameList& DefaultFilters);
+VFS_BOOL VFS_Archive_CreateFromDirectory(const VFS_String& strArchiveFileName, const VFS_String& strDirName, const VFS_FilterNameList& UsedFilters = VFS_FilterNameList(), VFS_BOOL bRecursive = VFS_TRUE);
+VFS_BOOL VFS_Archive_CreateFromFileList(const VFS_String& strArchiveFileName, const VFS_FileNameMap& Files, const VFS_FilterNameList& UsedFilters = VFS_FilterNameList());
 
-// Set the default Filters for an Archive
-VFS_BOOL VFS_Archive_SetDefaultFilters(const VFS_String& strArchive, const VFS_FilterNameList& Filters);
-VFS_BOOL VFS_Archive_GetDefaultFilters(const VFS_String& strArchive, VFS_FilterNameList& Filters);
-
-// Update the Filter List for an Archive.
-VFS_BOOL VFS_Archive_UpdateFilterList(const VFS_String& strArchive);
-
-// Extract an Archive.
-VFS_BOOL VFS_Archive_Extract(const VFS_String& strArchive, const VFS_String& strTargetDir);
+// Extract an Archive / File.
+VFS_BOOL VFS_Archive_Extract(const VFS_String& strArchiveFileName, const VFS_String& strTargetDir);
+VFS_BOOL VFS_Archive_ExtractFile(const VFS_String& strArchiveFileName, const VFS_String& strFile, const VFS_String& strTargetFile);
 
 // Information.
-VFS_BOOL VFS_Archive_Exists(const VFS_String& strArchive);
-VFS_BOOL VFS_Archive_GetInfo(const VFS_String& strDir, VFS_EntityInfo& Info);
+VFS_BOOL VFS_Archive_Exists(const VFS_String& strArchiveFileName);
+VFS_BOOL VFS_Archive_GetInfo(const VFS_String& strArchiveFileName, VFS_EntityInfo& Info);
+VFS_BOOL VFS_Archive_GetUsedFilters(const VFS_String& strArchiveFileName, VFS_FilterNameList& FilterNames);
 
 // Archive Management.
-VFS_BOOL VFS_Archive_Delete(const VFS_String& strArchive);
+VFS_BOOL VFS_Archive_Delete(const VFS_String& strArchiveFileName);
 
 // Flush the Archive System.
 VFS_BOOL VFS_Archive_Flush();
 
 ///////////////////////////////////////////////////////////////////////////////
-// The Directory Interface (You can only create/delete standard directories in the first root path).
+// The Directory Interface (You can only create/delete standard directories in the first root path. You can't manipulate Dirs in Archives).
 ///////////////////////////////////////////////////////////////////////////////
 // Directory Management.
-VFS_BOOL VFS_Dir_Create(const VFS_String& strDir, VFS_BOOL bRecursive = VFS_FALSE); // Recursive mode would create a directory c:\alpha\beta even if alpha doesn't exist.
-VFS_BOOL VFS_Dir_Delete(const VFS_String& strDir, VFS_BOOL bRecursive = VFS_FALSE); // Recursive mode would delete a directory c:\alpha even if it contains files and/or subdirectories.
+VFS_BOOL VFS_Dir_Create(const VFS_String& strDirName, VFS_BOOL bRecursive = VFS_FALSE);	// Recursive mode would create a directory c:\alpha\beta even if alpha doesn't exist.
+VFS_BOOL VFS_Dir_Delete(const VFS_String& strDirName, VFS_BOOL bRecursive = VFS_FALSE);	// Recursive mode would delete a directory c:\alpha even if it contains files and/or subdirectories.
 
 // Information.
-VFS_BOOL VFS_Dir_Exists(const VFS_String& strDir);
-VFS_BOOL VFS_Dir_GetInfo(const VFS_String& strDir, VFS_EntityInfo& Info);
+VFS_BOOL VFS_Dir_Exists(const VFS_String& strDirName);
+VFS_BOOL VFS_Dir_GetInfo(const VFS_String& strDirName, VFS_EntityInfo& Info);
 
 // Iterate a Directory and call the iteration procedure for each 
-VFS_BOOL VFS_Dir_Iterate(const VFS_String& strDir, VFS_DirIterationProc pIterationProc, VFS_BOOL bRecursive = VFS_FALSE);
+VFS_BOOL VFS_Dir_Iterate(const VFS_String& strDirName, VFS_DirIterationProc pIterationProc, VFS_BOOL bRecursive = VFS_FALSE, void* pParam = NULL);
 
 // Get the Contents of a Directory.
-VFS_BOOL VFS_Dir_GetContents(const VFS_String& strDir, VFS_EntityInfoList& EntityInfoList, VFS_BOOL bRecursive = VFS_FALSE);
-
-// Set the default Filters for a Directory (which must reside in an Archive).
-VFS_BOOL VFS_Dir_SetDefaultFilters(const VFS_String& strDir, const VFS_FilterNameList& Filters);
-VFS_BOOL VFS_Dir_GetDefaultFilters(const VFS_String& strDir, VFS_FilterNameList& Filters);
-
-// Get the Contents of a Directory as a tree structure.
-VFS_BOOL VFS_Dir_GetContentTree(const VFS_String& strDir, VFS_ContentTreeEntry*& First, VFS_BOOL bRecursive = VFS_FALSE);
-VFS_BOOL VFS_Dir_FreeContentTree(VFS_ContentTreeEntry* pFirst);
+VFS_BOOL VFS_Dir_GetContents(const VFS_String& strDirName, VFS_EntityInfoList& EntityInfoList, VFS_BOOL bRecursive = VFS_FALSE);
 
 ///////////////////////////////////////////////////////////////////////////////
-// The Utility Interface
+// The Utility Interface (You may call the File Name Management Functions even if 
+// the VFS isn't initialized yet).
 ///////////////////////////////////////////////////////////////////////////////
 // File Name Management Functions.
+VFS_BOOL VFS_Util_GetPath(const VFS_String& strFileName, VFS_String& strPath);
+VFS_BOOL VFS_Util_GetName(const VFS_String& strFileName, VFS_String& strName);
+VFS_BOOL VFS_Util_GetBaseName(const VFS_String& strFileName, VFS_String& strBaseName);
+VFS_BOOL VFS_Util_GetExtension(const VFS_String& strFileName, VFS_String& strExtension);
+VFS_BOOL VFS_Util_IsAbsoluteFileName(const VFS_String& strFileName);
 
-VFS_BOOL VFS_Util_GetPath(const VFS_String& strFileName, VFS_String& pszPath);
-VFS_BOOL VFS_Util_GetName(const VFS_String& strFileName, VFS_String& pszName);
-VFS_BOOL VFS_Util_GetBaseName(const VFS_String& strFileName, VFS_String& pszBaseName);
-VFS_BOOL VFS_Util_GetExtension(const VFS_String& strFileName, VFS_String& pszExtension);
+//============================================================================
+//    INTERFACE OBJECT CLASS DEFINITIONS
+//============================================================================
+//============================================================================
+//    INTERFACE TRAILING HEADERS
+//============================================================================
+
+#endif // __VFS_H__

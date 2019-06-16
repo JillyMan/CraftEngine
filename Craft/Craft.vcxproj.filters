@@ -134,6 +134,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">

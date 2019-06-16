@@ -158,6 +158,7 @@
     <ClInclude Include="src\Craft\Math\Math.h" />
     <ClInclude Include="src\Craft\Math\Vec4.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
