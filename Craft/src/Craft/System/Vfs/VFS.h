@@ -99,8 +99,8 @@ enum VFS_EntityType
 };
 
 // The Filter Reader and Writer Procedures.
-typedef VFS_BOOL(*VFS_FilterReadProc)(VFS_BYTE* pBuffer, VFS_DWORD dwBytesToRead, VFS_DWORD* pBytesRead = NULL);
-typedef VFS_BOOL(*VFS_FilterWriteProc)(const VFS_BYTE* pBuffer, VFS_DWORD dwBytesToWrite, VFS_DWORD* pBytesWritten = NULL);
+typedef VFS_BOOL(*VFS_FilterReadProc)(VFS_BYTE* pBuffer, VFS_DWORD dwBytesToRead, VFS_DWORD* pBytesRead);
+typedef VFS_BOOL(*VFS_FilterWriteProc)(const VFS_BYTE* pBuffer, VFS_DWORD dwBytesToWrite, VFS_DWORD* pBytesWritten);
 
 // An Iteration Procedure (return VFS_FALSE to cancel Iteration).
 typedef VFS_BOOL(*VFS_DirIterationProc)(const struct VFS_EntityInfo& Info, void* pParam);

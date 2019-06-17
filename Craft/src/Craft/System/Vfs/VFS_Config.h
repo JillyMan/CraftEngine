@@ -36,9 +36,9 @@
 #	include <windows.h>
 #	include <io.h>
 #	if defined( _MSC_VER )
-#		pragma comment( lib, "vfs.lib" )
-#		pragma warning( disable : 4311 )
-#		pragma warning( disable : 4312 )
+//#		pragma comment( lib, "vfs.lib" )
+//#		pragma warning( disable : 4311 )
+//#		pragma warning( disable : 4312 )
 #		if defined( _DEBUG )
 #			define VFS_DEBUG
 #		endif

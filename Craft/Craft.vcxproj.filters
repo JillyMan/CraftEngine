@@ -135,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
+    <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
