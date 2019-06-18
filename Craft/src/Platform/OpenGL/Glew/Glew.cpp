@@ -26,6 +26,7 @@ PFNGLATTACHSHADERPROC _glAttachShader = NULL;
 PFNGLLINKPROGRAMPROC _glLinkProgram = NULL;
 PFNGLDELETESHADERPROC _glDeleteShader = NULL;
 PFNGLUSEPROGRAMPROC _glUseProgram = NULL;
+PFNGLDELETEPROGRAMPROC _glDeleteProgram = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT = NULL;
@@ -34,6 +35,12 @@ PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
 PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
 
 PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB = NULL;
+
+PFNGLDEBUGMESSAGECALLBACKPROC _glDebugMessageCallback = NULL;
+PFNGLGETSHADERIVPROC _glGetShaderiv = NULL;
+PFNGLGETPROGRAMIVPROC _glGetProgramiv = NULL;
+PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog = NULL;
+PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog = NULL;
 
 void loadPFN(GLEWloadproc load)
 {
@@ -57,8 +64,15 @@ void loadPFN(GLEWloadproc load)
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)load("glVertexAttribPointer");
 	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)load("glEnableVertexAttribArray");
-	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
-	glDrawArraysEXT = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArraysEXT");
+	glUseProgram = (PFNGLUSEPROGRAMPROC)load("glUseProgram");
+	glDeleteProgram = (PFNGLDELETEPROGRAMPROC)load("glDeleteProgram");
+	glDrawArrays = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArrays");
+
+	glDebugMessageCallback = (PFNGLDEBUGMESSAGECALLBACKPROC)load("glDebugMessageCallback");
+	glGetShaderiv = (PFNGLGETSHADERIVPROC)load("glGetShaderiv");
+	glGetProgramiv = (PFNGLGETPROGRAMIVPROC)load("glGetProgramiv");
+	glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)load("glGetShaderInfoLog");
+	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)load("glGetShaderInfoLog ");
 }
 
 static int open_gl(void)

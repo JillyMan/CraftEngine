@@ -1,11 +1,22 @@
+#include <map>
 #include <Craft.h>
 
-#define GL_GLEXT_PROTOTYPES
-#include "Platform\OpenGL\OpenGL.h"
-#include "Platform\OpenGL\OpenGLShader.h"
+#define GAME
+
+#ifdef GAME
+	#define GL_GLEXT_PROTOTYPES
+	#include "Platform\OpenGL\OpenGL.h"
+	#include "Platform\OpenGL\OpenGLShader.h"
+#else
+	#include <iostream>
+	#include "Craft\System\Vfs\VFS.h"
+#endif
 
 #define BIND_EVENT_FN(x) std::bind(&ExampleLayer::x, this, std::placeholders::_1)
 
+using namespace Craft;
+
+#ifdef GAME
 class ExampleLayer : public Craft::Layer
 {
 private:
@@ -23,55 +34,21 @@ private:
 public:
 	ExampleLayer()
 	{
-		String fileName = "F:";
-		byte* info = "hello world";
-		bool result = Craft::FileSystem::WriteToFile(fileName, info, sizeof(info));
+		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+		m_VertexShader = R"(#version 330 core
+						layout (location = 0) in vec3 pos;
+						void main()
+						{
+							gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
+						})";
+		m_FragmentShader = R"(#version 330 core
+						out vec4 color;
+						void main()
+						{
+							color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+						})";
 
-		//m_VertexShader = R"(#version 330 core
-		//				layout (location = 0) in vec3 pos;
-		//				void main()
-		//				{
-		//					gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
-		//				})";
-
-		//m_FragmentShader = R"(#version 330 core
-		//				out vec4 color;
-		//				void main()
-		//				{
-		//					color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
-		//				})";
-
-		//m_Shader = new Craft::OpenGLShader(m_VertexShader.c_str(), m_FragmentShader.c_str());
-
-		const GLchar* vertexShaderSource = "#version 330 core\n"
-			"layout (location = 0) in vec3 position;\n"
-			"void main()\n"
-			"{\n"
-			"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-			"}\0";
-		const GLchar* fragmentShaderSource = "#version 330 core\n"
-			"out vec4 color;\n"
-			"void main()\n"
-			"{\n"
-			"color = vec4(0.0f, 0.0f, 0.0f, 0.0f);\n"
-			"}\n\0";
-
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-		glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-		glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-
-		glCompileShader(fragmentShader);
-		glCompileShader(vertexShader);
-
-		m_ShaderProgram = glCreateProgram();
-		glAttachShader(m_ShaderProgram, vertexShader);
-		glAttachShader(m_ShaderProgram, fragmentShader);
-		glLinkProgram(m_ShaderProgram);
-
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
+		m_Shader = new Craft::OpenGLShader(m_VertexShader.c_str(), m_FragmentShader.c_str());
 
 		m_Vertices = new GLfloat[9]
 		{
@@ -92,8 +69,6 @@ public:
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
-
-
 	}
 
 	~ExampleLayer()
@@ -105,16 +80,19 @@ public:
 
 	virtual void OnRender() override
 	{
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(m_ShaderProgram);
+		m_Shader->Use();
 		glBindVertexArray(m_VAO);
-
-		glDrawArraysEXT(GL_TRIANGLES, 0, 3);
-
+		glDrawArrays(GL_LINES, 0, 3);
 		glBindVertexArray(0);
 		GLenum error = glGetError();
+
+		if (error > 0)
+		{
+			CR_ERROR("Error code [%d]", error);
+		}
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -123,8 +101,10 @@ public:
 		dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(OnResizeWindow));
 	}
 
+	float theta = 0.0f;
 	virtual void OnUpdate(f32 deltaTime) override
 	{
+		theta += deltaTime;
 	}
 
 private:
@@ -134,13 +114,32 @@ private:
 		return true;
 	}
 };
+#endif
 
 class Sandbox : public Craft::Application
 {
 public:
 	Sandbox() : Application()
 	{
+		VFS_Test();
 		PushLayer(new ExampleLayer());
+	}
+
+	void VFS_Test()
+	{
+#ifndef GAME
+		bool result = VFS_Init();
+
+		if (!result)
+		{
+			VFS_ErrorCode errorCode = VFS_GetLastError();
+			VFS_String error;
+			VFS_GetErrorString(errorCode, error);
+			std::cout << error.c_str() << std::endl;
+			
+		}
+		VFS_Shutdown();
+#endif
 	}
 
 	virtual ~Sandbox()

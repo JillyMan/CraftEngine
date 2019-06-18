@@ -5,8 +5,36 @@
 
 namespace Craft
 {
-	class OpenGLShader : public Shader
+	class CRAFT_API OpenGLShader : public Shader
 	{
+	private:
+		GLuint m_ProgramId;
+
+	private:
+		void IsCompileSuccess(GLuint& shader)
+		{
+			GLint success;
+			GLchar info[512];
+			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+			if (!success)
+			{
+				glGetShaderInfoLog(shader, 512, NULL, info);
+				CR_WARN(info);
+			}
+		}
+
+		void IsProgramLink(GLuint& program)
+		{
+			GLint success;
+			GLchar info[512];
+			glGetProgramiv(program, GL_LINK_STATUS, &success);
+			if (!success)
+			{
+				glGetProgramInfoLog(program, 512, NULL, info);
+				CR_WARN(info);
+			}
+		}
+
 	public:
 		OpenGLShader(const char* vertexShader, const char* fragmentShader)
 		{
@@ -19,7 +47,7 @@ namespace Craft
 			glCompileShader(vertexShaderId);
 			glCompileShader(fragmentShaderId);
 
-#if CR_DEBUG
+#ifdef CR_DEBUG
 			IsCompileSuccess(vertexShaderId);
 			IsCompileSuccess(fragmentShaderId);
 #endif
@@ -50,33 +78,5 @@ namespace Craft
 		{
 			glUseProgram(0);
 		}
-
-	private:
-
-		void IsCompileSuccess(GLuint& shader)
-		{
-			GLint success;
-			GLchar info[512];
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-			if (!success)
-			{
-				glGetShaderInfoLog(shader, 512, NULL, info);
-				CR_WARN(info);
-			}
-		}
-
-		void IsProgramLink(GLuint& program)
-		{
-			GLint success;
-			GLchar info[512];
-			glGetProgramiv(program, GL_LINK_STATUS, &success);
-			if (!success)
-			{
-				glGetProgramInfoLog(program, 512, NULL, info);
-				CR_WARN(info);
-			}
-		}
-
-		GLuint m_ProgramId;
 	};
 }

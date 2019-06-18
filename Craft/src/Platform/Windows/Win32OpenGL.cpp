@@ -26,35 +26,33 @@ namespace Craft
 		if (wglMakeCurrent(WindowDC, TempOpenGLRC))
 		{
 			Result = glLoad();
-			//if (Result)
-			//{
-			//	int attributes[] =
-			//	{
-			//		WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
-			//		WGL_CONTEXT_MINOR_VERSION_ARB, 6,
-			//		WGL_CONTEXT_FLAGS_ARB,         WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
-			//		0
-			//	};
+			if (!Result)
+			{
+				int attributes[] =
+				{
+					WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
+					WGL_CONTEXT_MINOR_VERSION_ARB, 6,
+					WGL_CONTEXT_FLAGS_ARB,         WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+					0
+				};
+				HGLRC OpenGLRC = wglCreateContextAttribsARB(WindowDC, 0, attributes);
+				if (!OpenGLRC)
+				{
+					CR_CORE_INFO("Can't init opengl 4.6 context");
+					wglDeleteContext(TempOpenGLRC);
+					return false;
+				}
 
-			//	HGLRC OpenGLRC = wglCreateContextAttribsARB(WindowDC, 0, attributes);
-
-			//	if (!OpenGLRC)
-			//	{
-			//		CR_CORE_INFO("Can't init opengl 4.5 context");
-			//		wglDeleteContext(TempOpenGLRC);
-			//		return false;
-			//	}
-
-			//	if (!wglMakeCurrent(WindowDC, OpenGLRC))
-			//	{
-			//		wglDeleteContext(TempOpenGLRC);
-			//		wglDeleteContext(OpenGLRC);
-			//		return false;
-			//	}
-			//	wglDeleteContext(TempOpenGLRC);
-			//}
+				if (!wglMakeCurrent(WindowDC, OpenGLRC))
+				{
+					wglDeleteContext(TempOpenGLRC);
+					wglDeleteContext(OpenGLRC);
+					return false;
+				}
+				wglDeleteContext(TempOpenGLRC);
+			}
 		}
-
+		
 		return Result;
 	}
 
@@ -81,7 +79,6 @@ namespace Craft
 		HGLRC OpenGLRC = wglGetCurrentContext();
 		wglDeleteContext(OpenGLRC);
 		//TODO: (debug this moment)
-		HDC WindowDC = wglGetCurrentDC();
 	}
 
 	opengl_info glGetInfo()

@@ -5,6 +5,20 @@
 
 namespace Craft
 {
+	static void APIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
+		GLsizei length, const GLchar* message, const void* userParam)
+	{
+		if (type == GL_DEBUG_TYPE_ERROR)
+		{
+			CR_ERROR("%s [type 0x%x], [severity = 0x%x], [message=%s]\n", 
+				"** GL ERROR **", type, severity, message);
+		}
+		else
+		{
+			CR_INFO("GL CALLBACK: [type = 0x%x], [severity = 0x%x] \t \nmessage = %s\n", type, severity, message);
+		}
+	}
+
 	OpengGLContext::OpengGLContext(GLInitData initData) :
 		m_InitData(initData)
 	{
@@ -28,7 +42,11 @@ namespace Craft
 			CR_CORE_TRACE("Vendor: %s", info.Vendor);
 			CR_CORE_TRACE("Version: %s", info.Version);
 			CR_CORE_TRACE("Render device: %s", info.Renderer);
-		//	CR_CORE_TRACE(info.Extensions);
+
+#ifdef CR_DEBUG
+			glEnable(GL_DEBUG_OUTPUT);
+			glDebugMessageCallback(MessageCallback, 0);
+#endif
 		}
 
 		glVSync(m_InitData.VSync);

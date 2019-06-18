@@ -38,14 +38,6 @@
 # endif
 #endif
 
-#define GL_ARRAY_BUFFER						0x8892
-#define GL_STREAM_DRAW						0x88E0
-#define GL_STATIC_DRAW						0x88E4
-#define GL_DYNAMIC_DRAW						0x88E8
-#define GL_FRAGMENT_SHADER					0x8B30
-#define GL_VERTEX_SHADER					0x8B31
-#define GL_COMPILE_STATUS					0x8B81
-
 //-----------begin defines functions---------
 
 GLAPI PFNGLCREATEPROGRAMPROC _glCreateProgram;
@@ -66,6 +58,7 @@ GLAPI PFNGLATTACHSHADERPROC _glAttachShader;
 GLAPI PFNGLLINKPROGRAMPROC _glLinkProgram;
 GLAPI PFNGLDELETESHADERPROC _glDeleteShader;
 GLAPI PFNGLUSEPROGRAMPROC _glUseProgram;
+GLAPI PFNGLDELETEPROGRAMPROC _glDeleteProgram;
 
 GLAPI  PFNGLDRAWARRAYSEXTPROC  _glDrawArraysEXT;
 
@@ -77,6 +70,14 @@ GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 
 GLAPI PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays;
 GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+
+GLAPI PFNGLDEBUGMESSAGECALLBACKPROC _glDebugMessageCallback;
+GLAPI PFNGLGETSHADERIVPROC _glGetShaderiv;
+GLAPI PFNGLGETPROGRAMIVPROC _glGetProgramiv;
+GLAPI PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog;
+GLAPI PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
+
+#define glDebugMessageCallback				_glDebugMessageCallback
 
 #define glBindVertexArray					_glBindVertexArray
 #define glCreateShader						_glCreateShader
@@ -93,10 +94,16 @@ GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
 #define glVertexAttribPointer				_glVertexAttribPointer
 #define glEnableVertexAttribArray			_glEnableVertexAttribArray
 #define glUseProgram						_glUseProgram
-#define glDrawArraysEXT						_glDrawArraysEXT 
+#define glDeleteProgram						_glDeleteProgram
+#define glDrawArrays						_glDrawArraysEXT 
 #define glSwapIntervalEXT					_glSwapIntervalEXT
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
+
+#define glGetShaderiv						_glGetShaderiv
+#define glGetProgramiv						_glGetProgramiv
+#define glGetShaderInfoLog					_glGetShaderInfoLog
+#define glGetProgramInfoLog					_glGetProgramInfoLog
 
 #ifdef _WIN32
 #define wglCreateContextAttribsARB _wglCreateContextAttribsARB
