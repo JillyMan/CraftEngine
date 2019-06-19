@@ -35,6 +35,7 @@ PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
 PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
 
 PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB = NULL;
+PFNWGLCHOOSEPIXELFORMATARBPROC _wglChoosePixelFormatARB = NULL;
 
 PFNGLDEBUGMESSAGECALLBACKPROC _glDebugMessageCallback = NULL;
 PFNGLGETSHADERIVPROC _glGetShaderiv = NULL;
@@ -45,6 +46,7 @@ PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog = NULL;
 void loadPFN(GLEWloadproc load)
 {
 	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)load("wglCreateContextAttribsARB");
+	wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)load("wglChoosePixelFormatARB");
 	glSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("glSwapIntervalEXT");
 
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
@@ -113,7 +115,7 @@ static void* get_proc(const char *name)
 	return result;
 }
 
-int glLoad(void)
+int pfnGLLoad(void)
 {
 	int status = open_gl();
 	

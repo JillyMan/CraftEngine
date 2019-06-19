@@ -23,7 +23,7 @@ namespace Craft
 			}
 		}
 
-		void IsProgramLink(GLuint& program)
+		void IsProgramLinked(GLuint& program)
 		{
 			GLint success;
 			GLchar info[512];
@@ -47,19 +47,16 @@ namespace Craft
 			glCompileShader(vertexShaderId);
 			glCompileShader(fragmentShaderId);
 
-#ifdef CR_DEBUG
 			IsCompileSuccess(vertexShaderId);
 			IsCompileSuccess(fragmentShaderId);
-#endif
 
 			m_ProgramId = glCreateProgram();
 			glAttachShader(m_ProgramId, vertexShaderId);
 			glAttachShader(m_ProgramId, fragmentShaderId);
 			glLinkProgram(m_ProgramId);
 
-#if CR_DEBUG
-			IsProgramLink(m_ProgramId);
-#endif
+			IsProgramLinked(m_ProgramId);
+
 			glDeleteShader(vertexShaderId);
 			glDeleteShader(fragmentShaderId);
 		}

@@ -67,6 +67,7 @@ GLAPI PFNGLGENBUFFERSPROC _glGenBuffers;
 GLAPI PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT;
 
 GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
+GLAPI PFNWGLCHOOSEPIXELFORMATARBPROC _wglChoosePixelFormatARB;
 
 GLAPI PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays;
 GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
@@ -106,7 +107,8 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 #define glGetProgramInfoLog					_glGetProgramInfoLog
 
 #ifdef _WIN32
-#define wglCreateContextAttribsARB _wglCreateContextAttribsARB
+	#define wglChoosePixelFormatARB _wglChoosePixelFormatARB
+	#define wglCreateContextAttribsARB _wglCreateContextAttribsARB
 #endif
 
 //-----------end defines functions---------
@@ -116,4 +118,4 @@ GLAPI void glewLoadGLLoader(GLEWloadproc);
 
 typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
 static PFNWGLGETPROCADDRESSPROC_PRIVATE glewGetProcAddressPtr;
-int glLoad();
+int pfnGLLoad();

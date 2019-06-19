@@ -92,15 +92,11 @@ namespace Craft {
 
 		if (!m_WindowHandle)
 		{
-			int error = GetLastError();
-			String str("Can't create Window handle error=");
-			str += std::to_string(error);
-			CR_INFO(str);
+			CR_INFO("Can't create Window handle. [error code = %d]", GetLastError());
 			return false;
 		}
 
 		WindowManager::RegisterWindowClass(m_WindowHandle, this);
-		ShowWindow(m_WindowHandle, SW_SHOW);
 
 //--------------------
 		GLInitData setting; 
@@ -108,8 +104,10 @@ namespace Craft {
 		setting.Handle = m_WindowHandle;
 		m_GraphicsContext = new OpengGLContext(setting);
 //--------------------
-
 		m_GraphicsContext->Init();
+
+		ShowWindow(m_WindowHandle, SW_SHOW);
+		UpdateWindow(m_WindowHandle);
 
 		return true;
 	}

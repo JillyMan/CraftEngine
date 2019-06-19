@@ -31,11 +31,7 @@ namespace Craft
 
 	void OpengGLContext::Init()
 	{
-		if (!glInit(m_InitData.Handle))
-		{
-			CR_CORE_ERROR("Can't init Windows-OpenGL");
-		}
-		else
+		if (glInit(m_InitData.Handle))
 		{
 			opengl_info info = glGetInfo();
 			CR_CORE_TRACE("OpenGL init successed: ");
@@ -47,6 +43,10 @@ namespace Craft
 			glEnable(GL_DEBUG_OUTPUT);
 			glDebugMessageCallback(MessageCallback, 0);
 #endif
+		}
+		else
+		{
+			CR_CORE_ERROR("Can't init Windows-OpenGL");
 		}
 
 		glVSync(m_InitData.VSync);
