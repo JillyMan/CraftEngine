@@ -152,7 +152,7 @@
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
-    <ClInclude Include="src\Craft\Graphics\Layer.h" />
+    <ClInclude Include="src\Craft\Layer.h" />
     <ClInclude Include="src\Craft\Graphics\Shader.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />

@@ -2,8 +2,8 @@
 
 #include "Core.h"
 
+#include "Craft\Layer.h"
 #include "Craft\Window\Window.h"
-#include "Craft\Graphics\Layer.h"
 
 #include "Craft\Event\Event.h"
 #include "Craft\Event\KeyEvent.h"

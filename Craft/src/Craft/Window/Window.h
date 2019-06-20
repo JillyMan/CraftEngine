@@ -21,6 +21,7 @@ namespace Craft
 			Width(DEFAULT_WINDOW_WIDTH),
 			Height(DEFAULT_WINDOW_HEIGHT),
 			IsFullscreen(false),
+			IsVSync(false),
 			Style(Style::Default),
 			Title("Craft game engine")
 		{
@@ -44,6 +45,5 @@ namespace Craft
 		virtual void SetEventCallback(const EventCallbackFn& eventCallback) = 0;
 
 		virtual WindowHandle GetWindowHandle() = 0;
-
 	};
 }

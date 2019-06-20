@@ -169,7 +169,6 @@ namespace Craft {
 
 		s_WindowClass.hInstance = s_HInstance;
 		s_WindowClass.lpfnWndProc = WindowProc;
-		s_WindowClass.hbrBackground = WHITE_BRUSH;
 		s_WindowClass.lpszClassName = s_WindowClassName;
 		s_WindowClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
 		s_WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
