@@ -68,6 +68,7 @@ GLAPI PFNWGLSWAPINTERVALEXTPROC _wglSwapIntervalEXT;
 
 GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 GLAPI PFNWGLCHOOSEPIXELFORMATARBPROC _wglChoosePixelFormatARB;
+GLAPI PFNGLVALIDATEPROGRAMPROC _glValidateProgram;
 
 GLAPI PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays;
 GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
@@ -100,6 +101,7 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
 
+#define glValidateProgram					_glValidateProgram
 #define glGetShaderiv						_glGetShaderiv
 #define glGetProgramiv						_glGetProgramiv
 #define glGetShaderInfoLog					_glGetShaderInfoLog

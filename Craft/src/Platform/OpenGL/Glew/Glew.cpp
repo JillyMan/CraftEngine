@@ -19,6 +19,7 @@ PFNGLBINDVERTEXARRAYPROC _glBindVertexArray = NULL;
 PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer = NULL;
 PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray = NULL;
 
+PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
 PFNGLCREATESHADERPROC _glCreateShader = NULL;
 PFNGLSHADERSOURCEPROC _glShaderSource = NULL;
 PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
@@ -56,6 +57,7 @@ void loadPFN(GLEWloadproc load)
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)load("glBindVertexArray");
+	glValidateProgram = (PFNGLVALIDATEPROGRAMPROC)load("glValidateProgram");
 	glCreateShader = (PFNGLCREATESHADERPROC)load("glCreateShader");
 	glShaderSource = (PFNGLSHADERSOURCEPROC)load("glShaderSource");
 	glCompileShader = (PFNGLCOMPILESHADERPROC)load("glCompileShader");
@@ -77,7 +79,7 @@ void loadPFN(GLEWloadproc load)
 	glGetShaderiv = (PFNGLGETSHADERIVPROC)load("glGetShaderiv");
 	glGetProgramiv = (PFNGLGETPROGRAMIVPROC)load("glGetProgramiv");
 	glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)load("glGetShaderInfoLog");
-	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)load("glGetShaderInfoLog ");
+	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)load("glGetShaderInfoLog");
 }
 
 static int open_gl(void)

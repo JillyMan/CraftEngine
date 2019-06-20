@@ -11,26 +11,24 @@ namespace Craft
 		GLuint m_ProgramId;
 
 	private:
-		void IsCompileSuccess(GLuint& shader)
+		void ErrorCode(GLuint object, GLint status)
 		{
 			GLint success;
 			GLchar info[512];
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-			if (!success)
-			{
-				glGetShaderInfoLog(shader, 512, NULL, info);
-				CR_WARN(info);
-			}
-		}
 
-		void IsProgramLinked(GLuint& program)
-		{
-			GLint success;
-			GLchar info[512];
-			glGetProgramiv(program, GL_LINK_STATUS, &success);
+			if (status == GL_COMPILE_STATUS)
+			{
+				glGetShaderiv(object, status, &success);
+				glGetShaderInfoLog(object, 512, NULL, info);
+			}
+			else if(status == GL_LINK_STATUS)
+			{
+				glGetProgramiv(object, status, &success);
+				glGetProgramInfoLog(object, 512, NULL, info);
+			}
+
 			if (!success)
 			{
-				glGetProgramInfoLog(program, 512, NULL, info);
 				CR_WARN(info);
 			}
 		}
@@ -47,15 +45,15 @@ namespace Craft
 			glCompileShader(vertexShaderId);
 			glCompileShader(fragmentShaderId);
 
-			IsCompileSuccess(vertexShaderId);
-			IsCompileSuccess(fragmentShaderId);
-
 			m_ProgramId = glCreateProgram();
 			glAttachShader(m_ProgramId, vertexShaderId);
 			glAttachShader(m_ProgramId, fragmentShaderId);
 			glLinkProgram(m_ProgramId);
+			glValidateProgram(m_ProgramId);
 
-			IsProgramLinked(m_ProgramId);
+			ErrorCode(m_ProgramId, GL_LINK_STATUS);
+			ErrorCode(vertexShaderId, GL_COMPILE_STATUS);
+			ErrorCode(fragmentShaderId, GL_COMPILE_STATUS);
 
 			glDeleteShader(vertexShaderId);
 			glDeleteShader(fragmentShaderId);

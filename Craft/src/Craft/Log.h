@@ -19,7 +19,7 @@ namespace Craft {
 	};
 }
 
-#ifndef CR_DEBUG
+#ifdef CR_DEBUG
 
 #define CR_CORE_INFO(...)	::Craft::Log::GetCoreLogger()->Info(__VA_ARGS__)
 #define CR_CORE_WARN(...)	::Craft::Log::GetCoreLogger()->Warn(__VA_ARGS__)
@@ -34,6 +34,7 @@ namespace Craft {
 #define CR_FATAL(...)		::Craft::Log::GetClientLogger()->Fatal(__VA_ARGS__)
 
 #else 
+
 #define CR_CORE_INFO(...)
 #define CR_CORE_WARN(...)
 #define CR_CORE_ERROR(...)
@@ -45,4 +46,5 @@ namespace Craft {
 #define CR_ERROR(...)
 #define CR_TRACE(...)
 #define CR_FATAL(...)
+
 #endif
