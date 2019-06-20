@@ -6,11 +6,6 @@ namespace Craft
 {
 	static HDC WindowDC;
 
-	static void Error(const char* msg)
-	{
-		CR_ERROR("[%s], [code = %d], [line=%s], [file=%s]", msg, GetLastError(), __LINE__, __FILE__);
-	}
-
 	static void InitOpenGLExtensions(void)
 	{
 		WNDCLASS tempWindowClass = {};
@@ -19,11 +14,7 @@ namespace Craft
 		tempWindowClass.hInstance = GetModuleHandle(0);
 		tempWindowClass.lpszClassName = "Temp window";
 
-		if (!RegisterClass(&tempWindowClass))
-		{
-			Error("Can't register temp window class");
-			return;
-		}
+		CR_ASSERT(RegisterClass(&tempWindowClass), "Can't register temp window class");
 
 		HWND tempWindow = CreateWindowExA(
 			0,
@@ -40,11 +31,7 @@ namespace Craft
 			0
 		);
 
-		if (!tempWindow)
-		{
-			Error("Error create temp window");
-			return;
-		}
+		CR_ASSERT(tempWindow, "Error create temp window");
 
 		HDC tempDC = GetDC(tempWindow);
 
@@ -60,26 +47,15 @@ namespace Craft
 		pfd.cStencilBits = 8;
 
 		int pixelFormat = ChoosePixelFormat(tempDC, &pfd);
-		if (!pixelFormat) {
-			Error("Failed to find a suitable pixel format.");
-		}
-		if (!SetPixelFormat(tempDC, pixelFormat, &pfd)) {
-			Error("Failed to set the pixel format.");
-		}
 
+		CR_ASSERT(pixelFormat, "Failed to find a suitable pixel format.");
+		CR_ASSERT(SetPixelFormat(tempDC, pixelFormat, &pfd), "Failed to set the pixel format.");
+	
 		HGLRC tempContext = wglCreateContext(tempDC);
-		if (!tempContext) {
-			Error("Failed to create a dummy OpenGL rendering context.");
-		}
-
-		if (!wglMakeCurrent(tempDC, tempContext)) {
-			Error("Failed to activate dummy OpenGL rendering context.");
-		}
-
-		if (!pfnGLLoad())
-		{
-			Error("PFN GL load fail");
-		}
+	
+		CR_ASSERT(tempContext, "Failed to create a dummy OpenGL rendering context.");		
+		CR_ASSERT(wglMakeCurrent(tempDC, tempContext), "Failed to activate dummy OpenGL rendering context.");
+		CR_ASSERT(pfnGLLoad(), "PFN GL load fail");
 
 		wglMakeCurrent(tempDC, 0);
 		wglDeleteContext(tempContext);
@@ -108,19 +84,11 @@ namespace Craft
 		WindowDC = GetDC(window);
 		wglChoosePixelFormatARB(WindowDC, pixelFormatAttribs, 0, 1, &pixelFormat, &numFormats);
 
-		if (!numFormats)
-		{
-			Error("Failed select opengl pixel format");
-			return false;
-		}
+		CR_ASSERT(numFormats, "Failed select opengl pixel format");
 
 		PIXELFORMATDESCRIPTOR pfd;
 		DescribePixelFormat(WindowDC, pixelFormat, sizeof(pfd), &pfd);
-		if (!SetPixelFormat(WindowDC, pixelFormat, &pfd))
-		{
-			Error("Failed to set opengl pixel format");
-			return false;
-		}
+		CR_ASSERT(SetPixelFormat(WindowDC, pixelFormat, &pfd), "Failed to set opengl pixel format")
 
 		int gl46Attribs[] = {
 			WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
@@ -130,17 +98,8 @@ namespace Craft
 		};
 
 		HGLRC glContext = wglCreateContextAttribsARB(WindowDC, 0, gl46Attribs);
-		if (!glContext)
-		{
-			Error("Failed create opengl 4.6 context");
-			return false;
-		}
-
-		if (!wglMakeCurrent(WindowDC, glContext))
-		{
-			Error("Failed to activate opengl 4.6 rendering context");
-			return false;
-		}
+		CR_ASSERT(glContext, "Failed create opengl 4.6 context");
+		CR_ASSERT(wglMakeCurrent(WindowDC, glContext), "Failed to activate opengl 4.6 rendering context");
 
 		return true;
 	}
