@@ -64,7 +64,7 @@ GLAPI  PFNGLDRAWARRAYSEXTPROC  _glDrawArraysEXT;
 
 GLAPI PFNGLGETSHADERIVPROC _glGetShaderiv;
 GLAPI PFNGLGENBUFFERSPROC _glGenBuffers;
-GLAPI PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT;
+GLAPI PFNWGLSWAPINTERVALEXTPROC _wglSwapIntervalEXT;
 
 GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
 GLAPI PFNWGLCHOOSEPIXELFORMATARBPROC _wglChoosePixelFormatARB;
@@ -97,7 +97,6 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 #define glUseProgram						_glUseProgram
 #define glDeleteProgram						_glDeleteProgram
 #define glDrawArrays						_glDrawArraysEXT 
-#define glSwapIntervalEXT					_glSwapIntervalEXT
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
 
@@ -107,8 +106,9 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 #define glGetProgramInfoLog					_glGetProgramInfoLog
 
 #ifdef _WIN32
-	#define wglChoosePixelFormatARB _wglChoosePixelFormatARB
-	#define wglCreateContextAttribsARB _wglCreateContextAttribsARB
+	#define wglSwapIntervalEXT				_wglSwapIntervalEXT
+	#define wglChoosePixelFormatARB			_wglChoosePixelFormatARB
+	#define wglCreateContextAttribsARB		_wglCreateContextAttribsARB
 #endif
 
 //-----------end defines functions---------

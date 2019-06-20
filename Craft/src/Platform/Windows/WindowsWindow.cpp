@@ -15,14 +15,11 @@
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
-// or use GetModuleHandle(NULL) - ??
-#define HINS_THISCOMPONENT ((HINSTANCE)&__ImageBase)
-
 namespace Craft {
 
 	WNDCLASS WindowsWindow::s_WindowClass = {};
 	BOOL WindowsWindow::s_WindowClassInit = false;
-	HINSTANCE WindowsWindow::s_HInstance = HINS_THISCOMPONENT;
+	HINSTANCE WindowsWindow::s_HInstance = GetModuleHandle(0);
 	LPCSTR WindowsWindow::s_WindowClassName = "Craft Engine Window";
 
 	WindowsWindow::WindowsWindow(WindowSetting& setting)
@@ -59,7 +56,7 @@ namespace Craft {
 		}
 
 		DWORD dwStyle = WS_VISIBLE;
-		
+
 		u32 style = m_Setting.Style;
 		if (style == Style::None)
 		{
@@ -128,7 +125,7 @@ namespace Craft {
 	void WindowsWindow::SetVSync(bool enabled)
 	{
 	}
-	
+
 	bool WindowsWindow::IsVSync()
 	{
 		return false;
@@ -198,7 +195,7 @@ namespace Craft {
 		KeyReleasedEvent kre(vkCode);
 		window->OnEvent(kre);
 	}
-	
+
 	void OnResizeWindow(WindowsWindow* window, u32 width, u32 height)
 	{
 		WindowResizeEvent wre(width, height);

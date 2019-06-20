@@ -29,7 +29,7 @@ PFNGLUSEPROGRAMPROC _glUseProgram = NULL;
 PFNGLDELETEPROGRAMPROC _glDeleteProgram = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
-PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT = NULL;
+PFNWGLSWAPINTERVALEXTPROC _wglSwapIntervalEXT = NULL;
 
 PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
 PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
@@ -43,12 +43,15 @@ PFNGLGETPROGRAMIVPROC _glGetProgramiv = NULL;
 PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog = NULL;
 PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog = NULL;
 
-void loadPFN(GLEWloadproc load)
+void glPlatformLoad(GLEWloadproc load)
 {
 	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)load("wglCreateContextAttribsARB");
 	wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)load("wglChoosePixelFormatARB");
-	glSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("glSwapIntervalEXT");
+	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("wglSwapIntervalEXT");
+}
 
+void loadPFN(GLEWloadproc load)
+{
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 
@@ -121,6 +124,7 @@ int pfnGLLoad(void)
 	
 	if (status)
 	{
+		glPlatformLoad(&get_proc);
 		loadPFN(&get_proc);
 		close_gl();
 	}
