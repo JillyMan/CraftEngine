@@ -82,6 +82,9 @@
     <ClInclude Include="src\Craft\Graphics\Shader.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Layer.h">
+      <Filter>Craft</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -131,9 +134,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Layer.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -150,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="src\Craft\Window\WindowManager.cpp">
       <Filter>Craft\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Logger\CRLogger.cpp">
+      <Filter>Logger</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp">
       <Filter>Platform\OpenGL\Glew</Filter>
@@ -170,6 +173,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Logger\CRLogger.cpp" />
   </ItemGroup>
 </Project>

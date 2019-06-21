@@ -50,9 +50,9 @@ namespace Craft
 
 		CR_ASSERT(pixelFormat, "Failed to find a suitable pixel format.");
 		CR_ASSERT(SetPixelFormat(tempDC, pixelFormat, &pfd), "Failed to set the pixel format.");
-	
+
 		HGLRC tempContext = wglCreateContext(tempDC);
-	
+
 		CR_ASSERT(tempContext, "Failed to create a dummy OpenGL rendering context.");		
 		CR_ASSERT(wglMakeCurrent(tempDC, tempContext), "Failed to activate dummy OpenGL rendering context.");
 		CR_ASSERT(pfnGLLoad(), "PFN GL load fail");
@@ -91,8 +91,8 @@ namespace Craft
 		CR_ASSERT(SetPixelFormat(WindowDC, pixelFormat, &pfd), "Failed to set opengl pixel format")
 
 		int gl46Attribs[] = {
-			WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
-			WGL_CONTEXT_MINOR_VERSION_ARB, 5,
+			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
 			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 			0
 		};

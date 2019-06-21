@@ -18,8 +18,8 @@ namespace Craft
 
 	struct BackBuffer
 	{
-		u32 Width;
-		u32 Height;
+		s32 Width;
+		s32 Height;
 		u32 BytesPerPixel;
 		void* Pixels;
 

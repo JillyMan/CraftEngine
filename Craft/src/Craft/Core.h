@@ -15,7 +15,7 @@
 #endif
 
 #ifdef CR_DEBUG
-	#define CR_ASSERT(x, str) { if (!(x)) { CR_ERROR("Assertion failed: %s", (str)); __debugbreak(); } }
+	#define CR_ASSERT(x, ...) { if (!(x)) { CR_ERROR(__VA_ARGS__); __debugbreak(); } }
 #else
 	#define CR_ASSERT(x, ...)
 #endif

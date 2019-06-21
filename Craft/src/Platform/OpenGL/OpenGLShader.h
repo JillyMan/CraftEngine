@@ -16,15 +16,20 @@ namespace Craft
 			GLint success;
 			GLchar info[512];
 
-			if (status == GL_COMPILE_STATUS)
+			switch (status) 
 			{
-				glGetShaderiv(object, status, &success);
-				glGetShaderInfoLog(object, 512, NULL, info);
-			}
-			else if(status == GL_LINK_STATUS)
-			{
-				glGetProgramiv(object, status, &success);
-				glGetProgramInfoLog(object, 512, NULL, info);
+				case GL_COMPILE_STATUS:
+				{
+					glGetShaderiv(object, status, &success);
+					glGetShaderInfoLog(object, 512, NULL, info);
+					break;
+				}
+				case GL_LINK_STATUS:
+				{
+					glGetProgramiv(object, status, &success);
+					glGetProgramInfoLog(object, 512, NULL, info);
+					break;
+				}
 			}
 
 			if (!success)
