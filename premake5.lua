@@ -86,6 +86,7 @@ project "Sandbox"
 
 	links {
 		"Craft"
+		--"opengl32.lib"
 	}
 
 	filter "system:windows"

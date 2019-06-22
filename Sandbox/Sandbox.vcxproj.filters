@@ -11,6 +11,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="TODO_File.txt" />
+    <None Include="src\Shaders\basic.vertex.shader" />
   </ItemGroup>
 </Project>
