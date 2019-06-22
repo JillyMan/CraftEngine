@@ -32,4 +32,32 @@ namespace Craft
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+
+	IndexBuffer* IndexBuffer::Create(u32* indices, s32 count)
+	{
+		return new OpenGLIndexBuffer(indices, count);
+	}
+
+	OpenGLIndexBuffer::OpenGLIndexBuffer(u32* indices, s32 size)
+	{
+		glCreateBuffers(1, &m_BufferId);
+		Bind();
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size*sizeof(u32), indices, GL_DYNAMIC_DRAW);
+		Unbind();
+	}
+
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
+	{
+		glDeleteBuffers(1, &m_BufferId);
+	}
+
+	void OpenGLIndexBuffer::Bind()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_BufferId);
+	}
+	
+	void OpenGLIndexBuffer::Unbind()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_BufferId);
+	}
 }

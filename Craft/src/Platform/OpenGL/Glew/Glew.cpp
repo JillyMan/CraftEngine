@@ -30,6 +30,8 @@ PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
 PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
+PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
+
 PFNWGLSWAPINTERVALEXTPROC _wglSwapIntervalEXT = NULL;
 
 PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
@@ -61,6 +63,7 @@ void loadPFN(GLEWloadproc load)
 	glUseProgram = (PFNGLUSEPROGRAMPROC)load("glUseProgram");
 	glDrawArrays = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArrays");
 	glLinkProgram = (PFNGLLINKPROGRAMPROC)load("glLinkProgram");
+	glDrawElements = (PFNGLDRAWELEMENTSPROC)load("glDrawElements");
 	glAttachShader = (PFNGLATTACHSHADERPROC)load("glAttachShader");
 	glDeleteShader = (PFNGLDELETESHADERPROC)load("glDeleteShader");
 	glCreateShader = (PFNGLCREATESHADERPROC)load("glCreateShader");

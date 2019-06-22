@@ -23,11 +23,26 @@ namespace Craft
 			Unbind();
 		}
 		// ---
-		s32 GetSize() override { return m_Size; }
+		u32 GetCount() override { return m_Size; }
 
 	private:
 		GLint m_Size;
 		GLuint m_BufferId;
 		GLuint m_AttribCounter;
+	};
+
+	class OpenGLIndexBuffer : public IndexBuffer
+	{
+	public:
+		OpenGLIndexBuffer(u32* indices, s32 size);
+		virtual ~OpenGLIndexBuffer();
+
+		virtual void Bind() override;
+		virtual void Unbind() override;
+
+		virtual u32 GetCount() override { return m_Count; }
+	private:
+		GLuint m_BufferId;
+		GLuint m_Count;
 	};
 }

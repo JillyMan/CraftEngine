@@ -9,7 +9,7 @@ namespace Craft
 
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
-		virtual s32 GetSize() = 0;
+		virtual u32 GetCount() = 0;
 
 		static VertexBuffer* Create(f32* vertices, s32 size);
 	};

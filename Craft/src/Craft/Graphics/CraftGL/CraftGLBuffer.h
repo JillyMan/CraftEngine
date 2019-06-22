@@ -26,8 +26,6 @@ namespace Craft
 		void Bind();
 		void Unbind();
 
-		virtual u32 GetCount() { return m_Count; }
-
 	private:
 		u32 m_Count;
 		u32 m_RendererID;
