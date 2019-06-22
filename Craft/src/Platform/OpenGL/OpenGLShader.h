@@ -21,20 +21,23 @@ namespace Craft
 				case GL_COMPILE_STATUS:
 				{
 					glGetShaderiv(object, status, &success);
-					glGetShaderInfoLog(object, 512, NULL, info);
+					if (!success)
+					{
+						glGetShaderInfoLog(object, 512, NULL, info);
+						CR_WARN(info);
+					}
 					break;
 				}
 				case GL_LINK_STATUS:
 				{
 					glGetProgramiv(object, status, &success);
-					glGetProgramInfoLog(object, 512, NULL, info);
+					if (!success)
+					{
+						glGetProgramInfoLog(object, 512, NULL, info);
+						CR_WARN(info);
+					}
 					break;
 				}
-			}
-
-			if (!success)
-			{
-				CR_WARN(info);
 			}
 		}
 
@@ -56,9 +59,9 @@ namespace Craft
 			glLinkProgram(m_ProgramId);
 			glValidateProgram(m_ProgramId);
 
-			ErrorCode(m_ProgramId, GL_LINK_STATUS);
 			ErrorCode(vertexShaderId, GL_COMPILE_STATUS);
 			ErrorCode(fragmentShaderId, GL_COMPILE_STATUS);
+			ErrorCode(m_ProgramId, GL_LINK_STATUS);
 
 			glDeleteShader(vertexShaderId);
 			glDeleteShader(fragmentShaderId);

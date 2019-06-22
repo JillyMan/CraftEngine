@@ -19,7 +19,7 @@ namespace Craft
 		HWND tempWindow = CreateWindowExA(
 			0,
 			tempWindowClass.lpszClassName,
-			"Dummy OpenGL Window",
+			"Temp OpenGL Window",
 			0,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
@@ -31,7 +31,7 @@ namespace Craft
 			0
 		);
 
-		CR_ASSERT(tempWindow, "Error create temp window");
+		CR_ASSERT(tempWindow, "Failed to create temp window");
 
 		HDC tempDC = GetDC(tempWindow);
 
@@ -53,11 +53,11 @@ namespace Craft
 
 		HGLRC tempContext = wglCreateContext(tempDC);
 
-		CR_ASSERT(tempContext, "Failed to create a dummy OpenGL rendering context.");		
+		CR_ASSERT(tempContext, "Failed to create a dummy OpenGL rendering context.");
 		CR_ASSERT(wglMakeCurrent(tempDC, tempContext), "Failed to activate dummy OpenGL rendering context.");
-		CR_ASSERT(pfnGLLoad(), "PFN GL load fail");
+		CR_ASSERT(pfnGLLoad(), "Failed to load PFN GL.");
 
-		wglMakeCurrent(tempDC, 0);
+		wglMakeCurrent(tempDC, tempContext);
 		wglDeleteContext(tempContext);
 		ReleaseDC(tempWindow, tempDC);
 		DestroyWindow(tempWindow);
@@ -91,8 +91,8 @@ namespace Craft
 		CR_ASSERT(SetPixelFormat(WindowDC, pixelFormat, &pfd), "Failed to set opengl pixel format")
 
 		int gl46Attribs[] = {
-			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
-			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
+			WGL_CONTEXT_MINOR_VERSION_ARB, 6,
 			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 			0
 		};

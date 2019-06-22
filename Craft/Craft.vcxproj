@@ -89,7 +89,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,6 +166,7 @@
     <ClInclude Include="src\Logger\CRLogger.h" />
     <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
     <ClCompile Include="src\Logger\CRLogger.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
