@@ -23,7 +23,7 @@ namespace Craft {
 		f32 m_FPS;
 
 	public:
-		Application(f32 fps = 60.0f);
+		Application(f32 fps = 60.0f, WindowSetting& setting = WindowSetting());
 		virtual ~Application();
 
 		void Run();

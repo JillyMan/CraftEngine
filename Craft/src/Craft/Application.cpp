@@ -7,11 +7,12 @@
 
 namespace Craft
 {
-	Application::Application(f32 fps) :
+	Application::Application(f32 fps, WindowSetting& setting) :
 		m_Running(false),
 		m_FPS(fps)
 	{
-		m_MainWindow = WindowManager::Create();
+		m_WindowSetting = setting;
+		m_MainWindow = WindowManager::Create(setting);
 		m_MainWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
 

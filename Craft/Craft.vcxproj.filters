@@ -91,9 +91,6 @@
     <ClInclude Include="src\Craft\Math\Math.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Math\Vec4.h">
-      <Filter>Craft\Math</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\System\FileSystem.h">
       <Filter>Craft\System</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
+    <ClInclude Include="src\Craft\Math\Vectors.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">

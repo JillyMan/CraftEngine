@@ -62,6 +62,12 @@ GLAPI PFNGLDELETESHADERPROC					_glDeleteShader;
 GLAPI PFNGLUSEPROGRAMPROC					_glUseProgram;
 GLAPI PFNGLDELETEPROGRAMPROC				_glDeleteProgram;
 
+GLAPI PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation;
+GLAPI PFNGLUNIFORM1FPROC					_glUniform1f;
+GLAPI PFNGLUNIFORM2FPROC					_glUniform2f;
+GLAPI PFNGLUNIFORM3FPROC					_glUniform3f;
+GLAPI PFNGLUNIFORM4FPROC					_glUniform4f;
+
 GLAPI PFNGLDRAWARRAYSEXTPROC				_glDrawArraysEXT;
 GLAPI PFNGLDRAWELEMENTSPROC					_glDrawElements;
 
@@ -104,6 +110,12 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
 #define glDrawElements						_glDrawElements
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
+
+#define glUniform1f							_glUniform1f
+#define glUniform2f							_glUniform2f
+#define glUniform3f							_glUniform3f
+#define glUniform4f							_glUniform4f
+#define glGetUniformLocation				_glGetUniformLocation
 
 #define glValidateProgram					_glValidateProgram
 #define glGetShaderiv						_glGetShaderiv

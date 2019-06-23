@@ -29,6 +29,12 @@ PFNGLDELETEPROGRAMPROC _glDeleteProgram = NULL;
 PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
 PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
 
+PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation = NULL;
+PFNGLUNIFORM1FPROC					_glUniform1f = NULL;
+PFNGLUNIFORM2FPROC					_glUniform2f = NULL;
+PFNGLUNIFORM3FPROC					_glUniform3f = NULL;
+PFNGLUNIFORM4FPROC					_glUniform4f = NULL;
+
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
 
@@ -72,6 +78,13 @@ void loadPFN(GLEWloadproc load)
 	glCompileShader = (PFNGLCOMPILESHADERPROC)load("glCompileShader");
 	glCreateProgram = (PFNGLCREATEPROGRAMPROC)load("glCreateProgram");
 	glCreateBuffers = (PFNGLCREATEBUFFERSPROC)load("glCreateBuffers");
+
+	glUniform1f = (PFNGLUNIFORM1FPROC)load("glUniform1f");
+	glUniform2f = (PFNGLUNIFORM2FPROC)load("glUniform2f");
+	glUniform3f = (PFNGLUNIFORM3FPROC)load("glUniform3f");
+	glUniform4f = (PFNGLUNIFORM4FPROC)load("glUniform4f");
+	glGetUniformLocation =  (PFNGLGETUNIFORMLOCATIONARBPROC)load("glGetUniformLocation");
+
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)load("glBindVertexArray");
 	glValidateProgram = (PFNGLVALIDATEPROGRAMPROC)load("glValidateProgram");
 	glCreateVertexArrays = (PFNGLCREATEVERTEXARRAYSPROC)load("glCreateVertexArrays");

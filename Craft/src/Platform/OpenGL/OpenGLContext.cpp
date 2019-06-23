@@ -40,9 +40,12 @@ namespace Craft
 		CR_CORE_TRACE("Version: %s", info.Version);
 		CR_CORE_TRACE("Render device: %s", info.Renderer);
 
+		GLint shaderInputs;
+		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &shaderInputs);
+		CR_INFO("MAX shader inputs: %d", shaderInputs);
+
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
-
 	}
 
 	void OpengGLContext::SwapBuffers()

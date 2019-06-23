@@ -16,7 +16,11 @@
 using namespace Craft;
 
 #define S_BIND_EVENT_FN(x) std::bind(&ExampleLayer::x, this, std::placeholders::_1)
+#define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
 
+const char* VertexColorUniformString = "vertexColour";
+const char* RotorUniformString = "rotor";
+const char* AngleUniformString = "angle";
 
 /* shader data types
 
@@ -41,14 +45,21 @@ const char* GetVertexShader()
 R"(
 #version 460 core
 layout (location = 0) in vec3 pos;
-layout (location = 1) in vec3 colour;
 
-out vec4 vertexColour;
+uniform float angle;
+
+out vec4 vertexPos;
 
 void main()
 {
-	gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
-	vertexColour = vec4(colour, 1.0f);
+	float _cos = cos(angle), _sin= sin(angle);
+	float x = pos.x, y = pos.y;
+
+	vec4 newPos = vec4(x * _cos - y * _sin, 
+					   x * _sin + y * _cos,
+					   0.0f, 1.0f);
+
+	gl_Position = newPos;
 })";
 }
 
@@ -58,7 +69,7 @@ const char* GetFragmentShader()
 R"(
 #version 460 core
 
-in vec4 vertexColour;
+uniform vec4 vertexColour;
 out vec4 color;
 
 void main()
@@ -141,24 +152,28 @@ class CRectangle
 	IndexBuffer* m_IndexBuffer;
 	Shader* m_Shader;
 
+	Craft::v4 m_Color;
+	f32 m_Angle;
+
 public:
 
-	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2)
+	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color) : 
+		m_Color(color)
 	{
 		GLfloat vertices[] =
 		{
-			x1, y2, 0.0f, 1.0f, 0.0f, 0.0f,
-			x2, y2, 0.0f, 0.0f, 1.0f, 0.0f,
-			x1, y1, 0.0f, 0.0f, 0.0f, 1.0f,
-			x2, y1, 0.0f, 1.0f, 0.0f, 0.0f,
+			x1, y2, 0.0f,
+			x2, y2, 0.0f,
+			x1, y1, 0.0f,
+			x2, y1, 0.0f,
 		};
 
 		m_Shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
 
 		glCreateVertexArrays(1, &m_VAO);
 		glBindVertexArray(m_VAO);
-
-		m_VBuffer = new OpenGLVertexBuffer(vertices, sizeof(vertices));
+		
+		m_VBuffer = new OpenGLVertexBuffer(vertices, ArrayCount(vertices));
 		m_VBuffer->SetAttrib(3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat));
 		m_VBuffer->SetAttrib(3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 
@@ -167,14 +182,27 @@ public:
 			0,1,2,3,1,2
 		};
 
-		m_IndexBuffer = IndexBuffer::Create(indices, sizeof(indices));
+		m_IndexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
 
 		glBindVertexArray(0);
+	}
+
+	void SetColor(Craft::v4 color)
+	{
+		m_Color = color;
+	}
+
+	void Rotate(f32 angle)
+	{
+		m_Angle = angle;
 	}
 
 	void Render()
 	{
 		m_Shader->Use();
+		m_Shader->SetUniform4f(VertexColorUniformString, m_Color);
+		m_Shader->SetUniform1f(AngleUniformString, m_Angle);
+
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
@@ -209,7 +237,8 @@ public:
 
 	void InitRenderable()
 	{
-		rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f);
+		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
+		rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color);
 	}
 
 	virtual void OnRender() override
@@ -229,7 +258,19 @@ public:
 	float theta = 0.0f;
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		theta += deltaTime;
+		theta += deltaTime/1000.0f;
+		float sinT = sinf(theta);
+		float cosT = cosf(theta);
+		Craft::v4 color;
+
+		color.x = (sinT / 2 + 0.5f);
+		color.y = (cosT / 2 + 0.5f);
+		color.z = (sinT*cosT / 2 + 0.5f);
+
+		color.w = 1.0f;
+
+		rect->Rotate(theta);
+		rect->SetColor(color);
 	}
 
 private:
@@ -244,7 +285,7 @@ private:
 class Sandbox : public Craft::Application
 {
 public:
-	Sandbox() : Application()
+	Sandbox(f32 fps, WindowSetting setting) : Application(60.0f, setting)
 	{
 		VFS_Test();
 		PushLayer(new ExampleLayer());
@@ -274,5 +315,7 @@ public:
 
 Craft::Application* Craft::CreateApplication()
 {
-	return new Sandbox();
+	WindowSetting setting;
+	setting.IsVSync = false;
+	return new Sandbox(60.0f, setting);
 }

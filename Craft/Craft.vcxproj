@@ -156,7 +156,7 @@
     <ClInclude Include="src\Craft\Layer.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />
-    <ClInclude Include="src\Craft\Math\Vec4.h" />
+    <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
