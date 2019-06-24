@@ -5,6 +5,25 @@
 
 namespace Craft
 {
+	static GLenum GetOpenGLEnumType(ShaderDataType type)
+	{
+		switch (type)
+		{
+			case ShaderDataType::Float:		return GL_FLOAT;
+			case ShaderDataType::Float2:	return GL_FLOAT;
+			case ShaderDataType::Float3:	return GL_FLOAT;
+			case ShaderDataType::Float4:	return GL_FLOAT;
+			case ShaderDataType::Int:		return GL_INT;
+			case ShaderDataType::Int2:		return GL_INT;
+			case ShaderDataType::Int3:		return GL_INT;
+			case ShaderDataType::Int4:		return GL_INT;
+			case ShaderDataType::Bool:		return GL_BOOL;
+		}
+		
+		CR_ASSERT(false, "Invalid data type");
+		return GL_NONE;
+	}
+
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
@@ -14,15 +33,19 @@ namespace Craft
 		virtual void Bind() override;
 		virtual void Unbind() override;
 
-		// Need delete, just now i'am lazy write struct BufferAttrib!!
-		void SetAttrib(GLint size, GLenum type, GLboolean normalized, GLint stride, GLvoid* pointer = NULL)
+		virtual void AddBufferAttribute(BufferAttribute& attribute) override
 		{
 			Bind();
-			glVertexAttribPointer(m_AttribCounter, size, type, normalized, stride, pointer);
+			glVertexAttribPointer(m_AttribCounter, 
+				attribute.Size, 
+				GetOpenGLEnumType(attribute.DataType),
+				attribute.Normalized,
+				attribute.Stride, 
+				attribute.Pointer);
 			glEnableVertexAttribArray(m_AttribCounter++);
 			Unbind();
 		}
-		// ---
+
 		u32 GetCount() override { return m_Size; }
 
 	private:
