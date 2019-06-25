@@ -32,8 +32,10 @@ namespace Craft
 
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
-		virtual void AddBufferAttribute(BufferAttribute& attribute) = 0;
 		virtual u32 GetCount() = 0;
+
+		virtual void AddBufferAttribute(BufferAttribute& attribute) = 0;
+		virtual std::vector<BufferAttribute>& GetAttribs() = 0;
 
 		static VertexBuffer* Create(f32* vertices, s32 size);
 	};

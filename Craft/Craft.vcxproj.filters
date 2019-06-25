@@ -135,6 +135,7 @@
     <ClInclude Include="src\Craft\Math\Vectors.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -175,5 +176,9 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Graphics\VertexArrayBuffer.h" />
   </ItemGroup>
 </Project>

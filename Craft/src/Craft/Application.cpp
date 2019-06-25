@@ -19,7 +19,7 @@ namespace Craft
 	Application::~Application()
 	{
 		WindowManager::Destroy(m_MainWindow);
-		
+
 		for (int i = 0; i < m_pLayers.size(); ++i)
 		{
 			delete m_pLayers[i];

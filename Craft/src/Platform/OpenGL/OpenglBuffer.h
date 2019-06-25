@@ -35,20 +35,18 @@ namespace Craft
 
 		virtual void AddBufferAttribute(BufferAttribute& attribute) override
 		{
-			Bind();
-			glVertexAttribPointer(m_AttribCounter, 
-				attribute.Size, 
-				GetOpenGLEnumType(attribute.DataType),
-				attribute.Normalized,
-				attribute.Stride, 
-				attribute.Pointer);
-			glEnableVertexAttribArray(m_AttribCounter++);
-			Unbind();
+			m_Atribs.push_back(attribute);
+		}
+
+		virtual std::vector<BufferAttribute>& GetAttribs() override
+		{
+			return m_Atribs;
 		}
 
 		u32 GetCount() override { return m_Size; }
 
 	private:
+		std::vector<BufferAttribute> m_Atribs;
 		GLint m_Size;
 		GLuint m_BufferId;
 		GLuint m_AttribCounter;
@@ -57,7 +55,7 @@ namespace Craft
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(u32* indices, s32 size);
+		OpenGLIndexBuffer(u32* indices, u32 size);
 		virtual ~OpenGLIndexBuffer();
 
 		virtual void Bind() override;

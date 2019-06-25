@@ -169,6 +169,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\crpch.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
@@ -190,6 +192,9 @@
     <ClCompile Include="src\crpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Graphics\VertexArrayBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
