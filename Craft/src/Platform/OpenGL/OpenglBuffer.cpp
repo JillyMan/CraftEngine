@@ -3,14 +3,28 @@
 
 namespace Craft
 {
+	static GLenum GetOpenGLEnumType(VertexDataType type)
+	{
+		switch (type)
+		{
+			case VertexDataType::Float:			return GL_FLOAT;
+			case VertexDataType::Double:		return GL_FLOAT;
+			case VertexDataType::Int:			return GL_INT;
+			case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
+			case VertexDataType::Bool:			return GL_BOOL;
+		}
+
+		CR_ASSERT(false, "Invalid data type");
+		return GL_NONE;
+	}
+
 	VertexBuffer* VertexBuffer::Create(f32* vertices, s32 size)
 	{
 		return new OpenGLVertexBuffer(vertices, size);
 	}
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size) : 
-		m_AttribCounter(0), 
-		m_Size(size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size) :
+		m_Size(size), m_Layout()
 	{
 		glCreateBuffers(1, &m_BufferId);
 		Bind();

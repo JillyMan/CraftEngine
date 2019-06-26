@@ -62,40 +62,6 @@ void main()
 })";
 }
 
-u32 ShaderDataTypeSize(ShaderDataType type)
-{
-	switch (type)
-	{
-		case ShaderDataType::Float:		return 4;
-		case ShaderDataType::Float2:	return 4 * 2;
-		case ShaderDataType::Float3:	return 4 * 3;
-		case ShaderDataType::Float4:	return 4 * 4;
-		case ShaderDataType::Int:		return 4;
-		case ShaderDataType::Int2:		return 4 * 2;
-		case ShaderDataType::Int3:		return 4 * 3;
-		case ShaderDataType::Int4:		return 4 * 4;
-		case ShaderDataType::Bool:		return 1;
-	}
-
-	CR_ASSERT(false, "Invalid ShaderDataType");
-	return 0;
-}
-
-class Renderer
-{
-	
-public: 
-	void Render()
-	{
-	}
-};
-
-class Renderable
-{
-public:
-	virtual void Render() = 0;
-};
-
 class Shape
 {
 protected:
@@ -122,7 +88,7 @@ public:
 
 };
 
-class CRectangle : public Renderable, public Shape
+class CRectangle : public Shape
 {
 	GLuint m_VAO;
 	VertexArrayBuffer* m_VABuffer;
@@ -131,7 +97,6 @@ class CRectangle : public Renderable, public Shape
 	Shader* m_Shader;
 
 public:
-
 	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color) : 
 		Shape(color)
 	{
@@ -151,22 +116,21 @@ public:
 		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
 
 		m_VABuffer = VertexArrayBuffer::Create();
-		m_VABuffer->AddVertexBuffer(m_VBuffer);
-		m_VABuffer->SetIndexBuffer(m_IndexBuffer);
-
 		m_VBuffer = VertexBuffer::Create(vertices, ArrayCount(vertices));
 		m_IndexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
 
-		BufferAttribute posAttrib = {};
-		posAttrib.Size = 3;
-		posAttrib.DataType = ShaderDataType::Float;
-		posAttrib.Normalized = false;
-		posAttrib.Stride = posAttrib.Size * ShaderDataTypeSize(posAttrib.DataType);
+		BufferElement pos("Position", VertexDataType::Float3);
+		//BufferElement colr("Color", VertexDataType::Float3);
 
-		m_VBuffer->AddBufferAttribute(posAttrib);
+		std::vector<BufferElement> i = { pos };
+		BufferLayout layout(i);
+
+		m_VBuffer->SetLayout(layout);
+		m_VABuffer->AddVertexBuffer(m_VBuffer);
+		m_VABuffer->SetIndexBuffer(m_IndexBuffer);
 	}
 
-	virtual void Render() override
+	 void Render()
 	{
 		m_Shader->Use();
 		m_Shader->SetUniform4f(VertexColorUniformString, m_Color);
