@@ -79,19 +79,16 @@
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Layer.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Shader.h">
       <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Layer.h">
+      <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Log.h">
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Math\Math.h">
-      <Filter>Craft\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Math\Vec4.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\System\FileSystem.h">
@@ -134,10 +131,18 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
     <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
     <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h" />
     <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h" />
+=======
+    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
+    <ClInclude Include="src\Craft\Math\Vectors.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -154,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="src\Craft\Window\WindowManager.cpp">
       <Filter>Craft\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Logger\CRLogger.cpp">
+      <Filter>Logger</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp">
       <Filter>Platform\OpenGL\Glew</Filter>
@@ -174,6 +182,10 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Logger\CRLogger.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Graphics\VertexArrayBuffer.h" />
   </ItemGroup>
 </Project>

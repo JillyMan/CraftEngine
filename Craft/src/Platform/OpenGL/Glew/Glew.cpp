@@ -9,56 +9,93 @@ static HMODULE libGL;
 
 #endif
 
-PFNGLCREATEPROGRAMPROC _glCreateProgram = NULL;
-PFNGLCREATEBUFFERSPROC _glCreateBuffers = NULL;
-PFNGLCREATEVERTEXARRAYSPROC _glCreateVertexArrays = NULL;
 PFNGLBINDBUFFERPROC _glBindBuffer = NULL;
 PFNGLBUFFERDATAPROC _glBufferData = NULL;
+PFNGLCREATEPROGRAMPROC _glCreateProgram = NULL;
+PFNGLCREATEBUFFERSPROC _glCreateBuffers = NULL;
 PFNGLBINDVERTEXARRAYPROC _glBindVertexArray = NULL;
+PFNGLCREATEVERTEXARRAYSPROC _glCreateVertexArrays = NULL;
 
 PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer = NULL;
 PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray = NULL;
 
-PFNGLCREATESHADERPROC _glCreateShader = NULL;
-PFNGLSHADERSOURCEPROC _glShaderSource = NULL;
-PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
-PFNGLATTACHSHADERPROC _glAttachShader = NULL;
+PFNGLUSEPROGRAMPROC _glUseProgram = NULL;
 PFNGLLINKPROGRAMPROC _glLinkProgram = NULL;
 PFNGLDELETESHADERPROC _glDeleteShader = NULL;
-PFNGLUSEPROGRAMPROC _glUseProgram = NULL;
+PFNGLCREATESHADERPROC _glCreateShader = NULL;
+PFNGLSHADERSOURCEPROC _glShaderSource = NULL;
+PFNGLATTACHSHADERPROC _glAttachShader = NULL;
+PFNGLDELETEPROGRAMPROC _glDeleteProgram = NULL;
+PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
+PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
+
+PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation = NULL;
+PFNGLUNIFORM1FPROC					_glUniform1f = NULL;
+PFNGLUNIFORM2FPROC					_glUniform2f = NULL;
+PFNGLUNIFORM3FPROC					_glUniform3f = NULL;
+PFNGLUNIFORM4FPROC					_glUniform4f = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
-PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT = NULL;
+PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
 
-PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
+PFNWGLSWAPINTERVALEXTPROC _wglSwapIntervalEXT = NULL;
+
 PFNGLDELETEBUFFERSPROC _glDeleteBuffers = NULL;
+PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays = NULL;
 
+PFNWGLCHOOSEPIXELFORMATARBPROC _wglChoosePixelFormatARB = NULL;
 PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB = NULL;
+
+PFNGLGETSHADERIVPROC _glGetShaderiv = NULL;
+PFNGLGETPROGRAMIVPROC _glGetProgramiv = NULL;
+PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog = NULL;
+PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog = NULL;
+PFNGLDEBUGMESSAGECALLBACKPROC _glDebugMessageCallback = NULL;
+
+static void glPlatformLoad(GLEWloadproc load)
+{
+	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("wglSwapIntervalEXT");
+	wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)load("wglChoosePixelFormatARB");
+	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)load("wglCreateContextAttribsARB");
+}
 
 void loadPFN(GLEWloadproc load)
 {
-	wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)load("wglCreateContextAttribsARB");
-	glSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)load("glSwapIntervalEXT");
-
-	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
+	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 
-	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)load("glBindVertexArray");
-	glCreateShader = (PFNGLCREATESHADERPROC)load("glCreateShader");
-	glShaderSource = (PFNGLSHADERSOURCEPROC)load("glShaderSource");
-	glCompileShader = (PFNGLCOMPILESHADERPROC)load("glCompileShader");
-	glCreateProgram = (PFNGLCREATEPROGRAMPROC)load("glCreateProgram");
-	glAttachShader = (PFNGLATTACHSHADERPROC)load("glAttachShader");
-	glLinkProgram = (PFNGLLINKPROGRAMPROC)load("glLinkProgram");
-	glDeleteShader = (PFNGLDELETESHADERPROC)load("glDeleteShader");
-	glCreateVertexArrays = (PFNGLCREATEVERTEXARRAYSPROC)load("glCreateVertexArrays");
-	glCreateBuffers = (PFNGLCREATEBUFFERSPROC)load("glCreateBuffers");
 	glBindBuffer = (PFNGLBINDBUFFERPROC)load("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");
+	glUseProgram = (PFNGLUSEPROGRAMPROC)load("glUseProgram");
+	glDrawArrays = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArrays");
+	glLinkProgram = (PFNGLLINKPROGRAMPROC)load("glLinkProgram");
+	glDrawElements = (PFNGLDRAWELEMENTSPROC)load("glDrawElements");
+	glAttachShader = (PFNGLATTACHSHADERPROC)load("glAttachShader");
+	glDeleteShader = (PFNGLDELETESHADERPROC)load("glDeleteShader");
+	glCreateShader = (PFNGLCREATESHADERPROC)load("glCreateShader");
+	glShaderSource = (PFNGLSHADERSOURCEPROC)load("glShaderSource");
+	glDeleteProgram = (PFNGLDELETEPROGRAMPROC)load("glDeleteProgram");
+	glCompileShader = (PFNGLCOMPILESHADERPROC)load("glCompileShader");
+	glCreateProgram = (PFNGLCREATEPROGRAMPROC)load("glCreateProgram");
+	glCreateBuffers = (PFNGLCREATEBUFFERSPROC)load("glCreateBuffers");
+
+	glUniform1f = (PFNGLUNIFORM1FPROC)load("glUniform1f");
+	glUniform2f = (PFNGLUNIFORM2FPROC)load("glUniform2f");
+	glUniform3f = (PFNGLUNIFORM3FPROC)load("glUniform3f");
+	glUniform4f = (PFNGLUNIFORM4FPROC)load("glUniform4f");
+	glGetUniformLocation =  (PFNGLGETUNIFORMLOCATIONARBPROC)load("glGetUniformLocation");
+
+	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)load("glBindVertexArray");
+	glValidateProgram = (PFNGLVALIDATEPROGRAMPROC)load("glValidateProgram");
+	glCreateVertexArrays = (PFNGLCREATEVERTEXARRAYSPROC)load("glCreateVertexArrays");
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)load("glVertexAttribPointer");
 	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)load("glEnableVertexAttribArray");
-	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
-	glDrawArraysEXT = (PFNGLDRAWARRAYSEXTPROC)load("glDrawArraysEXT");
+
+	glGetShaderiv = (PFNGLGETSHADERIVPROC)load("glGetShaderiv");
+	glGetProgramiv = (PFNGLGETPROGRAMIVPROC)load("glGetProgramiv");
+	glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)load("glGetShaderInfoLog");
+	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)load("glGetShaderInfoLog");
+	glDebugMessageCallback = (PFNGLDEBUGMESSAGECALLBACKPROC)load("glDebugMessageCallback");
 }
 
 static int open_gl(void)
@@ -99,12 +136,13 @@ static void* get_proc(const char *name)
 	return result;
 }
 
-int glLoad(void)
+int pfnGLLoad(void)
 {
 	int status = open_gl();
 	
 	if (status)
 	{
+		glPlatformLoad(&get_proc);
 		loadPFN(&get_proc);
 		close_gl();
 	}

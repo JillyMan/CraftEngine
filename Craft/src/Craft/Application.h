@@ -2,12 +2,14 @@
 
 #include "Core.h"
 
+#include "Craft\Layer.h"
 #include "Craft\Window\Window.h"
-#include "Craft\Graphics\Layer.h"
 
 #include "Craft\Event\Event.h"
 #include "Craft\Event\KeyEvent.h"
 #include "Craft\Event\ApplicationEvent.h"
+
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 namespace Craft {
 
@@ -21,12 +23,12 @@ namespace Craft {
 		f32 m_FPS;
 
 	public:
-		Application(f32 fps = 60.0f);
+		Application(f32 fps = 60.0f, WindowSetting& setting = WindowSetting());
 		virtual ~Application();
 
 		void Run();
 		void PushLayer(Layer* layer);
-//		void PopLayer(Layer* layer);
+		void PopLayer(Layer* layer);
 
 	private:
 		void OnRender();

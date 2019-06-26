@@ -1,12 +1,47 @@
 #pragma once
 
 #include "OpenGL.h"
+#include "Craft\Math\Math.h"
 #include "Craft\Graphics\Shader.h"
 
 namespace Craft
 {
-	class OpenGLShader : public Shader
+	class CRAFT_API OpenGLShader : public Shader
 	{
+	private:
+		GLuint m_ProgramId;
+
+	private:
+		void ErrorCode(GLuint object, GLint status)
+		{
+			GLint success;
+			GLchar info[512];
+
+			switch (status) 
+			{
+				case GL_COMPILE_STATUS:
+				{
+					glGetShaderiv(object, status, &success);
+					if (!success)
+					{
+						glGetShaderInfoLog(object, 512, NULL, info);
+						CR_WARN(info);
+					}
+					break;
+				}
+				case GL_LINK_STATUS:
+				{
+					glGetProgramiv(object, status, &success);
+					if (!success)
+					{
+						glGetProgramInfoLog(object, 512, NULL, info);
+						CR_WARN(info);
+					}
+					break;
+				}
+			}
+		}
+
 	public:
 		OpenGLShader(const char* vertexShader, const char* fragmentShader)
 		{
@@ -19,64 +54,65 @@ namespace Craft
 			glCompileShader(vertexShaderId);
 			glCompileShader(fragmentShaderId);
 
-#if CR_DEBUG
-			IsCompileSuccess(vertexShaderId);
-			IsCompileSuccess(fragmentShaderId);
-#endif
-
 			m_ProgramId = glCreateProgram();
 			glAttachShader(m_ProgramId, vertexShaderId);
 			glAttachShader(m_ProgramId, fragmentShaderId);
 			glLinkProgram(m_ProgramId);
+			glValidateProgram(m_ProgramId);
 
-#if CR_DEBUG
-			IsProgramLink(m_ProgramId);
-#endif
+			ErrorCode(vertexShaderId, GL_COMPILE_STATUS);
+			ErrorCode(fragmentShaderId, GL_COMPILE_STATUS);
+			ErrorCode(m_ProgramId, GL_LINK_STATUS);
+
 			glDeleteShader(vertexShaderId);
 			glDeleteShader(fragmentShaderId);
 		}
 
-		~OpenGLShader()
+		virtual ~OpenGLShader()
 		{
 			glDeleteProgram(m_ProgramId);
 		}
 
-		void Use() override
+		virtual void Use() override
 		{
 			glUseProgram(m_ProgramId);
 		}
 
-		void Unuse() override
+		virtual void Unuse() override
 		{
 			glUseProgram(0);
 		}
 
-	private:
-
-		void IsCompileSuccess(GLuint& shader)
+		virtual void SetUniform1f(const char* name, f32 value)
 		{
-			GLint success;
-			GLchar info[512];
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-			if (!success)
-			{
-				glGetShaderInfoLog(shader, 512, NULL, info);
-				CR_WARN(info);
-			}
+			GLuint location = GetLocation(m_ProgramId, name);
+			glUniform1f(location, value);
 		}
 
-		void IsProgramLink(GLuint& program)
+		virtual void SetUniform2f(const char* name, v2 value)
 		{
-			GLint success;
-			GLchar info[512];
-			glGetProgramiv(program, GL_LINK_STATUS, &success);
-			if (!success)
-			{
-				glGetProgramInfoLog(program, 512, NULL, info);
-				CR_WARN(info);
-			}
+			GLuint location = GetLocation(m_ProgramId, name);
+			glUniform2f(location, value.x, value.y);
 		}
 
-		GLuint m_ProgramId;
+		virtual void SetUniform3f(const char* name, v3 value)
+		{
+			GLuint location = GetLocation(m_ProgramId, name);
+			glUniform3f(location, value.x, value.y, value.z);
+		}
+
+		virtual void SetUniform4f(const char* name, v4 value) override
+		{
+			GLuint location = GetLocation(m_ProgramId, name);
+			glUniform4f(location, value.x, value.y, value.z, value.w);
+		}
+
+private:
+		GLuint GetLocation(GLuint program, const char* name)
+		{
+			GLuint location = glGetUniformLocation(m_ProgramId, name);
+			CR_ASSERT(location != -1, "Position not found");
+			return location;
+		}
 	};
 }

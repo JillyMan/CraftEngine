@@ -15,14 +15,11 @@
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
-// or use GetModuleHandle(NULL) - ??
-#define HINS_THISCOMPONENT ((HINSTANCE)&__ImageBase)
-
 namespace Craft {
 
 	WNDCLASS WindowsWindow::s_WindowClass = {};
 	BOOL WindowsWindow::s_WindowClassInit = false;
-	HINSTANCE WindowsWindow::s_HInstance = HINS_THISCOMPONENT;
+	HINSTANCE WindowsWindow::s_HInstance = GetModuleHandle(0);
 	LPCSTR WindowsWindow::s_WindowClassName = "Craft Engine Window";
 
 	WindowsWindow::WindowsWindow(WindowSetting& setting)
@@ -59,7 +56,7 @@ namespace Craft {
 		}
 
 		DWORD dwStyle = WS_VISIBLE;
-		
+
 		u32 style = m_Setting.Style;
 		if (style == Style::None)
 		{
@@ -92,15 +89,11 @@ namespace Craft {
 
 		if (!m_WindowHandle)
 		{
-			int error = GetLastError();
-			String str("Can't create Window handle error=");
-			str += std::to_string(error);
-			CR_INFO(str);
+			CR_INFO("Can't create Window handle. [error code = %d]", GetLastError());
 			return false;
 		}
 
 		WindowManager::RegisterWindowClass(m_WindowHandle, this);
-		ShowWindow(m_WindowHandle, SW_SHOW);
 
 //--------------------
 		GLInitData setting; 
@@ -108,8 +101,10 @@ namespace Craft {
 		setting.Handle = m_WindowHandle;
 		m_GraphicsContext = new OpengGLContext(setting);
 //--------------------
-
 		m_GraphicsContext->Init();
+
+		ShowWindow(m_WindowHandle, SW_SHOW);
+		UpdateWindow(m_WindowHandle);
 
 		return true;
 	}
@@ -130,7 +125,7 @@ namespace Craft {
 	void WindowsWindow::SetVSync(bool enabled)
 	{
 	}
-	
+
 	bool WindowsWindow::IsVSync()
 	{
 		return false;
@@ -174,7 +169,6 @@ namespace Craft {
 
 		s_WindowClass.hInstance = s_HInstance;
 		s_WindowClass.lpfnWndProc = WindowProc;
-		s_WindowClass.hbrBackground = WHITE_BRUSH;
 		s_WindowClass.lpszClassName = s_WindowClassName;
 		s_WindowClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
 		s_WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -200,7 +194,7 @@ namespace Craft {
 		KeyReleasedEvent kre(vkCode);
 		window->OnEvent(kre);
 	}
-	
+
 	void OnResizeWindow(WindowsWindow* window, u32 width, u32 height)
 	{
 		WindowResizeEvent wre(width, height);

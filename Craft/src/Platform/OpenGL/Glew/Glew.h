@@ -38,45 +38,57 @@
 # endif
 #endif
 
-#define GL_ARRAY_BUFFER						0x8892
-#define GL_STREAM_DRAW						0x88E0
-#define GL_STATIC_DRAW						0x88E4
-#define GL_DYNAMIC_DRAW						0x88E8
-#define GL_FRAGMENT_SHADER					0x8B30
-#define GL_VERTEX_SHADER					0x8B31
-#define GL_COMPILE_STATUS					0x8B81
+typedef GLvoid (APIENTRYP PFNGLDRAWELEMENTSPROC) (GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
 
 //-----------begin defines functions---------
 
-GLAPI PFNGLCREATEPROGRAMPROC _glCreateProgram;
-GLAPI PFNGLCREATEBUFFERSPROC _glCreateBuffers;
-GLAPI PFNGLCREATEVERTEXARRAYSPROC _glCreateVertexArrays;
+GLAPI PFNGLCREATEPROGRAMPROC				_glCreateProgram;
+GLAPI PFNGLCREATEBUFFERSPROC				_glCreateBuffers;
+GLAPI PFNGLCREATEVERTEXARRAYSPROC			 _glCreateVertexArrays;
 
-GLAPI PFNGLBINDBUFFERPROC _glBindBuffer;
-GLAPI PFNGLBUFFERDATAPROC _glBufferData;
-GLAPI PFNGLBINDVERTEXARRAYPROC _glBindVertexArray;
+GLAPI PFNGLBINDBUFFERPROC					_glBindBuffer;
+GLAPI PFNGLBUFFERDATAPROC					_glBufferData;
+GLAPI PFNGLBINDVERTEXARRAYPROC				_glBindVertexArray;
 
-GLAPI PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
-GLAPI PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray;
+GLAPI PFNGLVERTEXATTRIBPOINTERPROC			_glVertexAttribPointer;
+GLAPI PFNGLENABLEVERTEXATTRIBARRAYPROC		_glEnableVertexAttribArray;
 
-GLAPI PFNGLCREATESHADERPROC _glCreateShader;
-GLAPI PFNGLSHADERSOURCEPROC _glShaderSource;
-GLAPI PFNGLCOMPILESHADERPROC _glCompileShader;
-GLAPI PFNGLATTACHSHADERPROC _glAttachShader;
-GLAPI PFNGLLINKPROGRAMPROC _glLinkProgram;
-GLAPI PFNGLDELETESHADERPROC _glDeleteShader;
-GLAPI PFNGLUSEPROGRAMPROC _glUseProgram;
+GLAPI PFNGLCREATESHADERPROC					_glCreateShader;
+GLAPI PFNGLSHADERSOURCEPROC					_glShaderSource;
+GLAPI PFNGLCOMPILESHADERPROC				_glCompileShader;
+GLAPI PFNGLATTACHSHADERPROC					_glAttachShader;
+GLAPI PFNGLLINKPROGRAMPROC					_glLinkProgram;
+GLAPI PFNGLDELETESHADERPROC					_glDeleteShader;
+GLAPI PFNGLUSEPROGRAMPROC					_glUseProgram;
+GLAPI PFNGLDELETEPROGRAMPROC				_glDeleteProgram;
 
-GLAPI  PFNGLDRAWARRAYSEXTPROC  _glDrawArraysEXT;
+GLAPI PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation;
+GLAPI PFNGLUNIFORM1FPROC					_glUniform1f;
+GLAPI PFNGLUNIFORM2FPROC					_glUniform2f;
+GLAPI PFNGLUNIFORM3FPROC					_glUniform3f;
+GLAPI PFNGLUNIFORM4FPROC					_glUniform4f;
 
-GLAPI PFNGLGETSHADERIVPROC _glGetShaderiv;
-GLAPI PFNGLGENBUFFERSPROC _glGenBuffers;
-GLAPI PFNWGLSWAPINTERVALEXTPROC _glSwapIntervalEXT;
+GLAPI PFNGLDRAWARRAYSEXTPROC				_glDrawArraysEXT;
+GLAPI PFNGLDRAWELEMENTSPROC					_glDrawElements;
 
-GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC _wglCreateContextAttribsARB;
+GLAPI PFNGLGETSHADERIVPROC					_glGetShaderiv;
+GLAPI PFNGLGENBUFFERSPROC					_glGenBuffers;
+GLAPI PFNWGLSWAPINTERVALEXTPROC				_wglSwapIntervalEXT;
 
-GLAPI PFNGLDELETEVERTEXARRAYSPROC _glDeleteVertexArrays;
-GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC		_wglCreateContextAttribsARB;
+GLAPI PFNWGLCHOOSEPIXELFORMATARBPROC		_wglChoosePixelFormatARB;
+GLAPI PFNGLVALIDATEPROGRAMPROC				_glValidateProgram;
+
+GLAPI PFNGLDELETEVERTEXARRAYSPROC			_glDeleteVertexArrays;
+GLAPI PFNGLDELETEBUFFERSPROC				_glDeleteBuffers;
+
+GLAPI PFNGLDEBUGMESSAGECALLBACKPROC			_glDebugMessageCallback;
+GLAPI PFNGLGETSHADERIVPROC					_glGetShaderiv;
+GLAPI PFNGLGETPROGRAMIVPROC					_glGetProgramiv;
+GLAPI PFNGLGETSHADERINFOLOGPROC				_glGetShaderInfoLog;
+GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
+
+#define glDebugMessageCallback				_glDebugMessageCallback
 
 #define glBindVertexArray					_glBindVertexArray
 #define glCreateShader						_glCreateShader
@@ -93,13 +105,28 @@ GLAPI PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
 #define glVertexAttribPointer				_glVertexAttribPointer
 #define glEnableVertexAttribArray			_glEnableVertexAttribArray
 #define glUseProgram						_glUseProgram
-#define glDrawArraysEXT						_glDrawArraysEXT 
-#define glSwapIntervalEXT					_glSwapIntervalEXT
+#define glDeleteProgram						_glDeleteProgram
+#define glDrawArrays						_glDrawArraysEXT 
+#define glDrawElements						_glDrawElements
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
 
+#define glUniform1f							_glUniform1f
+#define glUniform2f							_glUniform2f
+#define glUniform3f							_glUniform3f
+#define glUniform4f							_glUniform4f
+#define glGetUniformLocation				_glGetUniformLocation
+
+#define glValidateProgram					_glValidateProgram
+#define glGetShaderiv						_glGetShaderiv
+#define glGetProgramiv						_glGetProgramiv
+#define glGetShaderInfoLog					_glGetShaderInfoLog
+#define glGetProgramInfoLog					_glGetProgramInfoLog
+
 #ifdef _WIN32
-#define wglCreateContextAttribsARB _wglCreateContextAttribsARB
+	#define wglSwapIntervalEXT				_wglSwapIntervalEXT
+	#define wglChoosePixelFormatARB			_wglChoosePixelFormatARB
+	#define wglCreateContextAttribsARB		_wglCreateContextAttribsARB
 #endif
 
 //-----------end defines functions---------
@@ -109,4 +136,4 @@ GLAPI void glewLoadGLLoader(GLEWloadproc);
 
 typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
 static PFNWGLGETPROCADDRESSPROC_PRIVATE glewGetProcAddressPtr;
-int glLoad();
+int pfnGLLoad();

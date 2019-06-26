@@ -10,8 +10,6 @@ workspace "Craft"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {} 
-IncludeDir["Glad"] = "Craft/vendor/Glad/include"
-include "Craft/vendor/Glad"
 
 project "Craft"
 	location "Craft"
@@ -31,11 +29,9 @@ project "Craft"
 
 	includedirs {
 		"%{prj.name}/src",
-		"%{IncludeDir.Glad}",
 	}
 
 	links { 
-		"Glad",
 		"opengl32.lib"
 	}
 
@@ -86,11 +82,11 @@ project "Sandbox"
 
 	includedirs {
 		"Craft/src",
-		"%{IncludeDir.Glad}",
 	}
 
 	links {
 		"Craft"
+		--"opengl32.lib"
 	}
 
 	filter "system:windows"
