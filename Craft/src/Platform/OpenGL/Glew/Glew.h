@@ -88,6 +88,11 @@ GLAPI PFNGLGETPROGRAMIVPROC					_glGetProgramiv;
 GLAPI PFNGLGETSHADERINFOLOGPROC				_glGetShaderInfoLog;
 GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
 
+GLAPI PFNGLCREATETEXTURESPROC				_glCreateTextures;
+GLAPI PFNGLTEXTUREPARAMETERFVPROC			_glTexParameterfv;
+GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri;
+//GLAPI PFNGLDELETETEXTURESEXTPROC
+
 #define glDebugMessageCallback				_glDebugMessageCallback
 
 #define glBindVertexArray					_glBindVertexArray
@@ -122,6 +127,10 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
 #define glGetProgramiv						_glGetProgramiv
 #define glGetShaderInfoLog					_glGetShaderInfoLog
 #define glGetProgramInfoLog					_glGetProgramInfoLog
+
+#define glCreateTextures					_glCreateTextures
+#define glTexParameterfv					_glTexParameterfv
+#define glTexParameteri						_glTexParameteri 
 
 #ifdef _WIN32
 	#define wglSwapIntervalEXT				_wglSwapIntervalEXT

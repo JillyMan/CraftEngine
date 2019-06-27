@@ -35,6 +35,11 @@ PFNGLUNIFORM2FPROC					_glUniform2f = NULL;
 PFNGLUNIFORM3FPROC					_glUniform3f = NULL;
 PFNGLUNIFORM4FPROC					_glUniform4f = NULL;
 
+PFNGLCREATETEXTURESPROC				_glCreateTextures = NULL;
+PFNGLTEXTUREPARAMETERFVPROC			_glTexParameterfv = NULL;
+PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri = NULL;
+
+
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
 
@@ -63,6 +68,10 @@ void loadPFN(GLEWloadproc load)
 {
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
+
+	glCreateTextures = (PFNGLCREATETEXTURESPROC)load("glCreateTextures");
+	glTexParameterfv = (PFNGLTEXTUREPARAMETERFVPROC)load("glTexParameterfv");
+	glTexParameteri = (PFNGLTEXTUREPARAMETERIPROC)load("glTexParameteri");
 
 	glBindBuffer = (PFNGLBINDBUFFERPROC)load("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");

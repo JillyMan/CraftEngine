@@ -120,9 +120,9 @@ public:
 		m_IndexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
 
 		BufferElement pos("Position", VertexDataType::Float3);
-		//BufferElement colr("Color", VertexDataType::Float3);
+		BufferElement textCoord("Texture cordinates", VertexDataType::Float2);
 
-		std::vector<BufferElement> i = { pos };
+		std::vector<BufferElement> i = { pos/*, textCoord*/ };
 		BufferLayout layout(i);
 
 		m_VBuffer->SetLayout(layout);
