@@ -89,7 +89,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,14 +153,15 @@
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Craft\Graphics\Shader.h" />
+    <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h" />
     <ClInclude Include="src\Craft\Layer.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
     <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
     <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
     <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
@@ -170,11 +171,10 @@
     <ClInclude Include="src\Logger\CRLogger.h" />
     <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
-    <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\crpch.h" />
@@ -183,14 +183,13 @@
     <ClCompile Include="src\Craft\Application.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
-    <ClInclude Include="src\Craft\Graphics\Buffer.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
     <ClCompile Include="src\Logger\CRLogger.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
@@ -198,8 +197,6 @@
     <ClCompile Include="src\crpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

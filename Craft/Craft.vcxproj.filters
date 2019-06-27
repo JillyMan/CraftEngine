@@ -19,6 +19,9 @@
     <Filter Include="Craft\System">
       <UniqueIdentifier>{C9586377-B5BB-F21B-5E41-2BD24A83BE9E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\System\Vfs">
+      <UniqueIdentifier>{87D69FB7-73CF-BE09-9C01-A48E88599E15}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Window">
       <UniqueIdentifier>{9C72937F-88D5-2224-315B-5BDA1D9DEEA6}</UniqueIdentifier>
     </Filter>
@@ -82,6 +85,9 @@
     <ClInclude Include="src\Craft\Graphics\Shader.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Layer.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -91,8 +97,23 @@
     <ClInclude Include="src\Craft\Math\Math.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Math\Vectors.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\System\FileSystem.h">
       <Filter>Craft\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h">
+      <Filter>Craft\System\Vfs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h">
+      <Filter>Craft\System\Vfs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h">
+      <Filter>Craft\System\Vfs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h">
+      <Filter>Craft\System\Vfs</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
@@ -124,6 +145,12 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -131,18 +158,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-<<<<<<< HEAD
-    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
-    <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h" />
-=======
-    <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
-    <ClInclude Include="src\Craft\Math\Vectors.h">
-      <Filter>Craft\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
->>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -169,6 +184,12 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -182,10 +203,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Craft\Graphics\VertexArrayBuffer.h" />
   </ItemGroup>
 </Project>
