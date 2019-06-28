@@ -92,6 +92,8 @@ GLAPI PFNGLCREATETEXTURESPROC				_glCreateTextures;
 GLAPI PFNGLTEXTUREPARAMETERFVPROC			_glTexParameterfv;
 GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri;
 //GLAPI PFNGLDELETETEXTURESEXTPROC
+GLAPI PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap;
+GLAPI PFNGLTEXIMAGE2DMULTISAMPLEPROC		_glTexImage2D;
 
 #define glDebugMessageCallback				_glDebugMessageCallback
 
@@ -131,6 +133,11 @@ GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri;
 #define glCreateTextures					_glCreateTextures
 #define glTexParameterfv					_glTexParameterfv
 #define glTexParameteri						_glTexParameteri 
+
+//------need implement
+#define glGenerateMipmap					_glGenerateMipmap
+#define glTexImage2D						_glTexImage2D
+//------
 
 #ifdef _WIN32
 	#define wglSwapIntervalEXT				_wglSwapIntervalEXT

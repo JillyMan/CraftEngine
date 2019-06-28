@@ -69,9 +69,11 @@ void loadPFN(GLEWloadproc load)
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 
+	glTexImage2D = (PFNGLTEXIMAGE2DMULTISAMPLEPROC)load("glTexImage2D");
+	glTexParameteri =  (PFNGLTEXTUREPARAMETERIPROC)load("glTexParameteri");
+	glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)load("glGenerateMipmap");
 	glCreateTextures = (PFNGLCREATETEXTURESPROC)load("glCreateTextures");
 	glTexParameterfv = (PFNGLTEXTUREPARAMETERFVPROC)load("glTexParameterfv");
-	glTexParameteri = (PFNGLTEXTUREPARAMETERIPROC)load("glTexParameteri");
 
 	glBindBuffer = (PFNGLBINDBUFFERPROC)load("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");
