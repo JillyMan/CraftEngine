@@ -173,6 +173,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="Image.h">
+      <Filter>Craft\Graphics\Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">

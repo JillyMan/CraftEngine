@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{caaa8a1a-c740-436a-94af-2728517e0504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Shaders">
+      <UniqueIdentifier>{9a877885-f846-4ada-9808-ea6fbe9b8084}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SandboxApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\basic.vertex.shader">
+      <Filter>src\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

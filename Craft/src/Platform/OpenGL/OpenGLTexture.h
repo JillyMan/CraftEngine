@@ -1,5 +1,6 @@
 #include <Craft\Graphics\Texture.h>
 #include <Platform\OpenGL\OpenGL.h>
+#include <Craft\Graphics\Image\ImageLoader.h>
 
 namespace Craft
 {
@@ -86,7 +87,8 @@ namespace Craft
 	public:
 
 		//TODO: make class incapsulated info about image
-		OpenGLTexture(TextureType type, bool isMipMap, char* image, u32 width, u32 height) :
+
+		OpenGLTexture(TextureType type, bool isMipMap, Image* image) :
 			m_Type(type), m_OpenGLType(ToOpenGLTextureType(type))
 		{
 			glCreateTextures(m_OpenGLType, 1, &m_TextureId);

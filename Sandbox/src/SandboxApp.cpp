@@ -9,6 +9,8 @@
 	#include "Platform\OpenGL\OpenGLShader.h"
 	#include "Platform\OpenGL\OpenGLBuffer.h"
 	#include "Craft\Graphics\Texture.h"
+	#include "Craft\Graphics\Image\ImageLoader.h"
+	#include "Platform\OpenGL\OpenGLTexture.h"
 	#include "Platform\OpenGL\OpenGLVertexArrayBuffer.h"
 #else
 	#include <iostream>
@@ -23,6 +25,7 @@ using namespace Craft;
 const char* VertexColorUniformString = "vertexColour";
 const char* RotorUniformString = "rotor";
 const char* AngleUniformString = "angle";
+const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\TileSheet.bmp";
 
 const char* GetVertexShader()
 {
@@ -89,11 +92,6 @@ public:
 
 };
 
-void TestTexture()
-{
-
-}
-
 class CRectangle : public Shape
 {
 	GLuint m_VAO;
@@ -101,9 +99,10 @@ class CRectangle : public Shape
 	VertexBuffer* m_VBuffer;
 	IndexBuffer* m_IndexBuffer;
 	Shader* m_Shader;
+	OpenGLTexture* m_Texture;
 
 public:
-	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color) : 
+	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, Image* image) : 
 		Shape(color)
 	{
 		GLfloat vertices[] =
@@ -119,6 +118,9 @@ public:
 			0,1,2,3,1,2
 		};
 
+		m_Texture = new OpenGLTexture(
+			TextureType::Texture2D, false, image);
+		
 		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
 
 		m_VABuffer = VertexArrayBuffer::Create();
@@ -147,7 +149,12 @@ public:
 	}
 };
 
-#ifdef GAME
+void ImageTest()
+{
+	Image* image = ImageLoader::LoadBMPImage(String(PathToTileSheets));
+	CR_ASSERT(image, "Can't load image path=[%s]", PathToTileSheets);
+}
+
 class ExampleLayer : public Craft::Layer
 {
 private:
@@ -163,6 +170,7 @@ public:
 	ExampleLayer()
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+		ImageTest();
 		InitRenderable();
 	}
 
@@ -218,7 +226,6 @@ private:
 		return true;
 	}
 };
-#endif
 
 class Sandbox : public Craft::Application
 {
