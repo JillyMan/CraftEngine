@@ -90,9 +90,9 @@ namespace Craft
 			m_Type(type), m_OpenGLType(ToOpenGLTextureType(type))
 		{
 			glCreateTextures(m_OpenGLType, 1, &m_TextureId);
-			
+
 //			glTexImage2D(m_TextureId, width*height, ,width, height, )
-			
+
 			if (isMipMap)
 			{
 				glGenerateMipmap(m_TextureId);

@@ -3,14 +3,19 @@
 namespace Craft
 {
 	//Specify bihevior when texture coords out of range
-
 	enum class TextureParameter
 	{
 		None,
+
 		Repeat,
-		MirroredRepeat,
 		ClampTPEdge,
-		ClampToBorder
+		ClampToBorder,
+		MirroredRepeat,
+
+		NearesetMipMapNearset,
+		NearestMipMapLinear,
+		LinearMipMapNearest,
+		LinearMipMapLinear
 	};
 
 	enum class TextureParameterName
@@ -18,7 +23,9 @@ namespace Craft
 		S,
 		T,
 		R,
-		TextureBorderColor
+		MagFilter,
+		MinFilter,
+		TextureBorderColor,
 	};
 
 	enum class TextureType
@@ -34,7 +41,7 @@ namespace Craft
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 
-		virtual void SetParameterfv(TextureParameter param, f32* values) = 0;
+		virtual void SetParameterfv(TextureParameterName  param, f32* values) = 0;
 		virtual void SetParameteri(TextureParameterName paramName, TextureParameter param) = 0;
 	};
 }
