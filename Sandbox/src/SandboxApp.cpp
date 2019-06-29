@@ -8,6 +8,7 @@
 	#include "Platform\OpenGL\OpenGL.h"
 	#include "Platform\OpenGL\OpenGLShader.h"
 	#include "Platform\OpenGL\OpenGLBuffer.h"
+	#include "Craft\Graphics\Texture.h"
 	#include "Platform\OpenGL\OpenGLVertexArrayBuffer.h"
 #else
 	#include <iostream>
@@ -87,6 +88,11 @@ public:
 	}
 
 };
+
+void TestTexture()
+{
+
+}
 
 class CRectangle : public Shape
 {

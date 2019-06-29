@@ -139,6 +139,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ImageHeaders.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="src\Craft.h" />
     <ClInclude Include="src\Craft\Application.h" />
     <ClInclude Include="src\Craft\Core.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
