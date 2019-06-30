@@ -6,7 +6,6 @@
 
 namespace Craft
 {
-
 	class ImageLoader
 	{
 	public:

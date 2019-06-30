@@ -36,10 +36,10 @@ PFNGLUNIFORM3FPROC					_glUniform3f = NULL;
 PFNGLUNIFORM4FPROC					_glUniform4f = NULL;
 
 PFNGLCREATETEXTURESPROC				_glCreateTextures = NULL;
-PFNGLTEXTUREPARAMETERFVPROC			_glTexParameterfv = NULL;
-PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri = NULL;
+PFNGLTEXTUREPARAMETERFVPROC			_glTextureParameterfv = NULL;
+PFNGLTEXTUREPARAMETERIPROC			_glTextureParameteri = NULL;
 PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap = NULL;
-PFNGLTEXIMAGE2DMULTISAMPLEPROC		_glTexImage2D = NULL;
+PFNGLTEXIMAGE2DPROC					_glTexImage2D = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
@@ -70,11 +70,11 @@ void loadPFN(GLEWloadproc load)
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 
-	glTexImage2D = (PFNGLTEXIMAGE2DMULTISAMPLEPROC)load("glTexImage2D");
-	glTexParameteri =  (PFNGLTEXTUREPARAMETERIPROC)load("glTexParameteri");
-	glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)load("glGenerateMipmap");
+	glTexImage2D = (PFNGLTEXIMAGE2DPROC)load("glTexImage2D");
 	glCreateTextures = (PFNGLCREATETEXTURESPROC)load("glCreateTextures");
-	glTexParameterfv = (PFNGLTEXTUREPARAMETERFVPROC)load("glTexParameterfv");
+	glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)load("glGenerateMipmap");
+	glTextureParameteri =  (PFNGLTEXTUREPARAMETERIPROC)load("glTextureParameteri");
+	glTextureParameterfv = (PFNGLTEXTUREPARAMETERFVPROC)load("glTextureParameterfv");
 
 	glBindBuffer = (PFNGLBINDBUFFERPROC)load("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");

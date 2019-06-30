@@ -85,32 +85,32 @@ namespace Craft
 
 		virtual void SetUniform1f(const char* name, f32 value)
 		{
-			GLuint location = GetLocation(m_ProgramId, name);
+			GLint location = GetLocation(m_ProgramId, name);
 			glUniform1f(location, value);
 		}
 
 		virtual void SetUniform2f(const char* name, v2 value)
 		{
-			GLuint location = GetLocation(m_ProgramId, name);
+			GLint location = GetLocation(m_ProgramId, name);
 			glUniform2f(location, value.x, value.y);
 		}
 
 		virtual void SetUniform3f(const char* name, v3 value)
 		{
-			GLuint location = GetLocation(m_ProgramId, name);
+			GLint location = GetLocation(m_ProgramId, name);
 			glUniform3f(location, value.x, value.y, value.z);
 		}
 
 		virtual void SetUniform4f(const char* name, v4 value) override
 		{
-			GLuint location = GetLocation(m_ProgramId, name);
+			GLint location = GetLocation(m_ProgramId, name);
 			glUniform4f(location, value.x, value.y, value.z, value.w);
 		}
 
 private:
-		GLuint GetLocation(GLuint program, const char* name)
+		GLint GetLocation(GLuint program, const char* name)
 		{
-			GLuint location = glGetUniformLocation(m_ProgramId, name);
+			GLint location = glGetUniformLocation(m_ProgramId, name);
 			CR_ASSERT(location != -1, "Position not found");
 			return location;
 		}

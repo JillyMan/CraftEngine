@@ -12,12 +12,12 @@ namespace Craft
 		s32 Width;
 		s32 Height;
 		ImageType Type;
-		u32* Pixels;
+		u8* Pixels;
 
 		Image(u32 width, u32 height, void* formatData, u32 pixelsOffset, ImageType type) :
 			Width(width),
 			Height(height),
-			Pixels((u32*)formatData + pixelsOffset),
+			Pixels((u8*)formatData + pixelsOffset),
 			FormatData(formatData),
 			Type(type)
 		{

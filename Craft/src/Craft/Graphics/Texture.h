@@ -15,7 +15,10 @@ namespace Craft
 		NearesetMipMapNearset,
 		NearestMipMapLinear,
 		LinearMipMapNearest,
-		LinearMipMapLinear
+		LinearMipMapLinear,
+
+		Linear,
+		Nearest
 	};
 
 	enum class TextureParameterName

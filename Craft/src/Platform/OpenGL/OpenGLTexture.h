@@ -46,6 +46,10 @@ namespace Craft
 			case TextureParameter::NearestMipMapLinear: return GL_NEAREST_MIPMAP_LINEAR;
 			case TextureParameter::LinearMipMapNearest: return GL_LINEAR_MIPMAP_NEAREST;
 			case TextureParameter::LinearMipMapLinear: return  GL_LINEAR_MIPMAP_LINEAR;
+
+
+			case TextureParameter::Linear: return  GL_LINEAR;
+			case TextureParameter::Nearest: return  GL_NEAREST;
 		}
 
 		CR_ASSERT(false, "Invalid texture parameter name!");
@@ -79,46 +83,53 @@ namespace Craft
 	{
 	private:
 		TextureType m_Type;
-
-		// emm all time for binding need get this value???? -- it's bad 
-		GLenum m_OpenGLType;
+		GLenum m_DimensionType;
 		GLuint m_TextureId;
 
 	public:
 
 		//TODO: make class incapsulated info about image
 
-		OpenGLTexture(TextureType type, bool isMipMap, Image* image) :
-			m_Type(type), m_OpenGLType(ToOpenGLTextureType(type))
+		OpenGLTexture(TextureType type, Image* image, bool isMipMap = false) :
+			m_Type(type), m_DimensionType(ToOpenGLTextureType(type))
 		{
-			glCreateTextures(m_OpenGLType, 1, &m_TextureId);
+			glCreateTextures(m_DimensionType, 1, &m_TextureId);
 
-//			glTexImage2D(m_TextureId, width*height, ,width, height, )
+			// need delet bgr
+			glTexImage2D(m_DimensionType,
+				0, 
+				GL_RGB, 
+				image->Width, image->Height, 
+				0,
+				GL_RGB,
+				GL_UNSIGNED_BYTE,
+				image->Pixels);
 
 			if (isMipMap)
 			{
-				glGenerateMipmap(m_TextureId);
+				glGenerateMipmap(m_DimensionType);
 			}
 		}
 
 		virtual void Bind() override
 		{
-			glBindTexture(m_OpenGLType, m_TextureId);
+			// add define in glew
+			glBindTexture(m_DimensionType, m_TextureId);
 		}
 		
 		virtual void Unbind() override
 		{
-			glBindTexture(m_OpenGLType, 0);
+			glBindTexture(m_DimensionType, 0);
 		}
 
 		virtual void SetParameteri(TextureParameterName paramName, TextureParameter param) override
 		{
-			glTexParameteri(m_TextureId, ToOpenGLParameterName(paramName), ToOpenGLParameter(param));
+			glTextureParameteri(m_TextureId, ToOpenGLParameterName(paramName), ToOpenGLParameter(param));
 		}
 
 		virtual void SetParameterfv(TextureParameterName paramName, f32* values) override
 		{
-			glTexParameterfv(m_TextureId, ToOpenGLParameterName(paramName), values);
+			glTextureParameterfv(m_TextureId, ToOpenGLParameterName(paramName), values);
 		}
 	};
 }

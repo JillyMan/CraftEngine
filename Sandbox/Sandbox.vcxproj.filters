@@ -14,8 +14,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Shaders\basic.vertex.shader">
-      <Filter>src\Shaders</Filter>
-    </None>
+    <None Include="Todo-list.todo" />
+    <None Include="src\Shaders\basic.vertex.shader" />
   </ItemGroup>
 </Project>

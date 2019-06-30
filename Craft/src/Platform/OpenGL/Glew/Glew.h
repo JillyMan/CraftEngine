@@ -38,10 +38,13 @@
 # endif
 #endif
 
+typedef GLvoid (APIENTRYP PFNGLDELETETEXTUREPROC) (GLsizei n, const GLuint * textures);
 typedef GLvoid (APIENTRYP PFNGLDRAWELEMENTSPROC) (GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
+typedef GLvoid (APIENTRYP PFNGLTEXIMAGE2DPROC) (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * data);
 
 //-----------begin defines functions---------
 
+GLAPI PFNGLGENBUFFERSPROC					_glGenBuffers;
 GLAPI PFNGLCREATEPROGRAMPROC				_glCreateProgram;
 GLAPI PFNGLCREATEBUFFERSPROC				_glCreateBuffers;
 GLAPI PFNGLCREATEVERTEXARRAYSPROC			 _glCreateVertexArrays;
@@ -53,6 +56,10 @@ GLAPI PFNGLBINDVERTEXARRAYPROC				_glBindVertexArray;
 GLAPI PFNGLVERTEXATTRIBPOINTERPROC			_glVertexAttribPointer;
 GLAPI PFNGLENABLEVERTEXATTRIBARRAYPROC		_glEnableVertexAttribArray;
 
+GLAPI PFNGLDELETEVERTEXARRAYSPROC			_glDeleteVertexArrays;
+GLAPI PFNGLDELETEBUFFERSPROC				_glDeleteBuffers;
+
+//-Shader
 GLAPI PFNGLCREATESHADERPROC					_glCreateShader;
 GLAPI PFNGLSHADERSOURCEPROC					_glShaderSource;
 GLAPI PFNGLCOMPILESHADERPROC				_glCompileShader;
@@ -68,35 +75,35 @@ GLAPI PFNGLUNIFORM2FPROC					_glUniform2f;
 GLAPI PFNGLUNIFORM3FPROC					_glUniform3f;
 GLAPI PFNGLUNIFORM4FPROC					_glUniform4f;
 
+GLAPI PFNGLVALIDATEPROGRAMPROC				_glValidateProgram;
+GLAPI PFNGLGETSHADERIVPROC					_glGetShaderiv;
+//-----
+
 GLAPI PFNGLDRAWARRAYSEXTPROC				_glDrawArraysEXT;
 GLAPI PFNGLDRAWELEMENTSPROC					_glDrawElements;
 
-GLAPI PFNGLGETSHADERIVPROC					_glGetShaderiv;
-GLAPI PFNGLGENBUFFERSPROC					_glGenBuffers;
 GLAPI PFNWGLSWAPINTERVALEXTPROC				_wglSwapIntervalEXT;
-
-GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC		_wglCreateContextAttribsARB;
 GLAPI PFNWGLCHOOSEPIXELFORMATARBPROC		_wglChoosePixelFormatARB;
-GLAPI PFNGLVALIDATEPROGRAMPROC				_glValidateProgram;
+GLAPI PFNWGLCREATECONTEXTATTRIBSARBPROC		_wglCreateContextAttribsARB;
 
-GLAPI PFNGLDELETEVERTEXARRAYSPROC			_glDeleteVertexArrays;
-GLAPI PFNGLDELETEBUFFERSPROC				_glDeleteBuffers;
-
+//-Debug
 GLAPI PFNGLDEBUGMESSAGECALLBACKPROC			_glDebugMessageCallback;
 GLAPI PFNGLGETSHADERIVPROC					_glGetShaderiv;
 GLAPI PFNGLGETPROGRAMIVPROC					_glGetProgramiv;
 GLAPI PFNGLGETSHADERINFOLOGPROC				_glGetShaderInfoLog;
 GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
+//----
 
+//-Textures
+GLAPI PFNGLTEXIMAGE2DPROC					_glTexImage2D;
+GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTextureParameteri;
+GLAPI PFNGLDELETETEXTUREPROC				_glDeleteTexture;
 GLAPI PFNGLCREATETEXTURESPROC				_glCreateTextures;
-GLAPI PFNGLTEXTUREPARAMETERFVPROC			_glTexParameterfv;
-GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTexParameteri;
-//GLAPI PFNGLDELETETEXTURESEXTPROC
+GLAPI PFNGLTEXTUREPARAMETERFVPROC			_glTextureParameterfv;
 GLAPI PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap;
-GLAPI PFNGLTEXIMAGE2DMULTISAMPLEPROC		_glTexImage2D;
+//-----
 
 #define glDebugMessageCallback				_glDebugMessageCallback
-
 #define glBindVertexArray					_glBindVertexArray
 #define glCreateShader						_glCreateShader
 #define glShaderSource						_glShaderSource
@@ -130,13 +137,11 @@ GLAPI PFNGLTEXIMAGE2DMULTISAMPLEPROC		_glTexImage2D;
 #define glGetShaderInfoLog					_glGetShaderInfoLog
 #define glGetProgramInfoLog					_glGetProgramInfoLog
 
-#define glCreateTextures					_glCreateTextures
-#define glTexParameterfv					_glTexParameterfv
-#define glTexParameteri						_glTexParameteri 
-
-//------need implement
-#define glGenerateMipmap					_glGenerateMipmap
 #define glTexImage2D						_glTexImage2D
+#define glTextureParameteri					_glTextureParameteri
+#define glTextureParameterfv				_glTextureParameterfv
+#define glGenerateMipmap					_glGenerateMipmap
+#define glCreateTextures					_glCreateTextures
 //------
 
 #ifdef _WIN32

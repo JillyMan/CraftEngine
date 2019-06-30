@@ -25,7 +25,10 @@ using namespace Craft;
 const char* VertexColorUniformString = "vertexColour";
 const char* RotorUniformString = "rotor";
 const char* AngleUniformString = "angle";
-const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\TileSheet.bmp";
+//TileSheet - Copy.bmp
+//const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\TileSheet.bmp";
+
+const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\lgbt.bmp";
 
 const char* GetVertexShader()
 {
@@ -33,20 +36,23 @@ const char* GetVertexShader()
 R"(
 #version 460 core
 layout (location = 0) in vec3 pos;
+layout (location = 1) in vec2 InTexCoord;
 
 uniform float angle;
 
-out vec4 vertexPos;
+out vec2 TexCoord;
 
 void main()
 {
 	float _cos = cos(angle), _sin = sin(angle);
-	float x = pos.x, y = pos.y;
+	float x = pos.x,
+		  y = pos.y;
 
-	vec4 newPos = vec4(x * _cos - y * _sin,
+	vec4 newPos = vec4(pos, 1.0f); /*vec4(x * _cos - y * _sin,
 					   x * _sin + y * _cos,
-					   0.0f, 1.0f);
+					   0.0f, 1.0f);*/
 
+	TexCoord = InTexCoord;
 	gl_Position = newPos;
 })";
 }
@@ -58,12 +64,25 @@ R"(
 #version 460 core
 
 uniform vec4 vertexColour;
+uniform sampler2D outTexture;
+
+in vec2 TexCoord;
 out vec4 color;
 
 void main()
 {
-	color = vertexColour;
+	color = texture(outTexture, TexCoord) ;
 })";
+}
+
+Image* GetTestImage()
+{
+	static Image* image = ImageLoader::LoadBMPImage(String(PathToTileSheets));
+	BitmapHeader* bitmap = image->GetFormatData<BitmapHeader>();
+	BITMAPINFO* info = image->GetFormatData<BITMAPINFO>();
+
+	CR_ASSERT(image, "Can't load image path=[%s]", PathToTileSheets);
+	return image;
 }
 
 class Shape
@@ -94,12 +113,14 @@ public:
 
 class CRectangle : public Shape
 {
-	GLuint m_VAO;
+	Shader* m_Shader;
+	Texture* m_Texture;
+
 	VertexArrayBuffer* m_VABuffer;
 	VertexBuffer* m_VBuffer;
 	IndexBuffer* m_IndexBuffer;
-	Shader* m_Shader;
-	OpenGLTexture* m_Texture;
+
+	GLuint m_TextureId;
 
 public:
 	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, Image* image) : 
@@ -107,20 +128,41 @@ public:
 	{
 		GLfloat vertices[] =
 		{
-			x1, y2, 0.0f,
-			x2, y2, 0.0f,
-			x1, y1, 0.0f,
-			x2, y1, 0.0f,
+			0.5f,  0.5f, 0.0f,  1.0f, 1.0f,
+			0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
+
+		//x1, y2, 0.0f, 0.0f, 0.0f,
+		//x2, y2, 0.0f, 1.0f, 0.0f,
+		//x1, y1, 0.0f, 0.0f, 1.0f,
+		//x2, y1, 0.0f, 1.0f, 1.0f,
 
 		GLuint indices[] =
 		{
-			0,1,2,3,1,2
+			//0,1,2,3,1,2
+			0, 1, 3,
+			1, 2, 3
 		};
-
-		m_Texture = new OpenGLTexture(
-			TextureType::Texture2D, false, image);
 		
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureId);
+		glBindTexture(GL_TEXTURE_2D, m_TextureId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set texture wrapping to GL_REPEAT (usually basic wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->Width, image->Height, 0, GL_BGR, GL_UNSIGNED_BYTE, image->Pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		//m_Texture = new OpenGLTexture(TextureType::Texture2D, image, true);
+		//m_Texture->Bind();
+		//m_Texture->SetParameteri(TextureParameterName::S, TextureParameter::Repeat);
+		//m_Texture->SetParameteri(TextureParameterName::T, TextureParameter::Repeat);
+		//m_Texture->Unbind();
+
 		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
 
 		m_VABuffer = VertexArrayBuffer::Create();
@@ -130,8 +172,7 @@ public:
 		BufferElement pos("Position", VertexDataType::Float3);
 		BufferElement textCoord("Texture cordinates", VertexDataType::Float2);
 
-		std::vector<BufferElement> i = { pos/*, textCoord*/ };
-		BufferLayout layout(i);
+		BufferLayout layout( std::vector<BufferElement> {pos, textCoord} );
 
 		m_VBuffer->SetLayout(layout);
 		m_VABuffer->AddVertexBuffer(m_VBuffer);
@@ -140,20 +181,16 @@ public:
 
 	 void Render()
 	{
+		//m_Texture->Bind();
+		 glBindTexture(GL_TEXTURE_2D, m_TextureId);
 		m_Shader->Use();
-		m_Shader->SetUniform4f(VertexColorUniformString, m_Color);
-		m_Shader->SetUniform1f(AngleUniformString, m_Angle);
+		//m_Shader->SetUniform4f(VertexColorUniformString, m_Color);
+		//m_Shader->SetUniform1f(AngleUniformString, m_Angle);
 
 		m_VABuffer->Bind();
 		glDrawElements(GL_TRIANGLES, m_VABuffer->GetCountIndices(), GL_UNSIGNED_INT, 0);
 	}
 };
-
-void ImageTest()
-{
-	Image* image = ImageLoader::LoadBMPImage(String(PathToTileSheets));
-	CR_ASSERT(image, "Can't load image path=[%s]", PathToTileSheets);
-}
 
 class ExampleLayer : public Craft::Layer
 {
@@ -170,7 +207,6 @@ public:
 	ExampleLayer()
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
-		ImageTest();
 		InitRenderable();
 	}
 
@@ -184,7 +220,7 @@ public:
 	void InitRenderable()
 	{
 		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
-		rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color);
+		rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, GetTestImage());
 	}
 
 	virtual void OnRender() override
@@ -232,25 +268,7 @@ class Sandbox : public Craft::Application
 public:
 	Sandbox(f32 fps, WindowSetting setting) : Application(60.0f, setting)
 	{
-		VFS_Test();
 		PushLayer(new ExampleLayer());
-	}
-
-	void VFS_Test()
-	{
-#ifndef GAME
-		bool result = VFS_Init();
-
-		if (!result)
-		{
-			VFS_ErrorCode errorCode = VFS_GetLastError();
-			VFS_String error;
-			VFS_GetErrorString(errorCode, error);
-			std::cout << error.c_str() << std::endl;
-			
-		}
-		VFS_Shutdown();
-#endif
 	}
 
 	virtual ~Sandbox()
