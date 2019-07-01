@@ -75,14 +75,14 @@ void main()
 })";
 }
 
-Image* GetTestImage()
+Image& GetTestImage()
 {
 	static Image* image = ImageLoader::LoadBMPImage(String(PathToTileSheets));
 	BitmapHeader* bitmap = image->GetFormatData<BitmapHeader>();
 	BITMAPINFO* info = image->GetFormatData<BITMAPINFO>();
 
 	CR_ASSERT(image, "Can't load image path=[%s]", PathToTileSheets);
-	return image;
+	return *image;
 }
 
 class Shape
@@ -123,48 +123,36 @@ class CRectangle : public Shape
 	GLuint m_TextureId;
 
 public:
-	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, Image* image) : 
+	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, Image& image) : 
 		Shape(color)
 	{
 		GLfloat vertices[] =
 		{
-			0.5f,  0.5f, 0.0f,  1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-		};
+			//0.5f,  0.5f, 0.0f,  1.0f, 1.0f,
+			//0.5f, -0.5f, 0.0f,  1.0f, 0.0f,
+			//-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			//-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 
-		//x1, y2, 0.0f, 0.0f, 0.0f,
-		//x2, y2, 0.0f, 1.0f, 0.0f,
-		//x1, y1, 0.0f, 0.0f, 1.0f,
-		//x2, y1, 0.0f, 1.0f, 1.0f,
+			1.f,  1.f, 0.0f,  1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
+		};
 
 		GLuint indices[] =
 		{
-			//0,1,2,3,1,2
 			0, 1, 3,
 			1, 2, 3
 		};
-		
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureId);
-		glBindTexture(GL_TEXTURE_2D, m_TextureId);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set texture wrapping to GL_REPEAT (usually basic wrapping method)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->Width, image->Height, 0, GL_BGR, GL_UNSIGNED_BYTE, image->Pixels);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		//m_Texture = new OpenGLTexture(TextureType::Texture2D, image, true);
-		//m_Texture->Bind();
-		//m_Texture->SetParameteri(TextureParameterName::S, TextureParameter::Repeat);
-		//m_Texture->SetParameteri(TextureParameterName::T, TextureParameter::Repeat);
-		//m_Texture->Unbind();
+		m_Texture = Texture::Create(TextureType::Texture2D);
+		m_Texture->Bind();
+		m_Texture->SetParameteri(TextureParameterName::MinFilter, TextureParameter::Linear);
+		m_Texture->SetParameteri(TextureParameterName::MagFilter, TextureParameter::Linear);
+		m_Texture->SetImage(image, true);
+		m_Texture->Unbind();
 
 		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
-
 		m_VABuffer = VertexArrayBuffer::Create();
 		m_VBuffer = VertexBuffer::Create(vertices, ArrayCount(vertices));
 		m_IndexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
@@ -179,10 +167,9 @@ public:
 		m_VABuffer->SetIndexBuffer(m_IndexBuffer);
 	}
 
-	 void Render()
+	void Render()
 	{
-		//m_Texture->Bind();
-		 glBindTexture(GL_TEXTURE_2D, m_TextureId);
+		m_Texture->Bind();
 		m_Shader->Use();
 		//m_Shader->SetUniform4f(VertexColorUniformString, m_Color);
 		//m_Shader->SetUniform1f(AngleUniformString, m_Angle);

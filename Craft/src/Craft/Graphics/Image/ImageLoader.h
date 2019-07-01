@@ -10,19 +10,21 @@ namespace Craft
 	{
 	public:
 
+		// it's now just MOKE
 		static Image* LoadBMPImage(String path)
 		{
 			u64 size;
-			BitmapHeader* bitmap = (BitmapHeader*)FileSystem::ReadFromFile(path, size);
+			BitmapHeader* bitmapHeader = (BitmapHeader*)FileSystem::ReadFromFile(path, size);
 
-			CR_ASSERT(bitmap, "Can't load file");
+			CR_ASSERT(bitmapHeader, "Can't load file");
 
 			Image* image = new Image(
-				bitmap->Width,
-				bitmap->Height,
-				(void*)bitmap,
-				bitmap->BitmapOffset,
-				ImageType::BMP);
+				bitmapHeader->Width,
+				bitmapHeader->Height,
+				(void*)bitmapHeader,
+				bitmapHeader->BitmapOffset,
+				ImageType::BMP,
+				InternalPixelType::RGB);
 
 			return image;
 		}

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Craft\Graphics\Image\Image.h>
+
 namespace Craft
 {
 	//Specify bihevior when texture coords out of range
@@ -43,8 +45,11 @@ namespace Craft
 	public:
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
-
+		
+		virtual void SetImage(Image& image, bool isMipMap = true) = 0;
 		virtual void SetParameterfv(TextureParameterName  param, f32* values) = 0;
 		virtual void SetParameteri(TextureParameterName paramName, TextureParameter param) = 0;
+
+		static Texture* Create(TextureType type);
 	};
 }

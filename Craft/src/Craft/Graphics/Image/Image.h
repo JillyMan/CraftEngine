@@ -2,6 +2,13 @@
 
 namespace Craft
 {
+	//Specify numbers of color component in the texture
+	enum class InternalPixelType
+	{
+		RGB,
+		RGBA,
+	};
+
 	enum class ImageType
 	{
 		BMP
@@ -12,14 +19,16 @@ namespace Craft
 		s32 Width;
 		s32 Height;
 		ImageType Type;
+		InternalPixelType InternalType;
 		u8* Pixels;
 
-		Image(u32 width, u32 height, void* formatData, u32 pixelsOffset, ImageType type) :
+		Image(u32 width, u32 height, void* formatData, u32 pixelsOffset, ImageType type, InternalPixelType internalType) :
 			Width(width),
 			Height(height),
 			Pixels((u8*)formatData + pixelsOffset),
 			FormatData(formatData),
-			Type(type)
+			Type(type),
+			InternalType(internalType)
 		{
 		}
 
