@@ -156,10 +156,7 @@
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h" />
     <ClInclude Include="src\Craft\Graphics\Shader.h" />
-<<<<<<< HEAD
     <ClInclude Include="src\Craft\Graphics\Texture.h" />
-=======
->>>>>>> master
     <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h" />
     <ClInclude Include="src\Craft\Layer.h" />
     <ClInclude Include="src\Craft\Log.h" />
