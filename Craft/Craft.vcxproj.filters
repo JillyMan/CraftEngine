@@ -13,6 +13,9 @@
     <Filter Include="Craft\Graphics\CraftGL">
       <UniqueIdentifier>{2716C369-1310-ECBB-FC7C-82CCE8155228}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Graphics\Image">
+      <UniqueIdentifier>{E724DA8C-D3B3-6356-7CD2-7751684074FC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Math">
       <UniqueIdentifier>{4ED99666-3A91-D8B3-A398-B10F8F6F73A4}</UniqueIdentifier>
     </Filter>
@@ -82,7 +85,19 @@
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Image\Image.h">
+      <Filter>Craft\Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h">
+      <Filter>Craft\Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h">
+      <Filter>Craft\Graphics\Image</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Shader.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Texture.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h">
@@ -145,6 +160,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
@@ -182,6 +200,12 @@
       <Filter>Platform\OpenGL\Glew</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp">

@@ -87,7 +87,7 @@ namespace Craft
 				case VertexDataType::Mat4:		return (4 * 4);
 			};
 
-			CR_ASSERT(false, "i'ts impisible");
+			CR_ASSERT(false, "i'ts imposible");
 			return 0;
 		}
 	};

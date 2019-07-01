@@ -30,10 +30,21 @@ PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
 PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
 
 PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation = NULL;
+PFNGLUNIFORM1IPROC					_glUniform1i = NULL;
+PFNGLUNIFORM2IPROC					_glUniform2i = NULL;
+PFNGLUNIFORM3IPROC					_glUniform3i = NULL;
+PFNGLUNIFORM4IPROC					_glUniform4i = NULL;
 PFNGLUNIFORM1FPROC					_glUniform1f = NULL;
 PFNGLUNIFORM2FPROC					_glUniform2f = NULL;
 PFNGLUNIFORM3FPROC					_glUniform3f = NULL;
 PFNGLUNIFORM4FPROC					_glUniform4f = NULL;
+
+PFNGLACTIVETEXTUREPROC				_glActiveTexture = NULL;
+PFNGLCREATETEXTURESPROC				_glCreateTextures = NULL;
+PFNGLTEXTUREPARAMETERFVPROC			_glTextureParameterfv = NULL;
+PFNGLTEXTUREPARAMETERIPROC			_glTextureParameteri = NULL;
+PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap = NULL;
+PFNGLTEXIMAGE2DPROC					_glTexImage2D = NULL;
 
 PFNGLDRAWARRAYSEXTPROC _glDrawArraysEXT = NULL;
 PFNGLDRAWELEMENTSPROC _glDrawElements = NULL;
@@ -64,6 +75,13 @@ void loadPFN(GLEWloadproc load)
 	glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)load("glDeleteBuffers");
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)load("glDeleteVertexArrays");
 
+	glTexImage2D = (PFNGLTEXIMAGE2DPROC)load("glTexImage2D");
+	glActiveTexture = (PFNGLACTIVETEXTUREPROC)load("glActiveTexture");
+	glCreateTextures = (PFNGLCREATETEXTURESPROC)load("glCreateTextures");
+	glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC)load("glGenerateMipmap");
+	glTextureParameteri =  (PFNGLTEXTUREPARAMETERIPROC)load("glTextureParameteri");
+	glTextureParameterfv = (PFNGLTEXTUREPARAMETERFVPROC)load("glTextureParameterfv");
+
 	glBindBuffer = (PFNGLBINDBUFFERPROC)load("glBindBuffer");
 	glBufferData = (PFNGLBUFFERDATAPROC)load("glBufferData");
 	glUseProgram = (PFNGLUSEPROGRAMPROC)load("glUseProgram");
@@ -79,6 +97,10 @@ void loadPFN(GLEWloadproc load)
 	glCreateProgram = (PFNGLCREATEPROGRAMPROC)load("glCreateProgram");
 	glCreateBuffers = (PFNGLCREATEBUFFERSPROC)load("glCreateBuffers");
 
+	glUniform1i = (PFNGLUNIFORM1IPROC)load("glUniform1i");
+	glUniform2i = (PFNGLUNIFORM2IPROC)load("glUniform2i");
+	glUniform3i = (PFNGLUNIFORM3IPROC)load("glUniform3i");
+	glUniform4i = (PFNGLUNIFORM4IPROC)load("glUniform4i");
 	glUniform1f = (PFNGLUNIFORM1FPROC)load("glUniform1f");
 	glUniform2f = (PFNGLUNIFORM2FPROC)load("glUniform2f");
 	glUniform3f = (PFNGLUNIFORM3FPROC)load("glUniform3f");
