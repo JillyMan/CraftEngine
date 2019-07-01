@@ -134,10 +134,6 @@
       <Project>{5597FB0C-C1AB-23BE-8A2D-C71DF60020EF}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Shaders\basic.vertex.shader" />
-    <None Include="Todo-list.todo" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
