@@ -6,113 +6,28 @@
 
 namespace Craft
 {
-	class CRAFT_API OpenGLShader : public Shader
+	class OpenGLShader : public Shader
 	{
 	private:
 		GLuint m_ProgramId;
 
-	private:
-		void ErrorCode(GLuint object, GLint status)
-		{
-			GLint success;
-			GLchar info[512];
-
-			switch (status) 
-			{
-				case GL_COMPILE_STATUS:
-				{
-					glGetShaderiv(object, status, &success);
-					if (!success)
-					{
-						glGetShaderInfoLog(object, 512, NULL, info);
-						CR_WARN(info);
-					}
-					break;
-				}
-				case GL_LINK_STATUS:
-				{
-					glGetProgramiv(object, status, &success);
-					if (!success)
-					{
-						glGetProgramInfoLog(object, 512, NULL, info);
-						CR_WARN(info);
-					}
-					break;
-				}
-			}
-		}
-
 	public:
-		OpenGLShader(const char* vertexShader, const char* fragmentShader)
-		{
-			GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-			GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+		OpenGLShader(const char* vertexShader, const char* fragmentShader);
 
-			glShaderSource(vertexShaderId, 1, &vertexShader, NULL);
-			glShaderSource(fragmentShaderId, 1, &fragmentShader, NULL);
+		virtual ~OpenGLShader();
 
-			glCompileShader(vertexShaderId);
-			glCompileShader(fragmentShaderId);
+		virtual void Use() override;
+		virtual void Unuse() override;
 
-			m_ProgramId = glCreateProgram();
-			glAttachShader(m_ProgramId, vertexShaderId);
-			glAttachShader(m_ProgramId, fragmentShaderId);
-			glLinkProgram(m_ProgramId);
-			glValidateProgram(m_ProgramId);
+		virtual void SetUniform1i(const char* name, s32 value) override;
 
-			ErrorCode(vertexShaderId, GL_COMPILE_STATUS);
-			ErrorCode(fragmentShaderId, GL_COMPILE_STATUS);
-			ErrorCode(m_ProgramId, GL_LINK_STATUS);
+		virtual void SetUniform1f(const char* name, f32 value) override;
+		virtual void SetUniform2f(const char* name, v2 value) override;
+		virtual void SetUniform3f(const char* name, v3 value) override;
+		virtual void SetUniform4f(const char* name, v4 value) override;
 
-			glDeleteShader(vertexShaderId);
-			glDeleteShader(fragmentShaderId);
-		}
-
-		virtual ~OpenGLShader()
-		{
-			glDeleteProgram(m_ProgramId);
-		}
-
-		virtual void Use() override
-		{
-			glUseProgram(m_ProgramId);
-		}
-
-		virtual void Unuse() override
-		{
-			glUseProgram(0);
-		}
-
-		virtual void SetUniform1f(const char* name, f32 value)
-		{
-			GLint location = GetLocation(m_ProgramId, name);
-			glUniform1f(location, value);
-		}
-
-		virtual void SetUniform2f(const char* name, v2 value)
-		{
-			GLint location = GetLocation(m_ProgramId, name);
-			glUniform2f(location, value.x, value.y);
-		}
-
-		virtual void SetUniform3f(const char* name, v3 value)
-		{
-			GLint location = GetLocation(m_ProgramId, name);
-			glUniform3f(location, value.x, value.y, value.z);
-		}
-
-		virtual void SetUniform4f(const char* name, v4 value) override
-		{
-			GLint location = GetLocation(m_ProgramId, name);
-			glUniform4f(location, value.x, value.y, value.z, value.w);
-		}
-
-private:
-		GLint GetLocation(GLuint program, const char* name)
-		{
-			GLint location = glGetUniformLocation(m_ProgramId, name);
-			CR_ASSERT(location != -1, "Position not found");
-			return location;
-		}
+	private:
+		GLint GetLocation(GLuint program, const char* name);
+		void ErrorCode(GLuint object, GLint status);
 	};
 }

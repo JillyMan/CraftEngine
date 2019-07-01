@@ -193,6 +193,7 @@
     <ClCompile Include="src\Logger\CRLogger.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />

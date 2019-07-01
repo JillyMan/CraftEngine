@@ -47,7 +47,7 @@ typedef GLvoid (APIENTRYP PFNGLTEXIMAGE2DPROC) (GLenum target, GLint level, GLin
 GLAPI PFNGLGENBUFFERSPROC					_glGenBuffers;
 GLAPI PFNGLCREATEPROGRAMPROC				_glCreateProgram;
 GLAPI PFNGLCREATEBUFFERSPROC				_glCreateBuffers;
-GLAPI PFNGLCREATEVERTEXARRAYSPROC			 _glCreateVertexArrays;
+GLAPI PFNGLCREATEVERTEXARRAYSPROC			_glCreateVertexArrays;
 
 GLAPI PFNGLBINDBUFFERPROC					_glBindBuffer;
 GLAPI PFNGLBUFFERDATAPROC					_glBufferData;
@@ -70,6 +70,11 @@ GLAPI PFNGLUSEPROGRAMPROC					_glUseProgram;
 GLAPI PFNGLDELETEPROGRAMPROC				_glDeleteProgram;
 
 GLAPI PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation;
+
+GLAPI PFNGLUNIFORM1IPROC					_glUniform1i;
+GLAPI PFNGLUNIFORM2IPROC					_glUniform2i;
+GLAPI PFNGLUNIFORM3IPROC					_glUniform3i;
+GLAPI PFNGLUNIFORM4IPROC					_glUniform4i;
 GLAPI PFNGLUNIFORM1FPROC					_glUniform1f;
 GLAPI PFNGLUNIFORM2FPROC					_glUniform2f;
 GLAPI PFNGLUNIFORM3FPROC					_glUniform3f;
@@ -95,6 +100,7 @@ GLAPI PFNGLGETPROGRAMINFOLOGPROC			_glGetProgramInfoLog;
 //----
 
 //-Textures
+GLAPI PFNGLACTIVETEXTUREPROC				_glActiveTexture;
 GLAPI PFNGLTEXIMAGE2DPROC					_glTexImage2D;
 GLAPI PFNGLTEXTUREPARAMETERIPROC			_glTextureParameteri;
 GLAPI PFNGLDELETETEXTUREPROC				_glDeleteTexture;
@@ -125,6 +131,11 @@ GLAPI PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap;
 #define glDeleteVertexArrays				_glDeleteVertexArrays
 #define glDeleteBuffers						_glDeleteBuffers
 
+
+#define glUniform1i							_glUniform1i
+#define glUniform2i							_glUniform2i
+#define glUniform3i							_glUniform3i
+#define glUniform4i							_glUniform4i
 #define glUniform1f							_glUniform1f
 #define glUniform2f							_glUniform2f
 #define glUniform3f							_glUniform3f
@@ -137,6 +148,7 @@ GLAPI PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap;
 #define glGetShaderInfoLog					_glGetShaderInfoLog
 #define glGetProgramInfoLog					_glGetProgramInfoLog
 
+#define glActiveTexture						_glActiveTexture
 #define glTexImage2D						_glTexImage2D
 #define glTextureParameteri					_glTextureParameteri
 #define glTextureParameterfv				_glTextureParameterfv

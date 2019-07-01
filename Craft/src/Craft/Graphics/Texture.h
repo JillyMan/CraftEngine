@@ -43,9 +43,10 @@ namespace Craft
 	class Texture
 	{
 	public:
-		virtual void Bind() = 0;
+		virtual void Bind(s32 index = 0) = 0;
 		virtual void Unbind() = 0;
-		
+		virtual s32 GetIndex() = 0;
+
 		virtual void SetImage(Image& image, bool isMipMap = true) = 0;
 		virtual void SetParameterfv(TextureParameterName  param, f32* values) = 0;
 		virtual void SetParameteri(TextureParameterName paramName, TextureParameter param) = 0;

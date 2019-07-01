@@ -1,3 +1,4 @@
+#include <crpch.h>
 #include "OpenGLTexture.h"
 
 namespace Craft
@@ -71,7 +72,7 @@ namespace Craft
 		switch (type)
 		{
 			//case TextureType::Texture1D: return new OpenGLTexture1D();
-		case TextureType::Texture2D: return new OpenGLTexture2D();
+			case TextureType::Texture2D: return new OpenGLTexture2D();
 			//case TextureType::Texture3D: return new OpenGLTexture3D();
 		}
 
@@ -86,13 +87,13 @@ namespace Craft
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
-		// add define in glew
 		glDeleteTextures(1, &m_TextureId);
 	}
 
-	void OpenGLTexture2D::Bind()
+	void OpenGLTexture2D::Bind(s32 index)
 	{
-		// add define in glew
+		m_BlockIndex = index;
+		glActiveTexture(GL_TEXTURE0 + index);
 		glBindTexture(GL_TEXTURE_2D, m_TextureId);
 	}
 
