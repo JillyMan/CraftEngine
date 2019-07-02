@@ -1,8 +1,6 @@
 #pragma once
 
-struct v2;
-struct v3;
-struct v4;
+#include <Craft\Math\Vectors.h>
 
 namespace Craft
 {

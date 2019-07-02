@@ -189,6 +189,7 @@
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
+    <ClCompile Include="src\Craft\Math\Vectors.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
     <ClCompile Include="src\Logger\CRLogger.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />

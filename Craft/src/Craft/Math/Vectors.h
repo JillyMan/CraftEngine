@@ -34,7 +34,6 @@ namespace Craft
 		}
 	};
 
-
 	struct v3
 	{
 		union
@@ -94,4 +93,16 @@ namespace Craft
 		{
 		}
 	};
+
+	v4 operator + (v4& a, v4&b);
+	v4 operator - (v4& a, v4&b);
+	v4 operator * (v4& a, v4&b);
+	v4 operator / (v4& a, v4&b);
+
+	void operator *= (v4& a, const v4&b);
+	void operator /= (v4& a, const v4&b);
+	void operator -= (v4& a, const v4&b);
+	void operator += (v4& a, const v4&b);
+	
+	std::ostream& operator << (std::ostream& os, v4& v);
 }

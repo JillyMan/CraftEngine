@@ -312,6 +312,12 @@ class Sandbox : public Craft::Application
 public:
 	Sandbox(f32 fps, WindowSetting setting) : Application(60.0f, setting)
 	{
+		v4 a{ 1,2,3,4 };
+		v4 b{ 1,2,3,4 };
+		v4 c = a + b;
+		std::cout << c << std::endl;
+		return;
+
 		PushLayer(new ExampleLayer());
 	}
 

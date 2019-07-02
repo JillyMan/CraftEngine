@@ -227,5 +227,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Craft\Math\Vectors.cpp" />
   </ItemGroup>
 </Project>
