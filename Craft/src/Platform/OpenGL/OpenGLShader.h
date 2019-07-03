@@ -1,7 +1,7 @@
 #pragma once
 
 #include "OpenGL.h"
-#include "Craft\Math\Math.h"
+#include "Craft\Math\Vectors.h"
 #include "Craft\Graphics\Shader.h"
 
 namespace Craft

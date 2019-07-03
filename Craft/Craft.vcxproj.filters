@@ -176,6 +176,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Craft\Math\Matrix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -227,6 +228,7 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />
   </ItemGroup>
 </Project>
