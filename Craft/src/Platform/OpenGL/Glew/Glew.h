@@ -71,6 +71,7 @@ GLAPI PFNGLDELETEPROGRAMPROC				_glDeleteProgram;
 
 GLAPI PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation;
 
+GLAPI PFNGLUNIFORMMATRIX4FVPROC				_glUniformMatrix4fv;
 GLAPI PFNGLUNIFORM1IPROC					_glUniform1i;
 GLAPI PFNGLUNIFORM2IPROC					_glUniform2i;
 GLAPI PFNGLUNIFORM3IPROC					_glUniform3i;
@@ -132,6 +133,7 @@ GLAPI PFNGLGENERATEMIPMAPPROC				_glGenerateMipmap;
 #define glDeleteBuffers						_glDeleteBuffers
 
 
+#define glUniformMatrix4fv					_glUniformMatrix4fv
 #define glUniform1i							_glUniform1i
 #define glUniform2i							_glUniform2i
 #define glUniform3i							_glUniform3i

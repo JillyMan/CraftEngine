@@ -2,6 +2,8 @@
 
 namespace Craft
 {
+	struct v3;
+
 	struct mat4
 	{
 		mat4() 
@@ -23,8 +25,9 @@ namespace Craft
 		friend mat4 operator *= (mat4& a, mat4& b);
 		friend std::ostream& operator << (std::ostream& os, mat4& mat);
 
-		friend mat4 Identity(f32 value = 1.0f);
-		friend mat4 Rotate(f32 angle);
+		static mat4 Identity(f32 value = 1.0f);
+		static mat4 Rotate(f32 angle);
+		static mat4 Translate(v3 v);
 
 		f32 e[16];
 	};

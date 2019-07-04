@@ -30,6 +30,8 @@ PFNGLCOMPILESHADERPROC _glCompileShader = NULL;
 PFNGLVALIDATEPROGRAMPROC _glValidateProgram = NULL;
 
 PFNGLGETUNIFORMLOCATIONARBPROC		_glGetUniformLocation = NULL;
+
+PFNGLUNIFORMMATRIX4FVPROC			_glUniformMatrix4fv = NULL;
 PFNGLUNIFORM1IPROC					_glUniform1i = NULL;
 PFNGLUNIFORM2IPROC					_glUniform2i = NULL;
 PFNGLUNIFORM3IPROC					_glUniform3i = NULL;
@@ -97,6 +99,7 @@ void loadPFN(GLEWloadproc load)
 	glCreateProgram = (PFNGLCREATEPROGRAMPROC)load("glCreateProgram");
 	glCreateBuffers = (PFNGLCREATEBUFFERSPROC)load("glCreateBuffers");
 
+	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)load("glUniformMatrix4fv");
 	glUniform1i = (PFNGLUNIFORM1IPROC)load("glUniform1i");
 	glUniform2i = (PFNGLUNIFORM2IPROC)load("glUniform2i");
 	glUniform3i = (PFNGLUNIFORM3IPROC)load("glUniform3i");

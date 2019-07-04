@@ -1,5 +1,6 @@
 #include "crpch.h"
 #include "Matrix.h"
+#include "Vectors.h"
 
 namespace Craft
 {
@@ -37,7 +38,7 @@ namespace Craft
 
 	mat4 mat4::operator*(mat4 & b)
 	{
-		return Identity(130.f);
+		return Identity(0.1f);
 	}
 
 	mat4 operator *= (mat4& a, mat4& b)
@@ -46,7 +47,16 @@ namespace Craft
 		return a;
 	}
 
-	mat4 Identity(f32 value)
+	mat4 mat4::Translate(v3 v)
+	{
+		mat4 result = Identity();
+		result[3 + 4 * 0] = v.x;
+		result[3 + 4 * 1] = v.y;
+		result[3 + 4 * 2] = v.z;
+		return result;
+	}
+
+	mat4 mat4::Identity(f32 value)
 	{
 		mat4 result;
 		result[0 + 4 * 0] = value;
@@ -56,7 +66,7 @@ namespace Craft
 		return result;
 	}
 
-	mat4 Rotate(f32 angle)
+	mat4 mat4::Rotate(f32 angle)
 	{
 		return Identity(10.0f);
 	}
@@ -73,5 +83,4 @@ namespace Craft
 		}
 		return os;
 	}
-	
 }

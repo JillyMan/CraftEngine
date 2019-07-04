@@ -26,10 +26,10 @@ const char* VertexColorUniformString = "vertexColour";
 const char* ROTOR_STRING = "rotor";
 const char* ANGLE_STRING = "angle";
 const char* MIX_COEFFICIENT_STRING = "mixCoefficient";
+const char* TRANSFORM_STRING = "transform";
 
 const char* PathToSmileImage = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\smile.bmp";
 const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\lgbt.bmp";
-
 
 const char* GetVertexShader()
 {
@@ -40,28 +40,17 @@ layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 InTexCoord1;
 layout (location = 2) in vec2 InTexCoord2;
 
-uniform float angle;
+uniform mat4 transform;
 
 out vec2 TexCoord1;
 out vec2 TexCoord2;
 
 void main()
 {
-	float _cos = cos(angle), _sin = sin(angle);
-	float x = pos.x,
-		  y = pos.y;
-
-	//vec4 newPos = vec4(pos, 1.0f); /*vec4(x * _cos - y * _sin,
-	//				   x * _sin + y * _cos,
-	//				   0.0f, 1.0f);*/
-
-	vec4 newPos = vec4(x * _cos - y * _sin,
-					   x * _sin + y * _cos,
-					   0.0f, 1.0f);
+	gl_Position = transform * vec4(pos, 1.0f);
 
 	TexCoord1 = InTexCoord1;
 	TexCoord2 = InTexCoord2;
-	gl_Position = newPos;
 })";
 }
 
@@ -93,16 +82,18 @@ protected:
 	Craft::v4 m_Color;
 	f32 m_Angle = 0.0f;
 	f32 m_MixCoeff = 0.5f;
+	mat4 m_TransformMatrix;
 
-	VertexArrayBuffer* m_VABuffer;
-	VertexBuffer* m_VBuffer;
-	IndexBuffer* m_IndexBuffer;
+	Craft::VertexArrayBuffer* m_VABuffer;
+	Craft::VertexBuffer* m_VBuffer;
+	Craft::IndexBuffer* m_IndexBuffer;
 
-	Shader* m_Shader;
-	std::vector<Texture*> m_Textures;
+	Craft::Shader* m_Shader;
+	std::vector<Craft::Texture*> m_Textures;
 
 	Shape(Craft::v4 color) :
-		m_Color(color)
+		m_Color(color), 
+		m_TransformMatrix(mat4::Identity())
 	{
 	}
 
@@ -112,6 +103,11 @@ public:
 	void SetColor(Craft::v4 color)
 	{
 		m_Color = color;
+	}
+
+	void SetTransform(mat4 transformMatrix)
+	{
+		m_TransformMatrix = transformMatrix;
 	}
 
 	void Rotate(f32 angle)
@@ -128,7 +124,7 @@ public:
 class CRectangle : public Shape
 {
 public:
-	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, std::vector<Image*> images) : 
+	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, std::vector<Craft::Image*> images) :
 		Shape(color)
 	{
 		GLfloat vertices[] =
@@ -147,16 +143,16 @@ public:
 
 		TexturesInit(images);
 
-		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
-		m_VABuffer = VertexArrayBuffer::Create();
-		m_VBuffer = VertexBuffer::Create(vertices, ArrayCount(vertices));
-		m_IndexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
+		m_Shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
+		m_VABuffer = Craft::VertexArrayBuffer::Create();
+		m_VBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
+		m_IndexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
 
-		BufferElement pos("Position", VertexDataType::Float3);
-		BufferElement textCoord1("First texture cordinates", VertexDataType::Float2);
-		BufferElement textCoord2("Second texture cordinates", VertexDataType::Float2);
+		Craft::BufferElement pos("Position", Craft::VertexDataType::Float3);
+		Craft::BufferElement textCoord1("First texture cordinates", Craft::VertexDataType::Float2);
+		Craft::BufferElement textCoord2("Second texture cordinates", Craft::VertexDataType::Float2);
 
-		BufferLayout layout( std::vector<BufferElement> {pos, textCoord1, textCoord2} );
+		Craft::BufferLayout layout( std::vector<Craft::BufferElement> {pos, textCoord1, textCoord2} );
 
 		m_VBuffer->SetLayout(layout);
 		m_VABuffer->AddVertexBuffer(m_VBuffer);
@@ -174,7 +170,7 @@ public:
 		}
 		
 		m_Shader->SetUniform1f(MIX_COEFFICIENT_STRING, m_MixCoeff);
-		m_Shader->SetUniform1f(ANGLE_STRING, m_Angle);
+		m_Shader->SetUniformMatrix4fv(TRANSFORM_STRING, m_TransformMatrix);
 
 		m_VABuffer->Bind();
 		glDrawElements(GL_TRIANGLES, m_VABuffer->GetCountIndices(), GL_UNSIGNED_INT, 0);
@@ -195,30 +191,43 @@ public:
 	}
 
 private:
-	void TexturesInit(std::vector<Image*> images)
+	void TexturesInit(std::vector<Craft::Image*> images)
 	{
-		for(Image* image : images)
+		for(Craft::Image* image : images)
 		{ 
-			Texture* texture = Texture::Create(TextureType::Texture2D);
+			Craft::Texture* texture = Craft::Texture::Create(Craft::TextureType::Texture2D);
 			texture->Bind();
-			texture->SetParameteri(TextureParameterName::MinFilter, TextureParameter::Linear);
-			texture->SetParameteri(TextureParameterName::MagFilter, TextureParameter::Linear);
+			texture->SetParameteri(Craft::TextureParameterName::MinFilter, Craft::TextureParameter::Linear);
+			texture->SetParameteri(Craft::TextureParameterName::MagFilter, Craft::TextureParameter::Linear);
 			texture->SetImage(*image);
 			m_Textures.push_back(texture);
 		}
 	}
 };
 
+struct Camera
+{
+	mat4 transform;
+
+	Camera() :
+		transform(mat4::Identity())
+	{
+	}
+
+	void Move(v3 dir)
+	{
+		transform += mat4::Translate(dir);
+	}
+
+	void Update(f32 dt)
+	{
+	}
+};
+
 class ExampleLayer : public Craft::Layer
 {
 private:
-	Shader* m_Shader;
-	OpenGLVertexBuffer* m_VBuffer;
-	IndexBuffer* m_IndexBuffer;
-
-	GLuint m_VBO;
-	GLuint m_VAO;
-	CRectangle* rect;
+	CRectangle* m_Rect;
 
 public:
 	ExampleLayer()
@@ -229,18 +238,16 @@ public:
 
 	~ExampleLayer()
 	{
-		delete m_Shader;
-		delete m_VBuffer;
-		glDeleteVertexArrays(1, &m_VAO);
+		delete m_Rect;
 	}
 
 	void InitRenderable()
 	{
-		Image* smile = ImageLoader::LoadBMPImage(String(PathToSmileImage));
-		Image* image = ImageLoader::LoadBMPImage(String(PathToTileSheets));
+		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
+		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
 
 		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
-		rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Image*> { smile, image } );
+		m_Rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Craft::Image*> { smile, image } );
 
 		delete smile;
 		delete image;
@@ -251,7 +258,7 @@ public:
 		glClearColor(0.0f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		rect->Render();
+		m_Rect->Render();
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -259,45 +266,38 @@ public:
 		Craft::EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<Craft::WindowResizeEvent>(S_BIND_EVENT_FN(OnResizeWindow));
 		dispatcher.Dispatch<Craft::KeyPressedEvent>(S_BIND_EVENT_FN(OnKeyDown));
-
 	}
 
-	float theta = 0.0f;
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		theta += deltaTime/1000.0f;
-		float sinT = sinf(theta);
-		float cosT = cosf(theta);
-		Craft::v4 color;
-
-		color.x = (sinT / 2 + 0.5f);
-		color.y = (cosT / 2 + 0.5f);
-		color.z = (sinT*cosT / 2 + 0.5f);
-
-		color.w = 1.0f;
-
-		//rect->Rotate(theta);
-		rect->SetColor(color);
+		if (moved)
+		{
+			m_Camera.Update(deltaTime);
+			m_Rect->SetTransform(m_Camera.transform);
+			moved = false;
+		}
 	}
 
 private:
-	f32 mixCoeff = 0.5f;
-	f32 speedMix = 0.05f;
+	Camera m_Camera;
+	bool moved = false;
 
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
 	{
+		v3 dir = {};
 		if (event.GetKeyCode() == VK_UP)
 		{
-			mixCoeff += speedMix;
+			dir.y = -1.0f;
 		}
 
 		if (event.GetKeyCode() == VK_DOWN)
 		{
-			mixCoeff -= speedMix;
+			dir.y = 1.0f;
 		}
 
-		rect->SetMixCoeff(mixCoeff);
-		return true;
+		m_Camera.Move(dir);
+		moved = true;
+		return moved;
 	}
 
 	bool OnResizeWindow(Craft::WindowResizeEvent& event)
@@ -307,17 +307,32 @@ private:
 	}
 };
 
+void MathTest()
+{
+	Craft::v3 a{ 1,2,3 };
+	Craft::v3 b{ 1,2,3 };
+	Craft::v3 c = a + b;
+	std::cout << "A:			" << a << std::endl;
+	std::cout << "B:			" << b << std::endl;
+	std::cout << "Dot a*b:      " << Dot(a, b)		<< std::endl;
+	std::cout << "Cross a^b:    " << Cross(a, b)	<< std::endl;
+	std::cout << "Scalar a+10:  " << (a + 10.0f)	<< std::endl;
+	std::cout << "c = a + b:    " << (a + b)		<< std::endl;
+	std::cout << "Length(c):    " << Length(c)		<< std::endl;
+	std::cout << "Normalize(c): " << Normalize(c)	<< std::endl;
+
+	mat4 mat0 = mat4::Identity(1.0);
+	mat4 mat1 = mat4::Identity(2.0);
+	mat4 mat2 = mat0 + mat1;
+
+	std::cout << "math: " << "\n" << mat2 << std::endl;
+}
+
 class Sandbox : public Craft::Application
 {
 public:
-	Sandbox(f32 fps, WindowSetting setting) : Application(60.0f, setting)
+	Sandbox(f32 fps, Craft::WindowSetting setting) : Application(60.0f, setting)
 	{
-		v4 a{ 1,2,3,4 };
-		v4 b{ 1,2,3,4 };
-		v4 c = a + b;
-		std::cout << c << std::endl;
-		return;
-
 		PushLayer(new ExampleLayer());
 	}
 
