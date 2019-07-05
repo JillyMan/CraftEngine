@@ -26,8 +26,9 @@ namespace Craft
 		friend std::ostream& operator << (std::ostream& os, mat4& mat);
 
 		static mat4 Identity(f32 value = 1.0f);
-		static mat4 Rotate(f32 angle);
-		static mat4 Translate(v3 v);
+		static mat4 Rotate(f32 angle, v3 axis);
+		static mat4 Translate(v3& v);
+		static mat4 Scale(v3& v);
 
 		f32 e[16];
 	};
