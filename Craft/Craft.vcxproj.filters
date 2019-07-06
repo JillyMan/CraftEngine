@@ -177,6 +177,7 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
+    <ClInclude Include="src\Craft\Math\MathUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -212,9 +213,6 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
-      <Filter>Platform\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -230,5 +228,9 @@
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
   </ItemGroup>
 </Project>

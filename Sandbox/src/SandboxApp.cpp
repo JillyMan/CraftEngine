@@ -1,9 +1,6 @@
 #include <map>
 #include <Craft.h>
 
-#define GAME
-
-#ifdef GAME
 	#define GL_GLEXT_PROTOTYPES
 	#include "Platform\OpenGL\OpenGL.h"
 	#include "Platform\OpenGL\OpenGLShader.h"
@@ -12,10 +9,6 @@
 	#include "Craft\Graphics\Image\ImageLoader.h"
 	#include "Platform\OpenGL\OpenGLTexture.h"
 	#include "Platform\OpenGL\OpenGLVertexArrayBuffer.h"
-#else
-	#include <iostream>
-	#include "Craft\System\Vfs\VFS.h"
-#endif
 
 using namespace Craft;
 
@@ -25,8 +18,9 @@ using namespace Craft;
 const char* VertexColorUniformString = "vertexColour";
 const char* ROTOR_STRING = "rotor";
 const char* ANGLE_STRING = "angle";
+const char* TEXTURE_STRING = "texture";
 const char* MIX_COEFFICIENT_STRING = "mixCoefficient";
-const char* TRANSFORM_STRING = "transform";
+const char* TRANSFORM_STRING = "transformMatrix";
 
 const char* PathToSmileImage = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\smile.bmp";
 const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\lgbt.bmp";
@@ -40,14 +34,14 @@ layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 InTexCoord1;
 layout (location = 2) in vec2 InTexCoord2;
 
-uniform mat4 transform;
+uniform mat4 transformMatrix;
 
 out vec2 TexCoord1;
 out vec2 TexCoord2;
 
 void main()
 {
-	gl_Position = transform * vec4(pos, 1.0f);
+	gl_Position = transformMatrix * vec4(pos, 1.0f);
 
 	TexCoord1 = InTexCoord1;
 	TexCoord2 = InTexCoord2;
@@ -165,10 +159,10 @@ public:
 		for (s32 i = 0; i < m_Textures.size(); ++i)
 		{
 			m_Textures[i]->Bind(i);
-			String name = "texture" + std::to_string(i);
+			String name = TEXTURE_STRING + std::to_string(i);
 			m_Shader->SetUniform1i(name.c_str(), i);
 		}
-		
+
 		m_Shader->SetUniform1f(MIX_COEFFICIENT_STRING, m_MixCoeff);
 		m_Shader->SetUniformMatrix4fv(TRANSFORM_STRING, m_TransformMatrix);
 
@@ -214,13 +208,19 @@ struct Camera
 	{
 	}
 
-	void Move(v3 dir)
+	void Translate(v3 dir)
 	{
-		transform += mat4::Translate(dir);
+		transform = mat4::Translate(dir);
 	}
 
-	void Update(f32 dt)
+	void Scale(v3 dir)
 	{
+		transform = mat4::Scale(dir);
+	}
+
+	void Rotate(f32 angle, v3& axis)
+	{
+		transform = mat4::Rotate(angle, axis);
 	}
 };
 
@@ -240,7 +240,7 @@ public:
 	{
 		delete m_Rect;
 	}
-
+	
 	void InitRenderable()
 	{
 		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
@@ -249,10 +249,12 @@ public:
 		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
 		m_Rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Craft::Image*> { smile, image } );
 
+		m_Camera.Translate(v3{ 1.0f, 0.0, 0.0f });
+
 		delete smile;
 		delete image;
 	}
-	
+
 	virtual void OnRender() override
 	{
 		glClearColor(0.0f, 0.1f, 0.1f, 1.0f);
@@ -268,14 +270,14 @@ public:
 		dispatcher.Dispatch<Craft::KeyPressedEvent>(S_BIND_EVENT_FN(OnKeyDown));
 	}
 
+	f32 time = 0.0f;
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		if (moved)
-		{
-			m_Camera.Update(deltaTime);
-			m_Rect->SetTransform(m_Camera.transform);
-			moved = false;
-		}
+		time += deltaTime;
+		mat4 transform;
+		transform = mat4::Translate(v3{ 1.0f, 1.0f, 0.0f }) * mat4::Scale(v3{2.0f, 2.0f, 1.0f}) * mat4::Rotate(time/10.0f, v3{ 0.0f, 0.0f, 1.0f });
+
+		m_Rect->SetTransform(transform);
 	}
 
 private:
@@ -284,19 +286,6 @@ private:
 
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
 	{
-		v3 dir = {};
-		if (event.GetKeyCode() == VK_UP)
-		{
-			dir.y = -1.0f;
-		}
-
-		if (event.GetKeyCode() == VK_DOWN)
-		{
-			dir.y = 1.0f;
-		}
-
-		m_Camera.Move(dir);
-		moved = true;
 		return moved;
 	}
 
@@ -314,25 +303,28 @@ void MathTest()
 	Craft::v3 c = a + b;
 	std::cout << "A:			" << a << std::endl;
 	std::cout << "B:			" << b << std::endl;
-	std::cout << "Dot a*b:      " << Dot(a, b)		<< std::endl;
-	std::cout << "Cross a^b:    " << Cross(a, b)	<< std::endl;
-	std::cout << "Scalar a+10:  " << (a + 10.0f)	<< std::endl;
-	std::cout << "c = a + b:    " << (a + b)		<< std::endl;
-	std::cout << "Length(c):    " << Length(c)		<< std::endl;
-	std::cout << "Normalize(c): " << Normalize(c)	<< std::endl;
+	std::cout << "Dot a*b:		" << Dot(a, b)		<< std::endl;
+	std::cout << "Cross a^b:	" << Cross(a, b)	<< std::endl;
+	std::cout << "Scalar a+10:	" << (a + 10.0f)	<< std::endl;
+	std::cout << "c = a + b:	" << (a + b)		<< std::endl;
+	std::cout << "Length(c):	" << Length(c)		<< std::endl;
+	std::cout << "Normalize(c):	" << Normalize(c)	<< std::endl;
 
 	mat4 mat0 = mat4::Identity(1.0);
 	mat4 mat1 = mat4::Identity(2.0);
 	mat4 mat2 = mat0 + mat1;
+	mat4 mat3 = mat0 * mat2;
 
 	std::cout << "math: " << "\n" << mat2 << std::endl;
+	std::cout << "m0*m1: " << "\n" << mat3 << std::endl;
 }
 
 class Sandbox : public Craft::Application
 {
 public:
-	Sandbox(f32 fps, Craft::WindowSetting setting) : Application(60.0f, setting)
+	Sandbox(f32 fps, Craft::WindowSetting setting) : Application(fps, setting)
 	{
+		MathTest();
 		PushLayer(new ExampleLayer());
 	}
 
@@ -344,6 +336,6 @@ public:
 Craft::Application* Craft::CreateApplication()
 {
 	WindowSetting setting;
-	setting.IsVSync = false;
+	setting.IsVSync = true;
 	return new Sandbox(60.0f, setting);
 }

@@ -161,6 +161,7 @@
     <ClInclude Include="src\Craft\Layer.h" />
     <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />
+    <ClInclude Include="src\Craft\Math\MathUtils.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
     <ClCompile Include="src\Craft\Log.cpp" />
+    <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
     <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
