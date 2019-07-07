@@ -15,12 +15,13 @@ using namespace Craft;
 #define S_BIND_EVENT_FN(x) std::bind(&ExampleLayer::x, this, std::placeholders::_1)
 #define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
 
-const char* VertexColorUniformString = "vertexColour";
-const char* ROTOR_STRING = "rotor";
 const char* ANGLE_STRING = "angle";
 const char* TEXTURE_STRING = "texture";
 const char* MIX_COEFFICIENT_STRING = "mixCoefficient";
-const char* TRANSFORM_STRING = "transformMatrix";
+
+const char* VIEW_MATRIX_STRING = "vw_matrix";
+const char* MODEL_MATRIX_STRING = "ml_matrix";
+const char* PROJECTION_MATRIX_STRING = "pr_matrix";
 
 const char* PathToSmileImage = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\smile.bmp";
 const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\lgbt.bmp";
@@ -34,14 +35,16 @@ layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 InTexCoord1;
 layout (location = 2) in vec2 InTexCoord2;
 
-uniform mat4 transformMatrix;
+uniform mat4 pr_matrix;
+uniform mat4 vw_matrix = mat4(1.0f);
+uniform mat4 ml_matrix = mat4(1.0f);
 
 out vec2 TexCoord1;
 out vec2 TexCoord2;
 
 void main()
 {
-	gl_Position = transformMatrix * vec4(pos, 1.0f);
+	gl_Position = pr_matrix * vw_matrix * ml_matrix * vec4(pos, 1.0f);
 
 	TexCoord1 = InTexCoord1;
 	TexCoord2 = InTexCoord2;
@@ -118,15 +121,20 @@ public:
 class CRectangle : public Shape
 {
 public:
-	CRectangle(f32 x1, f32 y1, f32 x2, f32 y2, Craft::v4 color, std::vector<Craft::Image*> images) :
+	CRectangle(f32 x, f32 y, f32 width, f32 height, Craft::v4 color, std::vector<Craft::Image*> images) :
 		Shape(color)
 	{
+		f32 x1 = x;
+		f32 y1 = y;
+		f32 x2 = x + width;
+		f32 y2 = y + height;
+
 		GLfloat vertices[] =
 		{
-			0.5f,  0.5f, 0.0f,		1.0f, 1.0f,		2.0f, 2.0f,
-			0.5f, -0.5f, 0.0f,		1.0f, 0.0f,		2.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		0.0f, 1.0f,		0.0f, 2.0f,
+			0.0f,	0.0f,	0.0f,		1.0f, 1.0f,		2.0f, 2.0f,
+			0.0f,	height,	0.0f,		1.0f, 0.0f,		2.0f, 0.0f,
+			width,	height,	0.0f,		0.0f, 0.0f,		0.0f, 0.0f,
+			width,	0.0f,	0.0f,		0.0f, 1.0f,		0.0f, 2.0f,
 		};
 
 		GLuint indices[] =
@@ -164,7 +172,7 @@ public:
 		}
 
 		m_Shader->SetUniform1f(MIX_COEFFICIENT_STRING, m_MixCoeff);
-		m_Shader->SetUniformMatrix4fv(TRANSFORM_STRING, m_TransformMatrix);
+		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_TransformMatrix);
 
 		m_VABuffer->Bind();
 		glDrawElements(GL_TRIANGLES, m_VABuffer->GetCountIndices(), GL_UNSIGNED_INT, 0);
@@ -228,7 +236,7 @@ class ExampleLayer : public Craft::Layer
 {
 private:
 	CRectangle* m_Rect;
-
+	mat4 ortho;
 public:
 	ExampleLayer()
 	{
@@ -243,11 +251,14 @@ public:
 	
 	void InitRenderable()
 	{
+		ortho = mat4::Ortho(0.0f, DEFAULT_WINDOW_WIDTH, 0.0f, DEFAULT_WINDOW_WIDTH, 0.1f, 100.f);
+
 		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
 		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
 
 		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
-		m_Rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Craft::Image*> { smile, image } );
+		//m_Rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Craft::Image*> { smile, image } );
+		m_Rect = new CRectangle(100.0f, 100.0f, 400.0f, 400.0f, color, std::vector<Craft::Image*> { smile, image });
 
 		m_Camera.Translate(v3{ 1.0f, 0.0, 0.0f });
 
@@ -274,10 +285,7 @@ public:
 	virtual void OnUpdate(f32 deltaTime) override
 	{
 		time += deltaTime;
-		mat4 transform;
-		transform = mat4::Translate(v3{ 1.0f, 1.0f, 0.0f }) * mat4::Scale(v3{2.0f, 2.0f, 1.0f}) * mat4::Rotate(time/10.0f, v3{ 0.0f, 0.0f, 1.0f });
-
-		m_Rect->SetTransform(transform);
+		//m_Rect->SetTransform(ortho);
 	}
 
 private:

@@ -2,6 +2,14 @@
 
 namespace Craft
 {
+#ifdef near
+#undef near
+#endif
+
+#ifdef far
+#undef far
+#endif
+
 	struct v3;
 
 	struct mat4
@@ -29,6 +37,9 @@ namespace Craft
 		static mat4 Rotate(f32 angle, v3& axis);
 		static mat4 Translate(v3& v);
 		static mat4 Scale(v3& v);
+
+		static mat4 Ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
+		static mat4 Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far);
 
 		f32 e[16];
 	};

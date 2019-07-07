@@ -114,6 +114,38 @@ namespace Craft
 		return result;
 	}
 
+	mat4 mat4::Ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
+	{
+		mat4 result;
+		result[0 + 0 * 4] = 2.0f / (right - left);
+		result[1 + 1 * 4] = 2.0f / (top - bottom);
+		result[2 + 2 * 4] = 2.0f / (near - far);
+		result[0 + 3 * 4] = (left + right) / (left - right);
+		result[1 + 3 * 4] = (bottom + top) / (bottom - top);
+		result[2 + 3 * 4] = (far + near) / (far - near);
+		result[3 + 3 * 4] = 1.0f;
+
+		return result;
+	}
+
+	mat4 mat4::Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far)
+	{
+		mat4 result = Identity();
+		f32 p = 1.0f / tanf(ToRadians(0.5 * fov));
+		f32 a = p / aspectRatio;
+
+		f32 b = (near + far) / (near - far);
+		f32 c = (2.0f * near * far) / (near - far);
+
+		result[0 + 0 * 4] = a;
+		result[1 + 1 * 4] = p;
+		result[2 + 2 * 4] = b;
+		result[3 + 2 * 4] = -1.0f;
+		result[2 + 3 * 4] = c;
+
+		return result;
+	}
+
 	std::ostream& operator << (std::ostream& os, mat4& mat)
 	{
 		for (int i = 0; i < 4; ++i)
