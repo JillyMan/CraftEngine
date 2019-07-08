@@ -60,7 +60,7 @@ namespace Craft
 		Event& m_Event;
 
 	public:
-		EventDispatcher(Event& event) : 
+		EventDispatcher(Event& event) :
 			m_Event(event)
 		{
 		}

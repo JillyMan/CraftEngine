@@ -1,7 +1,6 @@
 #pragma once
 
 #include "crpch.h"
-
 #include "Event.h"
 
 namespace Craft
@@ -9,7 +8,7 @@ namespace Craft
 	class CRAFT_API MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(s32 xOffset, s32 yOffset) : 
+		MouseScrolledEvent(s32 xOffset, s32 yOffset) :
 			m_XOffset(xOffset), m_YOffset(yOffset)
 		{
 		}

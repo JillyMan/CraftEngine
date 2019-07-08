@@ -2,7 +2,7 @@
 
 namespace Craft
 {
-	//Specify numbers of color component in the texture
+	//Docs. Specify numbers of color component in the texture
 	enum class InternalPixelType
 	{
 		RGB,

@@ -12,19 +12,19 @@ namespace Craft
 			case VertexDataType::Float:
 			case VertexDataType::Float2:
 			case VertexDataType::Float3:
-			case VertexDataType::Float4:	return GL_FLOAT;
+			case VertexDataType::Float4:		return GL_FLOAT;
 
 			case VertexDataType::Int:
 			case VertexDataType::Int2:
 			case VertexDataType::Int3:
-			case VertexDataType::Int4:		return GL_INT;
+			case VertexDataType::Int4:			return GL_INT;
 
-			case VertexDataType::Mat3:		return GL_FLOAT;
-			case VertexDataType::Mat4:		return GL_FLOAT;
+			case VertexDataType::Mat3:			return GL_FLOAT;
+			case VertexDataType::Mat4:			return GL_FLOAT;
 
-			case VertexDataType::Bool:		return GL_BOOL;
-			case VertexDataType::Double:	return GL_DOUBLE;
-			case VertexDataType::UnsignedInt:		return GL_UNSIGNED_INT;
+			case VertexDataType::Bool:			return GL_BOOL;
+			case VertexDataType::Double:		return GL_DOUBLE;
+			case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
 		}
 	}
 

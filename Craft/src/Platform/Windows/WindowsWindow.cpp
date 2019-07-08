@@ -10,7 +10,6 @@
 
 //--------delete dependency
 #include "Platform\OpenGL\OpenGLContext.h"
-#include "Craft/Graphics/CraftGL/CraftGLContext.h"
 //--------
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -124,6 +123,7 @@ namespace Craft {
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		//will be implemented.
 	}
 
 	bool WindowsWindow::IsVSync()

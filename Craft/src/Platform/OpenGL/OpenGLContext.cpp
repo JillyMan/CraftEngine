@@ -10,7 +10,7 @@ namespace Craft
 	{
 		if (type == GL_DEBUG_TYPE_ERROR)
 		{
-			CR_ERROR("%s [type 0x%x], [severity = 0x%x], [message=%s]\n", 
+			CR_ERROR("%s [type 0x%x], [severity = 0x%x], [message=%s]\n",
 				"** GL ERROR **", type, severity, message);
 		}
 		else

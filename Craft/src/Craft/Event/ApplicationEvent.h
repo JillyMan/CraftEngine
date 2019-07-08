@@ -1,7 +1,6 @@
 #pragma once
 
 #include "crpch.h"
-
 #include "Event.h"
 
 namespace Craft
@@ -9,7 +8,7 @@ namespace Craft
 	class CRAFT_API WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizeEvent(s32 width, s32 height) : 
+		WindowResizeEvent(s32 width, s32 height) :
 			m_Width(width), m_Height(height)
 		{
 		}

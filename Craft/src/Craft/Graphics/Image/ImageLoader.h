@@ -6,11 +6,10 @@
 
 namespace Craft
 {
+	// it's MOKE
 	class ImageLoader
 	{
 	public:
-
-		// it's now just MOKE
 		static Image* LoadBMPImage(String path)
 		{
 			u64 size;
@@ -27,12 +26,6 @@ namespace Craft
 				InternalPixelType::RGB);
 
 			return image;
-		}
-
-	private:
-		static Image* GetBMP()
-		{
-
 		}
 	};
 }

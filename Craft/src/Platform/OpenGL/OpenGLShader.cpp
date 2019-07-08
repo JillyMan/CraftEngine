@@ -28,46 +28,46 @@ namespace Craft
 		glDeleteShader(fragmentShaderId);
 	}
 
-	 OpenGLShader::~OpenGLShader()
+	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(m_ProgramId);
 	}
 
-	 void OpenGLShader::Use()
+	void OpenGLShader::Use()
 	{
 		glUseProgram(m_ProgramId);
 	}
 
-	 void OpenGLShader::Unuse()
+	void OpenGLShader::Unuse()
 	{
 		glUseProgram(0);
 	}
 
-	 void OpenGLShader::SetUniform1i(const char* name, s32 value)
+	void OpenGLShader::SetUniform1i(const char* name, s32 value)
 	{
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniform1i(location, value);
 	}
 
-	 void OpenGLShader::SetUniform1f(const char* name, f32 value)
+	void OpenGLShader::SetUniform1f(const char* name, f32 value)
 	{
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniform1f(location, value);
 	}
 
-	 void OpenGLShader::SetUniform2f(const char* name, v2& value)
+	void OpenGLShader::SetUniform2f(const char* name, v2& value)
 	{
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniform2f(location, value.x, value.y);
 	}
 
-	 void OpenGLShader::SetUniform3f(const char* name, v3& value)
+	void OpenGLShader::SetUniform3f(const char* name, v3& value)
 	{
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniform3f(location, value.x, value.y, value.z);
 	}
 
-	 void OpenGLShader::SetUniform4f(const char* name, v4& value)
+	void OpenGLShader::SetUniform4f(const char* name, v4& value)
 	{
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniform4f(location, value.x, value.y, value.z, value.w);
@@ -78,7 +78,6 @@ namespace Craft
 		GLint location = GetLocation(m_ProgramId, name);
 		glUniformMatrix4fv(location, 1, GL_FALSE, mat.e);
 	}
-
 
 	GLint OpenGLShader::GetLocation(GLuint program, const char* name)
 	{

@@ -4,7 +4,7 @@
 	#ifdef CRAFT_DYNAMIC_LINK
 		#ifdef CRAFT_BUILD_DLL
 			#define CRAFT_API __declspec(dllexport)
-		#else		
+		#else
 			#define CRAFT_API __declspec(dllimport)
 		#endif
 	#else

@@ -17,7 +17,7 @@ namespace Craft
 
 	bool FileSystem::FileExist(String& fileName)
 	{
-		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);		
+		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
 		bool Result = false;
 		if (FileHandle)
 		{
