@@ -11,6 +11,7 @@ namespace Craft
 	{
 	protected:
 		v4 m_Color;
+		mat4 modelMatrix;
 		mat4 viewProjectionMatrix;
 
 	public:
@@ -20,11 +21,6 @@ namespace Craft
 		IndexBuffer* indexBuffer;
 
 		std::vector<Craft::Texture*> m_Textures;
-
-		Shape(Craft::v4& color) :
-			m_Color(color)
-		{
-		}
 
 		virtual ~Shape()
 		{

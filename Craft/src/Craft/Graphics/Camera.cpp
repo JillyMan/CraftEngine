@@ -11,7 +11,6 @@ namespace Craft
 		m_ProjectionMatrix(projectionMatrix),
 		m_Position(position)
 	{
-		m_ViewProjectionMatrix = m_ProjectionMatrix;
 	}
 
 	Camera* Camera::CreatePerspectiveCamera(f32 fov, f32 aspectRatio, f32 _near, f32 _far, v3& position)
