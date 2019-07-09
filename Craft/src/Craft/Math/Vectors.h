@@ -13,7 +13,10 @@ namespace Craft
 			f32 e[2];
 		};
 
-		v2() = default;
+		v2()
+		{
+			x = y = 0;
+		}
 
 		v2(f32 x, f32 y) :
 			x(x), y(y)
@@ -44,7 +47,10 @@ namespace Craft
 			f32 e[3];
 		};
 
-		v3() = default;
+		v3()
+		{
+			x = y = z = 0;
+		}
 
 		v3(f32 x, f32 y, f32 z) :
 			x(x), y(y), z(z)
@@ -82,7 +88,10 @@ namespace Craft
 			f32 e[4];
 		};
 
-		v4() = default;
+		v4() 
+		{
+			x = y = z = w = 0;
+		}
 
 		v4(f32 x, f32 y, f32 z, f32 w) :
 			x(x), y(y), z(z), w(w)
