@@ -12,7 +12,7 @@ namespace Craft
 
 	void OrthographicsCamera::RecalculateMatrix()
 	{
-		m_ViewMatrix = mat4::Translate(m_Position) * mat4::Rotate(m_Rotation, v3 { 0.0f, 0.0f, 1.0f });;
+		m_ViewMatrix = mat4::Translate(m_Position) * mat4::Rotate(m_Rotation, v3 { 0.0f, 0.0f, 1.0f });
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 }

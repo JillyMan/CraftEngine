@@ -12,7 +12,7 @@ namespace Craft
 		mat4 m_ViewProjectionMatrix;
 
 		v3 m_Position;
-		f32 m_Rotation;
+		f32 m_Rotation = 0.0f;
 
 	public:
 		OrthographicsCamera(f32 left, f32 right, f32 bottom, f32 top);

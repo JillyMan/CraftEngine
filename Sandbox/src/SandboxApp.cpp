@@ -47,7 +47,7 @@ layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 InTexCoord1;
 layout (location = 2) in vec2 InTexCoord2;
 
-uniform mat4 pr_matrix;
+uniform mat4 pr_matrix = mat4(1.0f);
 uniform mat4 vw_matrix = mat4(1.0f);
 uniform mat4 ml_matrix = mat4(1.0f);
 
@@ -69,7 +69,7 @@ const char* GetFragmentShader()
 R"(
 #version 460 core
 
-uniform float mixCoefficient;
+uniform float mixCoefficient = 0.5f;
 uniform sampler2D texture0;
 uniform sampler2D texture1;
 
@@ -80,11 +80,10 @@ out vec4 color;
 void main()
 {
 	color = mix(texture(texture0, TexCoord1), 
-				texture(texture1, vec2(1.0f - TexCoord2.x, TexCoord2.y)), 
+				texture(texture1, TexCoord2), 
 				mixCoefficient);
 })";
 }
-
 
 class CRectangle : public Shape
 {
@@ -95,14 +94,14 @@ public:
 		f32 x1 = x;
 		f32 y1 = y;
 		f32 x2 = x + width;
-		f32 y2 = y + height;
+		f32 y2 = y - height;
 
 		GLfloat vertices[] =
 		{
-			x1, y2, 0.0f,		1.0f, 1.0f,		2.0f, 2.0f,
-			x2, y2, 0.0f,		1.0f, 0.0f,		2.0f, 0.0f,
-			x1, y1, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f,
-			x2, y1, 0.0f,		0.0f, 1.0f,		0.0f, 2.0f,
+			x2, y1, 0.0f,		1.0f, 1.0f,		2.0f, 2.0f,	// Top Right
+			x2, y2, 0.0f,		1.0f, 0.0f,		2.0f, 0.0f,	// Bottom Right
+			x1, y2, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f,	// Bottom Left
+			x1, y1, 0.0f,		0.0f, 1.0f,		0.0f, 2.0f,	// Top Left 
 		};
 
 		GLuint indices[] =
@@ -182,8 +181,8 @@ private:
 	OrthographicsCamera m_Camera;
 
 public:
-	ExampleLayer() : 
-		m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
+	ExampleLayer() :
+		m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		InitRenderable();
@@ -201,11 +200,12 @@ public:
 
 		m_Rect = new CRectangle(
 			-0.5, 0.5, 1.0f, 1.0f,
+			//200.0f, 200.0f, 100.f, 100.0f,
 			v4(1.0f, 0.0f, 0.0f, 1.0f),
 			std::vector<Craft::Image*> { smile, image } );
 
-		//m_Camera.SetRotation(45.0f);
-		//m_Camera.SetPosition(v3{ 0.5f, 0.5f, 0.0f });
+		m_Camera.SetRotation(0.0f);
+		m_Camera.SetPosition(v3{ 0.0f, 0.0f, 0.0f });
 
 		delete smile;
 		delete image;
@@ -216,6 +216,7 @@ public:
 		RenderCommand::SetClearColor(v4 { 0.0f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
 
+		m_Camera.SetRotation(time / 20.0f);
 		Renderer::BeginScene(m_Camera);
 		Renderer::Submit(*m_Rect);
 	}
@@ -234,8 +235,8 @@ public:
 	}
 
 private:
-	bool moved = false;
 
+	bool moved = false;
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
 	{
 		return moved;
