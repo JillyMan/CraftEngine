@@ -5,7 +5,7 @@ namespace Craft
 {
 	Renderer::SceneData Renderer::Data;
 	
-	void Renderer::BeginScene(OrthographicsCamera& camera)
+	void Renderer::BeginScene(Camera& camera)
 	{
 		Data.m_ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}

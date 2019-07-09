@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Camera.h"
 #include "RenderCommand.h"
-#include "OrthographicsCamera.h"
 
 #include "Primitives\Shape.h"
 
@@ -11,7 +11,7 @@ namespace Craft
 	{
 	public:
 
-		static void BeginScene(OrthographicsCamera& camera);
+		static void BeginScene(Camera& camera);
 		static void Submit(Shape& shape);
 
 	private:

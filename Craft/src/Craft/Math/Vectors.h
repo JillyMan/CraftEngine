@@ -74,6 +74,11 @@ namespace Craft
 
 			struct
 			{
+				f32 x, y, w, h;
+			};
+
+			struct
+			{
 				v2 xy;
 				f32 _Ignored3;
 				f32 _Ignored4;

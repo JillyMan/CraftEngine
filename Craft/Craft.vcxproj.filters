@@ -172,7 +172,6 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\MathUtils.h" />
-    <ClInclude Include="src\Craft\Graphics\OrthographicsCamera.h" />
     <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
     <ClInclude Include="src\Craft\Graphics\VertexArray.h">
       <Filter>Craft\Graphics</Filter>
@@ -184,6 +183,9 @@
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Craft\Graphics\Renderer.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
+    <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Camera.h" />
+    <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -235,7 +237,6 @@
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
-    <ClCompile Include="src\Craft\Graphics\OrthographicsCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
@@ -243,5 +244,8 @@
     <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Camera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

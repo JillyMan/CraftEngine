@@ -21,12 +21,15 @@ namespace Craft
 
 		std::vector<Craft::Texture*> m_Textures;
 
-		Shape(Craft::v4 color) :
+		Shape(Craft::v4& color) :
 			m_Color(color)
 		{
 		}
 
-		virtual ~Shape() = default;
+		virtual ~Shape()
+		{
+			FreeResources();
+		}
 
 		virtual void BeginDraw() = 0;
 		virtual void EndDraw() = 0;
@@ -40,6 +43,34 @@ namespace Craft
 		void SetViewProjectinMatrix(mat4& matrix)
 		{
 			viewProjectionMatrix = matrix;
+		}
+
+	protected:
+		void TexturesInit(std::vector<Craft::Image*> images)
+		{
+			for (Craft::Image* image : images)
+			{
+				Craft::Texture* texture = Craft::Texture::Create(Craft::TextureType::Texture2D);
+				texture->Bind();
+				texture->SetParameteri(Craft::TextureParameterName::MinFilter, Craft::TextureParameter::Linear);
+				texture->SetParameteri(Craft::TextureParameterName::MagFilter, Craft::TextureParameter::Linear);
+				texture->SetImage(*image);
+				m_Textures.push_back(texture);
+			}
+		}
+
+	protected:
+		virtual void FreeResources()
+		{
+			for (s32 i = 0; i < m_Textures.size(); ++i)
+			{
+				delete m_Textures[i];
+			}
+
+			delete shader;
+			delete vertexArray;
+			delete vertexBuffer;
+			delete indexBuffer;
 		}
 	};
 }
