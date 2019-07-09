@@ -1,14 +1,26 @@
 #include <map>
 #include <Craft.h>
 
-	#define GL_GLEXT_PROTOTYPES
-	#include "Platform\OpenGL\OpenGL.h"
-	#include "Platform\OpenGL\OpenGLShader.h"
-	#include "Platform\OpenGL\OpenGLBuffer.h"
-	#include "Craft\Graphics\Texture.h"
-	#include "Craft\Graphics\Image\ImageLoader.h"
-	#include "Platform\OpenGL\OpenGLTexture.h"
-	#include "Platform\OpenGL\OpenGLVertexArrayBuffer.h"
+#define GL_GLEXT_PROTOTYPES
+#include "Craft\Graphics\Texture.h"
+#include "Craft\Graphics\RenderCommand.h"
+#include "Craft\Graphics\Image\ImageLoader.h"
+#include "Craft\Graphics\OrthographicsCamera.h"
+
+#include "Craft\Graphics\RendererAPI.h"
+#include "Craft\Graphics\Renderer.h"
+
+#include "Craft\Graphics\Primitives\Shape.h"
+
+
+//------ PLATFORM CODE -------
+#include "Platform\OpenGL\OpenGL.h"
+#include "Platform\OpenGL\OpenGLShader.h"
+#include "Platform\OpenGL\OpenGLBuffer.h"
+#include "Platform\OpenGL\OpenGLTexture.h"
+#include "Platform\OpenGL\OpenGLVertexArray.h"
+#include "Platform\OpenGL\OpenGLRendererAPI.h"
+//----------------------------
 
 using namespace Craft;
 
@@ -73,50 +85,6 @@ void main()
 })";
 }
 
-class Shape
-{
-protected:
-	Craft::v4 m_Color;
-	f32 m_Angle = 0.0f;
-	f32 m_MixCoeff = 0.5f;
-	mat4 m_TransformMatrix;
-
-	Craft::VertexArrayBuffer* m_VABuffer;
-	Craft::VertexBuffer* m_VBuffer;
-	Craft::IndexBuffer* m_IndexBuffer;
-
-	Craft::Shader* m_Shader;
-	std::vector<Craft::Texture*> m_Textures;
-
-	Shape(Craft::v4 color) :
-		m_Color(color), 
-		m_TransformMatrix(mat4::Identity())
-	{
-	}
-
-	virtual ~Shape() = default;
-
-public:
-	void SetColor(Craft::v4 color)
-	{
-		m_Color = color;
-	}
-
-	void SetTransform(mat4 transformMatrix)
-	{
-		m_TransformMatrix = transformMatrix;
-	}
-
-	void Rotate(f32 angle)
-	{
-		m_Angle = angle;
-	}
-
-	void SetMixCoeff(float mixCoeff)
-	{
-		m_MixCoeff = mixCoeff;
-	}
-};
 
 class CRectangle : public Shape
 {
@@ -131,10 +99,10 @@ public:
 
 		GLfloat vertices[] =
 		{
-			0.0f,	0.0f,	0.0f,		1.0f, 1.0f,		2.0f, 2.0f,
-			0.0f,	height,	0.0f,		1.0f, 0.0f,		2.0f, 0.0f,
-			width,	height,	0.0f,		0.0f, 0.0f,		0.0f, 0.0f,
-			width,	0.0f,	0.0f,		0.0f, 1.0f,		0.0f, 2.0f,
+			x1, y2, 0.0f,		1.0f, 1.0f,		2.0f, 2.0f,
+			x2, y2, 0.0f,		1.0f, 0.0f,		2.0f, 0.0f,
+			x1, y1, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f,
+			x2, y1, 0.0f,		0.0f, 1.0f,		0.0f, 2.0f,
 		};
 
 		GLuint indices[] =
@@ -145,10 +113,10 @@ public:
 
 		TexturesInit(images);
 
-		m_Shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
-		m_VABuffer = Craft::VertexArrayBuffer::Create();
-		m_VBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
-		m_IndexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
+		shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
+		vertexArray = Craft::VertexArray::Create();
+		vertexBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
+		indexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
 
 		Craft::BufferElement pos("Position", Craft::VertexDataType::Float3);
 		Craft::BufferElement textCoord1("First texture cordinates", Craft::VertexDataType::Float2);
@@ -156,40 +124,40 @@ public:
 
 		Craft::BufferLayout layout( std::vector<Craft::BufferElement> {pos, textCoord1, textCoord2} );
 
-		m_VBuffer->SetLayout(layout);
-		m_VABuffer->AddVertexBuffer(m_VBuffer);
-		m_VABuffer->SetIndexBuffer(m_IndexBuffer);
+		vertexBuffer->SetLayout(layout);
+		vertexArray->AddVertexBuffer(vertexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
 	}
 
-	void Render()
+	virtual void BeginDraw() override
 	{
-		m_Shader->Use();
+		shader->Use();
 		for (s32 i = 0; i < m_Textures.size(); ++i)
 		{
 			m_Textures[i]->Bind(i);
 			String name = TEXTURE_STRING + std::to_string(i);
-			m_Shader->SetUniform1i(name.c_str(), i);
+			shader->SetUniform1i(name.c_str(), i);
 		}
 
-		m_Shader->SetUniform1f(MIX_COEFFICIENT_STRING, m_MixCoeff);
-		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_TransformMatrix);
+		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, viewProjectionMatrix);
+		vertexArray->Bind();
+	}
 
-		m_VABuffer->Bind();
-		glDrawElements(GL_TRIANGLES, m_VABuffer->GetCountIndices(), GL_UNSIGNED_INT, 0);
+	virtual void EndDraw() override
+	{
 	}
 
 	~CRectangle()
 	{
-
 		for (s32 i = 0; i < m_Textures.size(); ++i)
 		{
 			delete m_Textures[i];
 		}
 
-		delete m_Shader;
-		delete m_VABuffer;
-		delete m_VBuffer;
-		delete m_IndexBuffer;
+		delete shader;
+		delete vertexArray;
+		delete vertexBuffer;
+		delete indexBuffer;
 	}
 
 private:
@@ -207,38 +175,15 @@ private:
 	}
 };
 
-struct Camera
-{
-	mat4 transform;
-
-	Camera() :
-		transform(mat4::Identity())
-	{
-	}
-
-	void Translate(v3 dir)
-	{
-		transform = mat4::Translate(dir);
-	}
-
-	void Scale(v3 dir)
-	{
-		transform = mat4::Scale(dir);
-	}
-
-	void Rotate(f32 angle, v3& axis)
-	{
-		transform = mat4::Rotate(angle, axis);
-	}
-};
-
 class ExampleLayer : public Craft::Layer
 {
 private:
 	CRectangle* m_Rect;
-	mat4 ortho;
+	OrthographicsCamera m_Camera;
+
 public:
-	ExampleLayer()
+	ExampleLayer() : 
+		m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		InitRenderable();
@@ -251,16 +196,16 @@ public:
 	
 	void InitRenderable()
 	{
-		ortho = mat4::Ortho(0.0f, DEFAULT_WINDOW_WIDTH, 0.0f, DEFAULT_WINDOW_WIDTH, 0.1f, 100.f);
-
 		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
 		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
 
-		Craft::v4 color = Craft::v4(1.0f, 0.0f, 0.0f, 1.0f);
-		//m_Rect = new CRectangle(-0.5, 0.5, 0.5f, -0.5f, color, std::vector<Craft::Image*> { smile, image } );
-		m_Rect = new CRectangle(100.0f, 100.0f, 400.0f, 400.0f, color, std::vector<Craft::Image*> { smile, image });
+		m_Rect = new CRectangle(
+			-0.5, 0.5, 1.0f, 1.0f,
+			v4(1.0f, 0.0f, 0.0f, 1.0f),
+			std::vector<Craft::Image*> { smile, image } );
 
-		m_Camera.Translate(v3{ 1.0f, 0.0, 0.0f });
+		//m_Camera.SetRotation(45.0f);
+		//m_Camera.SetPosition(v3{ 0.5f, 0.5f, 0.0f });
 
 		delete smile;
 		delete image;
@@ -268,10 +213,11 @@ public:
 
 	virtual void OnRender() override
 	{
-		glClearColor(0.0f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		RenderCommand::SetClearColor(v4 { 0.0f, 0.1f, 0.1f, 1.0f });
+		RenderCommand::Clear();
 
-		m_Rect->Render();
+		Renderer::BeginScene(m_Camera);
+		Renderer::Submit(*m_Rect);
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -285,11 +231,9 @@ public:
 	virtual void OnUpdate(f32 deltaTime) override
 	{
 		time += deltaTime;
-		//m_Rect->SetTransform(ortho);
 	}
 
 private:
-	Camera m_Camera;
 	bool moved = false;
 
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
@@ -304,8 +248,11 @@ private:
 	}
 };
 
+#define CRAFT_MATH_TEST
+
 void MathTest()
 {
+#ifdef CRAFT_MATH_TEST
 	Craft::v3 a{ 1,2,3 };
 	Craft::v3 b{ 1,2,3 };
 	Craft::v3 c = a + b;
@@ -325,6 +272,7 @@ void MathTest()
 
 	std::cout << "math: " << "\n" << mat2 << std::endl;
 	std::cout << "m0*m1: " << "\n" << mat3 << std::endl;
+#endif
 }
 
 class Sandbox : public Craft::Application
