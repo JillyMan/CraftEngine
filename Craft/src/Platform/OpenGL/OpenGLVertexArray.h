@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Craft\Graphics\VertexArrayBuffer.h"
+#include "Craft\Graphics\VertexArray.h"
 
 namespace Craft
 {
-	class OpenGLVertexArrayBuffer : public VertexArrayBuffer
+	class OpenGLVertexArray : public VertexArray
 	{
 	public:
-		OpenGLVertexArrayBuffer();
-		virtual ~OpenGLVertexArrayBuffer();
+		OpenGLVertexArray();
+		virtual ~OpenGLVertexArray();
 
 		virtual void Bind();
 		virtual void Unbind();

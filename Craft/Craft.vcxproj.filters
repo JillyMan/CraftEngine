@@ -100,9 +100,6 @@
     <ClInclude Include="src\Craft\Graphics\Texture.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\VertexArrayBuffer.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Layer.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -163,9 +160,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.h">
-      <Filter>Platform\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
@@ -178,6 +172,18 @@
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\MathUtils.h" />
+    <ClInclude Include="src\Craft\Graphics\OrthographicsCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
+    <ClInclude Include="src\Craft\Graphics\VertexArray.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
+    <ClInclude Include="src\Craft\Graphics\Renderer.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -210,9 +216,6 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArrayBuffer.cpp">
-      <Filter>Platform\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -232,5 +235,13 @@
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
+    <ClCompile Include="src\Craft\Graphics\OrthographicsCamera.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
+    <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />
   </ItemGroup>
 </Project>

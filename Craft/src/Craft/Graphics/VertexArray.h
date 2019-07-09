@@ -4,7 +4,7 @@
 
 namespace Craft {
 
-	class VertexArrayBuffer
+	class VertexArray
 	{
 	public:
 		virtual void Bind() = 0;
@@ -15,6 +15,6 @@ namespace Craft {
 
 		virtual u32 GetCountIndices() = 0;
 
-		static VertexArrayBuffer* Create();
+		static VertexArray* Create();
 	};
 }

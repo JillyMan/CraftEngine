@@ -1,7 +1,7 @@
 #include "crpch.h"
 
 #include "Platform\OpenGL\OpenGL.h"
-#include "OpenGLVertexArrayBuffer.h"
+#include "OpenGLVertexArray.h"
 
 namespace Craft
 {
@@ -28,32 +28,32 @@ namespace Craft
 		}
 	}
 
-	VertexArrayBuffer* VertexArrayBuffer::Create()
+	VertexArray* VertexArray::Create()
 	{
-		return new OpenGLVertexArrayBuffer();
+		return new OpenGLVertexArray();
 	}
 
-	Craft::OpenGLVertexArrayBuffer::OpenGLVertexArrayBuffer()
+	Craft::OpenGLVertexArray::OpenGLVertexArray()
 	{
 		glCreateVertexArrays(1, &m_BufferId);
 	}
 
-	Craft::OpenGLVertexArrayBuffer::~OpenGLVertexArrayBuffer()
+	Craft::OpenGLVertexArray::~OpenGLVertexArray()
 	{
 		glDeleteVertexArrays(1, &m_BufferId);
 	}
 
-	void Craft::OpenGLVertexArrayBuffer::Bind()
+	void Craft::OpenGLVertexArray::Bind()
 	{
 		glBindVertexArray(m_BufferId);
 	}
 
-	void Craft::OpenGLVertexArrayBuffer::Unbind()
+	void Craft::OpenGLVertexArray::Unbind()
 	{
 		glBindVertexArray(0);
 	}
 
-	void Craft::OpenGLVertexArrayBuffer::AddVertexBuffer(VertexBuffer* buffer)
+	void Craft::OpenGLVertexArray::AddVertexBuffer(VertexBuffer* buffer)
 	{
 		CR_ASSERT(buffer, "Buffer not initilized!");
 		Bind();
@@ -81,7 +81,7 @@ namespace Craft
 		m_VertexBuffers.push_back(buffer);
 	}
 
-	void Craft::OpenGLVertexArrayBuffer::SetIndexBuffer(IndexBuffer* buffer)
+	void Craft::OpenGLVertexArray::SetIndexBuffer(IndexBuffer* buffer)
 	{
 		Bind();
 		buffer->Bind();
