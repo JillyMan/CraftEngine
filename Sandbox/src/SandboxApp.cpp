@@ -27,6 +27,7 @@ using namespace Craft;
 const char* ANGLE_STRING = "angle";
 const char* TEXTURE_STRING = "texture";
 const char* MIX_COEFFICIENT_STRING = "mixCoefficient";
+const char* U_COLOR_STRING = "u_color";
 
 const char* VIEW_MATRIX_STRING = "vw_matrix";
 const char* MODEL_MATRIX_STRING = "ml_matrix";
@@ -69,6 +70,7 @@ R"(
 uniform float mixCoefficient = 0.5f;
 uniform sampler2D texture0;
 uniform sampler2D texture1;
+uniform vec4 u_color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 in vec2 TexCoord1;
 in vec2 TexCoord2;
@@ -76,7 +78,7 @@ out vec4 color;
 
 void main()
 {
-	color = mix(texture(texture0, TexCoord1), 
+	color = u_color * mix(texture(texture0, TexCoord1), 
 				texture(texture1, TexCoord2), 
 				mixCoefficient);
 })";
@@ -90,14 +92,28 @@ void main()
 class Cube : public Shape
 {
 public:
-	Cube(std::vector<Craft::Image*> images)
+	Cube(f32 x, f32 y, std::vector<Craft::Image*> images)
 	{
 		Init();
+		SetPosition(v3(x, y, 0.0f));
 		this->TexturesInit(images);
 	}
 
 	virtual void BeginDraw() override
 	{
+		shader->Use();
+		for (s32 i = 0; i < m_Textures.size(); ++i)
+		{
+			m_Textures[i]->Bind(i);
+			String name = TEXTURE_STRING + std::to_string(i);
+			shader->SetUniform1i(name.c_str(), i);
+		}
+
+		shader->SetUniform4f(U_COLOR_STRING, v4(1.0f, 0.0f, 0.0f, 1.0f));
+		shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
+		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
+
+		vertexArray->Bind();
 	}
 
 	virtual void EndDraw() override
@@ -107,7 +123,82 @@ public:
 private: 
 	void Init()
 	{
-		
+		f32 vertices[] = {
+			//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+			//0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+			//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			//0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			//0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			//-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			//-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			//0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			//0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			//0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+			// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			//-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+
+			0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+		};
+
+		u32 indices[] = {
+			0, 2, 1, //face front
+			0, 3, 2,
+			2, 3, 4, //face top
+			2, 4, 5,
+			1, 2, 5, //face right
+			1, 5, 6,
+			0, 7, 4, //face left
+			0, 4, 3,
+			5, 4, 7, //face back
+			5, 7, 6,
+			0, 6, 7, //face bottom
+			0, 1, 6
+		};
+
+		shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
+		vertexArray = Craft::VertexArray::Create();
+		vertexBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
+		indexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
+
+		Craft::BufferElement pos("Position", Craft::VertexDataType::Float3);
+		Craft::BufferElement textCoord1("First texture cordinates", Craft::VertexDataType::Float2);
+
+		Craft::BufferLayout layout(std::vector<Craft::BufferElement> { pos, textCoord1 });
+
+		vertexBuffer->SetLayout(layout);
+		vertexArray->AddVertexBuffer(vertexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
 	}
 };
 
@@ -175,8 +266,9 @@ public:
 class ExampleLayer : public Craft::Layer
 {
 private:
-	CRectangle* m_Rect;
-	CRectangle* m_Rect1;
+	Shape* m_Rect;
+	Shape* m_Rect1;
+	Shape* m_Cube;
 
 	Camera* m_Camera;
 	Camera* m_Camera0;
@@ -195,6 +287,9 @@ public:
 	
 	void InitRenderable()
 	{
+		RenderCommand::SetClearColor(v4{ 0.0f, 0.1f, 0.1f, 1.0f });
+		RenderCommand::ZTest(true);
+
 		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
 					v3(0.0f, 0.0f, -5.0f));
@@ -205,10 +300,14 @@ public:
 		m_Rect1 = new CRectangle(
 			0.0f, 0.0f, 1.0f, 1.0f,
 			std::vector<Craft::Image*> { image, smile } );
+		m_Rect1->SetRotation(-55.0f, v3(1.0f, 0.0f, 0.0f));
 
 		m_Rect = new CRectangle(
 			-1.0f, 0.0f, 1.0f, 1.0f,
 			std::vector<Craft::Image*> { image });
+
+		m_Cube = new Cube(0.0f, 0.0f, std::vector<Craft::Image*> { smile });
+		m_Cube->SetRotation(55.0f, v3(0.0f, 0.0f, 1.0f));
 
 		delete smile;
 		delete image;
@@ -216,13 +315,13 @@ public:
 
 	virtual void OnRender() override
 	{
-		RenderCommand::SetClearColor(v4 { 0.0f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
 
-		//m_Camera->SetRotation(time / 20.0f);
 		Renderer::BeginScene(*m_Camera);
+
 		Renderer::Submit(*m_Rect);
 		Renderer::Submit(*m_Rect1);
+		Renderer::Submit(*m_Cube);
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -232,16 +331,9 @@ public:
 		dispatcher.Dispatch<Craft::KeyPressedEvent>(S_BIND_EVENT_FN(OnKeyDown));
 	}
 
-	f32 nowTime = 0.0f;
-	f32 lastTime = 0.0f;
-
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		lastTime = nowTime;
-		nowTime += deltaTime;
-//		f32 rotate = Lerp(0.0, 1.0f, sinf(nowTime));
-
-	//	m_Rect->SetRotation(rotate, v3(0.0f, 0.0f, 1.0f));
+		
 	}
 
 private:
@@ -274,6 +366,17 @@ private:
 		{
 			P.x -= 0.2f;
 		}
+
+		if (event.GetKeyCode() == VK_NUMPAD1)
+		{
+			P.y += 0.2f;
+		}
+
+		if (event.GetKeyCode() == VK_NUMPAD4)
+		{
+			P.y -= 0.2f;
+		}
+
 
 		m_Camera->SetPosition(P);
 
@@ -338,6 +441,6 @@ public:
 Craft::Application* Craft::CreateApplication()
 {
 	WindowSetting setting;
-	setting.IsVSync = true;
+	setting.IsVSync = false;
 	return new Sandbox(60.0f, setting);
 }

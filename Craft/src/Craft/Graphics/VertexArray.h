@@ -14,6 +14,7 @@ namespace Craft {
 		virtual void SetIndexBuffer(IndexBuffer* buffer) = 0;
 
 		virtual u32 GetCountIndices() = 0;
+		virtual u32 GetCountVertices() = 0;
 
 		static VertexArray* Create();
 	};

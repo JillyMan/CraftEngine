@@ -33,7 +33,8 @@ namespace Craft
 		return new OpenGLVertexArray();
 	}
 
-	Craft::OpenGLVertexArray::OpenGLVertexArray()
+	Craft::OpenGLVertexArray::OpenGLVertexArray() : 
+		m_VertexCount(0)
 	{
 		glCreateVertexArrays(1, &m_BufferId);
 	}
@@ -79,6 +80,7 @@ namespace Craft
 		}
 
 		m_VertexBuffers.push_back(buffer);
+		m_VertexCount += buffer->GetCount();
 	}
 
 	void Craft::OpenGLVertexArray::SetIndexBuffer(IndexBuffer* buffer)

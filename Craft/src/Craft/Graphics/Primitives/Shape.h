@@ -14,6 +14,7 @@ namespace Craft
 		v3 m_Axis;
 		v3 m_Scale;
 		v3 m_Position;
+		v3 m_Origin;
 		v4 m_Color;
 
 		mat4 m_ModelMatrix;

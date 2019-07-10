@@ -10,7 +10,6 @@ namespace Craft
 	class Renderer
 	{
 	public:
-
 		static void BeginScene(Camera& camera);
 		static void Submit(Shape& shape);
 

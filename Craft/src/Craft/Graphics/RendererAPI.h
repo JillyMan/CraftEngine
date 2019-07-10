@@ -18,6 +18,10 @@ namespace Craft
 		virtual void Clear() = 0;
 
 		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
+		virtual void DrawArrays(VertexArray* vertexArray) = 0;
+
+		virtual void ZTest(bool enabled) = 0;
+
 		inline static API GetAPI() { return s_API; }
 
 	private:

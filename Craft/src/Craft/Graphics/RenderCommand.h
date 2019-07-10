@@ -22,6 +22,16 @@ namespace Craft
 			s_RendererAPI->DrawIndexed(vertexArray);
 		}
 
+		inline static void DrawArray(VertexArray* vertexArray)
+		{
+			s_RendererAPI->DrawArrays(vertexArray);
+		}
+
+		inline static void ZTest(bool enabled)
+		{
+			s_RendererAPI->ZTest(enabled);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
 	};

@@ -11,5 +11,8 @@ namespace Craft
 		virtual void SetClearColor(const v4& color) override;
 
 		virtual void DrawIndexed(VertexArray* vertexArray) override;
+		virtual void DrawArrays(VertexArray* vertexArray) override;
+
+		virtual void ZTest(bool enabled) override;
 	};
 }
