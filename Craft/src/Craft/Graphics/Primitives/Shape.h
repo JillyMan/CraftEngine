@@ -10,9 +10,14 @@ namespace Craft
 	class Shape
 	{
 	protected:
+		f32 m_Rotation;
+		v3 m_Axis;
+		v3 m_Scale;
+		v3 m_Position;
 		v4 m_Color;
-		mat4 modelMatrix;
-		mat4 viewProjectionMatrix;
+
+		mat4 m_ModelMatrix;
+		mat4 m_ViewProjectionMatrix;
 
 	public:
 		Shader* shader;
@@ -21,6 +26,14 @@ namespace Craft
 		IndexBuffer* indexBuffer;
 
 		std::vector<Craft::Texture*> m_Textures;
+
+		Shape() :
+			m_ModelMatrix(mat4::Identity()),
+			m_Scale(1.0f, 1.0f, 1.0f),
+			m_Axis(v3(1.0f, 1.0f, 1.0f)),
+			m_Rotation(0)
+		{
+		}
 
 		virtual ~Shape()
 		{
@@ -31,14 +44,25 @@ namespace Craft
 		virtual void EndDraw() = 0;
 
 	public:
-		void SetColor(Craft::v4 color)
+		void SetViewProjectinMatrix(mat4& matrix) { m_ViewProjectionMatrix = matrix; }
+
+		void SetColor(Craft::v4& color) { m_Color = color; }
+
+		void SetPosition(v3& position) { m_Position = position; RecalculateModelMatrix(); }
+
+		void SetRotation(f32 rotation, v3& axis)
 		{
-			m_Color = color;
+			m_Rotation = rotation;
+			m_Axis = axis;
+			RecalculateModelMatrix();
 		}
 
-		void SetViewProjectinMatrix(mat4& matrix)
+		void SetScale(v3& scale) { m_Scale = scale; RecalculateModelMatrix(); }
+
+	private:
+		void RecalculateModelMatrix()
 		{
-			viewProjectionMatrix = matrix;
+			m_ModelMatrix = mat4::VeiwModelMatrix(m_Position, m_Scale, m_Rotation, m_Axis);
 		}
 
 	protected:

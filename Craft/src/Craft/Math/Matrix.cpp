@@ -146,6 +146,24 @@ namespace Craft
 		return result;
 	}
 
+	mat4 mat4::VeiwModelMatrix(v3& pos, f32 rotation, v3& axis) 
+	{
+		mat4 result = mat4::Translate(pos) * mat4::Rotate(rotation, axis);
+		return result;
+	}
+
+	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale)
+	{
+		mat4 result = mat4::Translate(pos) * mat4::Scale(scale);
+		return result;
+	}
+
+	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis)
+	{
+		mat4 result = mat4::Translate(pos) * mat4::Scale(scale) * mat4::Rotate(rotation, axis);
+		return result;
+	}
+
 	std::ostream& operator << (std::ostream& os, mat4& mat)
 	{
 		for (int i = 0; i < 4; ++i)

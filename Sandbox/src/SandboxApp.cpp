@@ -1,17 +1,14 @@
 #include <map>
 #include <Craft.h>
 
-#define GL_GLEXT_PROTOTYPES
-#include "Craft\Graphics\Texture.h"
-#include "Craft\Graphics\RenderCommand.h"
-#include "Craft\Graphics\Image\ImageLoader.h"
-#include "Craft\Graphics\OrthographicsCamera.h"
-
-#include "Craft\Graphics\RendererAPI.h"
 #include "Craft\Graphics\Renderer.h"
+#include "Craft\Graphics\RendererAPI.h"
+#include "Craft\Graphics\RenderCommand.h"
 
-#include "Craft\Graphics\Primitives\Shape.h"
+#include "Craft\Graphics\Camera.h"
 
+#include "Craft\Graphics\Texture.h"
+#include "Craft\Graphics\Image\ImageLoader.h"
 
 //------ PLATFORM CODE -------
 #include "Platform\OpenGL\OpenGL.h"
@@ -85,23 +82,47 @@ void main()
 })";
 }
 
+#define FOV				45.0f
+#define ASPECT_RATIO	DEFAULT_WINDOW_WIDTH / DEFAULT_WINDOW_HEIGHT
+#define NEAR_PLANE		0.1f
+#define FAR_PLANE		100.0f
+
+class Cube : public Shape
+{
+public:
+	Cube(std::vector<Craft::Image*> images)
+	{
+		Init();
+		this->TexturesInit(images);
+	}
+
+	virtual void BeginDraw() override
+	{
+	}
+
+	virtual void EndDraw() override
+	{
+	}
+
+private: 
+	void Init()
+	{
+		
+	}
+};
+
 class CRectangle : public Shape
 {
 public:
-	CRectangle(f32 x, f32 y, f32 width, f32 height, Craft::v4 color, std::vector<Craft::Image*> images) :
-		Shape(color)
+	CRectangle(f32 x, f32 y, f32 w, f32 h, 
+		std::vector<Craft::Image*> images)
 	{
-		f32 x1 = x;
-		f32 y1 = y;
-		f32 x2 = x + width;
-		f32 y2 = y - height;
-
 		GLfloat vertices[] =
 		{
-			x2, y1, 0.0f,		1.0f, 1.0f,		2.0f, 2.0f,	// Top Right
-			x2, y2, 0.0f,		1.0f, 0.0f,		2.0f, 0.0f,	// Bottom Right
-			x1, y2, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f,	// Bottom Left
-			x1, y1, 0.0f,		0.0f, 1.0f,		0.0f, 2.0f,	// Top Left 
+			w,    0.0f, 1.0f,		1.0f, 1.0f,		4.0f, 4.0f,	// Top Right
+			w,    -h,	1.0f,		1.0f, 0.0f,		4.0f, 0.0f,	// Bottom Right
+			0.0f, -h,	1.0f,		0.0f, 0.0f,		0.0f, 0.0f,	// Bottom Left
+			0.0f, 0.0f, 1.0f,		0.0f, 1.0f,		0.0f, 4.0f,	// Top Left 
 		};
 
 		GLuint indices[] =
@@ -109,6 +130,8 @@ public:
 			0, 1, 3,
 			1, 2, 3
 		};
+
+		SetPosition(v3{ x, y, 0.0f });
 
 		TexturesInit(images);
 
@@ -138,39 +161,14 @@ public:
 			shader->SetUniform1i(name.c_str(), i);
 		}
 
-		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, viewProjectionMatrix);
+		shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
+		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
 		vertexArray->Bind();
 	}
 
 	virtual void EndDraw() override
 	{
-	}
-
-	~CRectangle()
-	{
-		for (s32 i = 0; i < m_Textures.size(); ++i)
-		{
-			delete m_Textures[i];
-		}
-
-		delete shader;
-		delete vertexArray;
-		delete vertexBuffer;
-		delete indexBuffer;
-	}
-
-private:
-	void TexturesInit(std::vector<Craft::Image*> images)
-	{
-		for(Craft::Image* image : images)
-		{ 
-			Craft::Texture* texture = Craft::Texture::Create(Craft::TextureType::Texture2D);
-			texture->Bind();
-			texture->SetParameteri(Craft::TextureParameterName::MinFilter, Craft::TextureParameter::Linear);
-			texture->SetParameteri(Craft::TextureParameterName::MagFilter, Craft::TextureParameter::Linear);
-			texture->SetImage(*image);
-			m_Textures.push_back(texture);
-		}
+		//...unbind...
 	}
 };
 
@@ -178,11 +176,13 @@ class ExampleLayer : public Craft::Layer
 {
 private:
 	CRectangle* m_Rect;
-	OrthographicsCamera m_Camera;
+	CRectangle* m_Rect1;
+
+	Camera* m_Camera;
+	Camera* m_Camera0;
 
 public:
-	ExampleLayer() :
-		m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+	ExampleLayer()
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		InitRenderable();
@@ -195,17 +195,20 @@ public:
 	
 	void InitRenderable()
 	{
+		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
+		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
+					v3(0.0f, 0.0f, -5.0f));
+
 		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
 		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
 
-		m_Rect = new CRectangle(
-			-0.5, 0.5, 1.0f, 1.0f,
-			//200.0f, 200.0f, 100.f, 100.0f,
-			v4(1.0f, 0.0f, 0.0f, 1.0f),
-			std::vector<Craft::Image*> { smile, image } );
+		m_Rect1 = new CRectangle(
+			0.0f, 0.0f, 1.0f, 1.0f,
+			std::vector<Craft::Image*> { image, smile } );
 
-		m_Camera.SetRotation(0.0f);
-		m_Camera.SetPosition(v3{ 0.0f, 0.0f, 0.0f });
+		m_Rect = new CRectangle(
+			-1.0f, 0.0f, 1.0f, 1.0f,
+			std::vector<Craft::Image*> { image });
 
 		delete smile;
 		delete image;
@@ -216,9 +219,10 @@ public:
 		RenderCommand::SetClearColor(v4 { 0.0f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
 
-		m_Camera.SetRotation(time / 20.0f);
-		Renderer::BeginScene(m_Camera);
+		//m_Camera->SetRotation(time / 20.0f);
+		Renderer::BeginScene(*m_Camera);
 		Renderer::Submit(*m_Rect);
+		Renderer::Submit(*m_Rect1);
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -228,24 +232,65 @@ public:
 		dispatcher.Dispatch<Craft::KeyPressedEvent>(S_BIND_EVENT_FN(OnKeyDown));
 	}
 
-	f32 time = 0.0f;
+	f32 nowTime = 0.0f;
+	f32 lastTime = 0.0f;
+
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		time += deltaTime;
+		lastTime = nowTime;
+		nowTime += deltaTime;
+//		f32 rotate = Lerp(0.0, 1.0f, sinf(nowTime));
+
+	//	m_Rect->SetRotation(rotate, v3(0.0f, 0.0f, 1.0f));
 	}
 
 private:
 
-	bool moved = false;
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
 	{
-		return moved;
+		if (event.GetKeyCode() == VK_F2)
+		{
+			ChangeCamera();
+			return true;
+		}
+
+		v3 P = m_Camera->GetPosition();
+		if (event.GetKeyCode() == VK_UP)
+		{
+			P.z+=0.1f;
+		}
+
+		if (event.GetKeyCode() == VK_DOWN)
+		{
+			P.z-=0.1f;
+		}
+
+		if (event.GetKeyCode() == VK_LEFT)
+		{
+			P.x += 0.2f;
+		}
+
+		if (event.GetKeyCode() == VK_RIGHT)
+		{
+			P.x -= 0.2f;
+		}
+
+		m_Camera->SetPosition(P);
+
+		return false;
 	}
 
 	bool OnResizeWindow(Craft::WindowResizeEvent& event)
 	{
 		glViewport(0, 0, event.GetWidth(), event.GetHeight());
 		return true;
+	}
+
+	void ChangeCamera()
+	{
+		Camera* temp = m_Camera;
+		m_Camera = m_Camera0;
+		m_Camera0 = temp;
 	}
 };
 
