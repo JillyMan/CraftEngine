@@ -155,7 +155,17 @@ namespace Craft
 		return c;
 	}
 
-		v3 operator * (v3& a, f32 value)
+	v3 operator - (v3& a)
+	{
+		v3 c;
+		c.x = -a.x;
+		c.y = -a.y;
+		c.z = -a.z;
+		return c;
+	}
+
+
+	v3 operator * (v3& a, f32 value)
 	{
 		v3 c;
 		c.x = a.x * value;

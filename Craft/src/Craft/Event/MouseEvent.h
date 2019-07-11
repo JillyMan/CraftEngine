@@ -48,7 +48,6 @@ namespace Craft
 			return ss.str();
 		}
 
-	private:
 		s32 x, y;
 	};
 

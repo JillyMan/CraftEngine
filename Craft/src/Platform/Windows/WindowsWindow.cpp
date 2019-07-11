@@ -9,7 +9,7 @@
 #include "Craft/Event/ApplicationEvent.h"
 
 //--------delete dependency
-#include "Platform\OpenGL\OpenGLContext.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 //--------
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -26,7 +26,7 @@ namespace Craft {
 		m_Setting = setting;
 		m_IsClosed = false;
 
-		Init();
+		CR_ASSERT(Init(), "Window init == false, why ??");
 	}
 
 	WindowsWindow::~WindowsWindow()

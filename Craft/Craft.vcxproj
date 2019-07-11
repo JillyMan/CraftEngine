@@ -152,6 +152,7 @@
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
+    <ClInclude Include="src\Craft\Graphics\FPSCamera.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Craft\Graphics\Image\Image.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />

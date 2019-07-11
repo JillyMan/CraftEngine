@@ -186,6 +186,7 @@
     <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h" />
     <ClInclude Include="src\Craft\Graphics\Camera.h" />
     <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\FPSCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">

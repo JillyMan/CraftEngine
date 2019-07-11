@@ -133,6 +133,8 @@ namespace Craft
 	v3 operator * (v3& a, f32 value);
 	v3 operator / (v3& a, f32 value);
 
+	v3 operator - (v3& a);
+
 	v3 operator *= (v3& a, f32 value);
 	v3 operator /= (v3& a, f32 value);
 	v3 operator -= (v3& a, f32 value);

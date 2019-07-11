@@ -21,7 +21,6 @@
 
 using namespace Craft;
 
-#define S_BIND_EVENT_FN(x) std::bind(&ExampleLayer::x, this, std::placeholders::_1)
 #define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
 
 const char* ANGLE_STRING = "angle";
@@ -210,10 +209,10 @@ public:
 	{
 		GLfloat vertices[] =
 		{
-			w,    0.0f, 1.0f,		1.0f, 1.0f,		4.0f, 4.0f,	// Top Right
-			w,    -h,	1.0f,		1.0f, 0.0f,		4.0f, 0.0f,	// Bottom Right
+			w,    0.0f, 1.0f,		1.0f, 1.0f,		1.0f, 1.0f,	// Top Right
+			w,    -h,	1.0f,		1.0f, 0.0f,		1.0f, 0.0f,	// Bottom Right
 			0.0f, -h,	1.0f,		0.0f, 0.0f,		0.0f, 0.0f,	// Bottom Left
-			0.0f, 0.0f, 1.0f,		0.0f, 1.0f,		0.0f, 4.0f,	// Top Left 
+			0.0f, 0.0f, 1.0f,		0.0f, 1.0f,		0.0f, 1.0f,	// Top Left 
 		};
 
 		GLuint indices[] =
@@ -287,8 +286,8 @@ public:
 	
 	void InitRenderable()
 	{
-		RenderCommand::SetClearColor(v4{ 0.0f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::ZTest(true);
+		RenderCommand::SetClearColor(v4{ 0.0f, 0.1f, 0.1f, 1.0f });
 
 		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
@@ -298,9 +297,9 @@ public:
 		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
 
 		m_Rect1 = new CRectangle(
-			0.0f, 0.0f, 1.0f, 1.0f,
+			-2.0f, 0.0f, 1.0f, 1.0f,
 			std::vector<Craft::Image*> { image, smile } );
-		m_Rect1->SetRotation(-55.0f, v3(1.0f, 0.0f, 0.0f));
+		m_Rect1->SetRotation(-75.0f, v3(1.0f, 0.0f, 0.0f));
 
 		m_Rect = new CRectangle(
 			-1.0f, 0.0f, 1.0f, 1.0f,
@@ -327,13 +326,17 @@ public:
 	virtual void OnEvent(Craft::Event& event) override
 	{
 		Craft::EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<Craft::WindowResizeEvent>(S_BIND_EVENT_FN(OnResizeWindow));
-		dispatcher.Dispatch<Craft::KeyPressedEvent>(S_BIND_EVENT_FN(OnKeyDown));
+		dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(ExampleLayer::OnMouseMove));
+		dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(ExampleLayer::OnResizeWindow));
+		dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(ExampleLayer::OnKeyDown));
 	}
 
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		
+		static f32 lastTime;
+		lastTime += deltaTime;
+
+		m_Cube->SetRotation(lastTime/20.0f, v3(1.0, 0.0, 0.0f));
 	}
 
 private:
@@ -347,40 +350,40 @@ private:
 		}
 
 		v3 P = m_Camera->GetPosition();
-		if (event.GetKeyCode() == VK_UP)
+		if (event.GetKeyCode() == 'W')
 		{
-			P.z+=0.1f;
+			P.z += 0.1f;
 		}
 
-		if (event.GetKeyCode() == VK_DOWN)
+		if (event.GetKeyCode() == 'S')
 		{
-			P.z-=0.1f;
+			P.z -= 0.1f;
 		}
 
-		if (event.GetKeyCode() == VK_LEFT)
+		if (event.GetKeyCode() == 'A')
 		{
 			P.x += 0.2f;
 		}
 
-		if (event.GetKeyCode() == VK_RIGHT)
+		if (event.GetKeyCode() == 'D')
 		{
 			P.x -= 0.2f;
 		}
 
-		if (event.GetKeyCode() == VK_NUMPAD1)
-		{
-			P.y += 0.2f;
-		}
-
-		if (event.GetKeyCode() == VK_NUMPAD4)
-		{
-			P.y -= 0.2f;
-		}
-
-
 		m_Camera->SetPosition(P);
 
 		return false;
+	}
+
+	bool OnMouseMove(Craft::MouseMovedEvent& e)
+	{
+		//static f32 LastY = e.y;
+
+		//v3 P = m_Camera->GetPosition();
+		//f32 y = P.y - LastY;
+
+		//LastY += ;
+		return true;
 	}
 
 	bool OnResizeWindow(Craft::WindowResizeEvent& event)

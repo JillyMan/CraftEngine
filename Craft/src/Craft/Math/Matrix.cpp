@@ -164,6 +164,24 @@ namespace Craft
 		return result;
 	}
 
+	mat4 LookAt(v3& camX, v3& camY, v3& camZ)
+	{
+		mat4 result;
+		result[0 + 0 * 4] = camX.x;
+		result[1 + 0 * 4] = camX.y;
+		result[2 + 0 * 4] = camX.z;
+
+		result[0 + 1 * 4] = camY.x;
+		result[1 + 1 * 4] = camY.y;
+		result[2 + 1 * 4] = camY.z;
+
+		result[0 + 2 * 4] = camZ.x;
+		result[1 + 2 * 4] = camZ.y;
+		result[2 + 2 * 4] = camZ.z;
+
+		return result;
+	}
+
 	std::ostream& operator << (std::ostream& os, mat4& mat)
 	{
 		for (int i = 0; i < 4; ++i)

@@ -13,7 +13,7 @@ namespace Craft
 	{
 		m_WindowSetting = setting;
 		m_MainWindow = WindowManager::Create(setting);
-		m_MainWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_MainWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 	}
 
 	Application::~Application()
@@ -76,10 +76,10 @@ namespace Craft
 	void Application::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
-		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyEvent));
-
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyEvent));
+		
 		for (auto layer = begin(m_pLayers);
 			layer != end(m_pLayers);
 			++layer)

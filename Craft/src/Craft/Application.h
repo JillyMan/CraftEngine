@@ -9,8 +9,6 @@
 #include "Craft\Event\KeyEvent.h"
 #include "Craft\Event\ApplicationEvent.h"
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 namespace Craft {
 
 	class CRAFT_API Application
