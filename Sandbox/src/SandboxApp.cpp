@@ -6,6 +6,7 @@
 #include <Craft\Graphics\RenderCommand.h>
 
 #include <Craft\Graphics\Cameras\Camera.h>
+#include <Craft\Graphics\Cameras\FPSCamera.h>
 
 #include <Craft\Graphics\Texture.h>
 #include <Craft\Graphics\Image\ImageLoader.h>
@@ -112,7 +113,8 @@ public:
 
 		m_Shader->SetUniform4f(U_COLOR_STRING, v4(1.0f, 0.0f, 0.0f, 1.0f));
 		m_Shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
-		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
+		m_Shader->SetUniformMatrix4fv(VIEW_MATRIX_STRING, m_ViewMatrix);
+		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ProjectionMatrix);
 	}
 
 	virtual void EndDraw() override
@@ -123,8 +125,6 @@ private:
 	void Init()
 	{
 		//m_Mesh = Mesh::GenerateCubeWithTextureCoord();
-
-
 		f32 vertices[] = {
 			0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 			1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
@@ -187,7 +187,8 @@ public:
 		m_Shader->SetUniform1i(name.c_str(), 0);
 
 		m_Shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
-		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
+		m_Shader->SetUniformMatrix4fv(VIEW_MATRIX_STRING, m_ViewMatrix);
+		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ProjectionMatrix);
 		m_VertexArray->Bind();
 	}
 
@@ -255,25 +256,30 @@ public:
 		RenderCommand::ZTest(true);
 		RenderCommand::SetClearColor(v4{ 0.0f, 0.1f, 0.1f, 1.0f });
 
-		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -1.9f, 1.9f);
-		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
-					v3(0.0f, 0.0f, -5.0f));
+//		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -1.9f, 1.9f);
+		
+		m_Camera = new FPSCamera(
+			v3(0.0f, 0.0f, 5.0f),
+			mat4::Perspective(90.0f, 16.0f / 9.0f, 0.1f, 100.0f));
+
+		/*m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
+					v3(0.0f, 0.0f, -5.0f));*/
 
 		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(PathToSmileImage);
 		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(PathToTileSheets);
 
 		m_Rect1 = new Sprite(
-			-2.0f, 0.0f, 1.0f, 1.0f, 
+			0.0f, 0.0f, 1.0f, 1.0f, 
 			*image);
 		m_Rect1->SetRotation(-75.0f, v3(1.0f, 0.0f, 0.0f));
 
 		m_Rect = new Sprite(
-			-2.0f, 0.0f, 1.0f, 1.0f,
+			-4.0f, 0.0f, 1.0f, 1.0f,
 			*smile);
 
 		m_Rect->SetRotation(45.0f, v3(0.0f, 1.0f, 0.0f));
 
-		m_Cube = new Cube(v3(0.0f, 0.0f, 1.0f), smile);
+		m_Cube = new Cube(v3(0.0f, 0.0f, 0.0f), smile);
 		m_Cube->SetRotation(55.0f, v3(0.0f, 0.0f, 1.0f));
 
 		delete smile;
@@ -305,11 +311,11 @@ public:
 		UpdataShapes(deltaTime);
 	}
 
-	void UpdataShapes(f32 deltaTime) 
+	f32 timer = 0.0f;
+	void UpdataShapes(f32 deltaTime)
 	{
-		static f32 lastTime;
-		lastTime += deltaTime;
-		m_Cube->SetRotation(lastTime / 20.0f, v3(1.0, 0.0, 0.0f));
+		timer += deltaTime;
+		m_Cube->SetRotation(timer / 20.0f, v3(1.0, 0.0, 0.0f));
 	}
 
 	void UpdataCamera(f32 deltaTime)
@@ -319,33 +325,34 @@ public:
 
 		if (Input::InputHandler::IsKeyPressed('W'))
 		{
-			P.z += force.z;
+			P.z -= force.z;
 		}
-
 		if (Input::InputHandler::IsKeyPressed('S'))
 		{
-			P.z -= force.z;
+			P.z += force.z;
 		}
 
 		if (Input::InputHandler::IsKeyPressed('A'))
 		{
-			P.x += force.x;
-		}
-
-		if (Input::InputHandler::IsKeyPressed('D'))
-		{
 			P.x -= force.x;
 		}
-
-		if (Input::InputHandler::IsKeyPressed('Z'))
+		if (Input::InputHandler::IsKeyPressed('D'))
 		{
-			P.y -= force.y;
+			P.x += force.x;
 		}
 
 		if (Input::InputHandler::IsKeyPressed('Q'))
 		{
 			P.y += force.y;
 		}
+		if (Input::InputHandler::IsKeyPressed('Z'))
+		{
+			P.y -= force.y;
+		}
+
+
+		//P.x = sinf(timer) * 10.0f;
+		//P.z = cosf(timer) * 10.0f;
 
 		m_Camera->SetPosition(P);
 	}
@@ -361,7 +368,7 @@ private:
 
 		if (event.GetKeyCode() == VK_ESCAPE)
 		{		
-			Sleep(1000);
+			//todo: HARD code
 			exit(1);
 		}
 
@@ -385,9 +392,7 @@ private:
 
 	void ChangeCamera()
 	{
-		Camera* temp = m_Camera;
-		m_Camera = m_Camera0;
-		m_Camera0 = temp;
+		std::swap(m_Camera, m_Camera0);
 	}
 };
 

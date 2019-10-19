@@ -9,19 +9,23 @@ namespace Craft
 		v3 m_Position;
 		f32 m_Rotation = 0.0f;
 
+		mat4 m_ViewMatrix;
 		mat4 m_ProjectionMatrix;
 		mat4 m_ViewProjectionMatrix;
 
 	protected:
 		Camera(mat4& projectionMatrix, v3& position);
-		virtual void RecalculateMatrix() = 0;
+		virtual void RecalculateMatrix();
 
 	public:
 		inline mat4 GetViewProjectionMatrix() { return m_ViewProjectionMatrix; }
 
+		inline mat4 GetViewMatrix() { return m_ViewMatrix; }
+		inline mat4 GetProjectionMatrix() { return m_ProjectionMatrix; }
+
 		inline f32 GetRotation() { return m_Rotation; }
 		inline void SetRotation(f32 rotation) 
-		{ 
+		{
 			m_Rotation = rotation; 
 			RecalculateMatrix(); 
 		}

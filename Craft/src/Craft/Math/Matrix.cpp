@@ -1,5 +1,6 @@
 #include "crpch.h"
-#include "Math.h"
+
+#include <Craft/Math/Math.h>
 
 namespace Craft
 {
@@ -131,7 +132,7 @@ namespace Craft
 	mat4 mat4::Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far)
 	{
 		mat4 result = Identity();
-		f32 p = 1.0f / tanf(ToRadians(0.5 * fov));
+		f32 p = 1.0f / tanf(ToRadians(0.5f * fov));
 		f32 a = p / aspectRatio;
 
 		f32 b = (near + far) / (near - far);
@@ -164,22 +165,31 @@ namespace Craft
 		return result;
 	}
 
-	mat4 LookAt(v3& camX, v3& camY, v3& camZ)
+	mat4 mat4::LookAt(v3& pos, v3& up, v3& target)
 	{
-		mat4 result;
-		result[0 + 0 * 4] = camX.x;
-		result[1 + 0 * 4] = camX.y;
-		result[2 + 0 * 4] = camX.z;
+		v3 dir = pos - target;
+		v3 camZ = Normalize(dir);
+		v3 camX = Normalize(Cross(up, camZ));
+		v3 camY = Cross(camZ, camX);
 
-		result[0 + 1 * 4] = camY.x;
-		result[1 + 1 * 4] = camY.y;
-		result[2 + 1 * 4] = camY.z;
+		mat4 view;
+		view[0 + 0 * 4] = camX.x;
+		view[1 + 0 * 4] = camX.y;
+		view[2 + 0 * 4] = camX.z;
 
-		result[0 + 2 * 4] = camZ.x;
-		result[1 + 2 * 4] = camZ.y;
-		result[2 + 2 * 4] = camZ.z;
+		view[0 + 1 * 4] = camY.x;
+		view[1 + 1 * 4] = camY.y;
+		view[2 + 1 * 4] = camY.z;
 
-		return result;
+		view[0 + 2 * 4] = camZ.x;
+		view[1 + 2 * 4] = camZ.y;
+		view[2 + 2 * 4] = camZ.z;
+
+		view[3 + 3 * 4] = 1.0f;
+
+		mat4 transform = mat4::Translate(-pos);
+
+		return view * transform;
 	}
 
 	std::ostream& operator << (std::ostream& os, mat4& mat)

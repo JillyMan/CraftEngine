@@ -1,7 +1,5 @@
 #pragma once
 
-namespace Craft
-{
 #ifdef near
 #undef near
 #endif
@@ -10,6 +8,8 @@ namespace Craft
 #undef far
 #endif
 
+namespace Craft
+{
 	struct v3;
 
 	struct mat4
@@ -47,6 +47,6 @@ namespace Craft
 		static mat4 VeiwModelMatrix(v3& pos, f32 rotation, v3& axis);
 		static mat4 VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis);
 
-		static mat4 LookAt(v3& camX, v3& camY, v3& camZ);
+		static mat4 LookAt(v3& pos, v3& up, v3& target);
 	};
 }

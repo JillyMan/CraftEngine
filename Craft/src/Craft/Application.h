@@ -14,11 +14,13 @@ namespace Craft {
 	class CRAFT_API Application
 	{
 	private:
-		WindowSetting m_WindowSetting;
-		Window* m_MainWindow;
-		std::vector<Layer*> m_pLayers;
-		bool m_Running;
 		f32 m_FPS;
+		f32 m_LastTime;
+		bool m_Running;
+
+		Window* m_MainWindow;
+		WindowSetting m_WindowSetting;
+		std::vector<Layer*> m_pLayers;
 
 	public:
 		Application(f32 fps = 60.0f, WindowSetting& setting = WindowSetting());
@@ -27,6 +29,8 @@ namespace Craft {
 		void Run();
 		void PushLayer(Layer* layer);
 		void PopLayer(Layer* layer);
+
+		f32 GetElapsedTime() { return m_LastTime; }
 
 	private:
 		void OnRender();

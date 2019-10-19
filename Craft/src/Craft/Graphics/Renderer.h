@@ -15,7 +15,8 @@ namespace Craft { namespace Graphics {
 	private:
 		struct SceneData
 		{
-			mat4 m_ViewProjectionMatrix;
+			mat4 m_ViewMatrix;
+			mat4 m_ProjectionMatrix;
 		};
 
 		static SceneData Data;

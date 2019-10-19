@@ -7,13 +7,14 @@ namespace Craft
 	class FPSCamera : public Camera
 	{
 	private:
-		v3 CamZ;
-		v3 CamX;
-		v3 CamY;
+		v3 m_Up;
+		v3 m_Target;
 
 	public:
-		FPSCamera(v3& P) : 
-			Camera(mat4::Perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), P)
+		FPSCamera(v3& P, mat4& projMatrix, v3& target = v3(0.0f, 0.0f, 0.0f), v3& up = v3(0.0f, 1.0f, 0.0f)) : 
+			Camera(projMatrix, P),
+			m_Target(target),
+			m_Up(up)
 		{
 			RecalculateMatrix();
 		}
@@ -21,14 +22,7 @@ namespace Craft
 	protected:
 		virtual void RecalculateMatrix() override
 		{
-			CamZ = Normalize(m_Position);
-
-			v3 up(0.0f, 1.0f, 0.0f);
-			CamX = Normalize(Cross(up, CamZ));
-			CamY = Normalize(Cross(CamX, CamZ));
-
-			mat4 view = mat4::LookAt(CamX, CamY, CamZ) * mat4::Translate(-m_Position);
-			m_ViewProjectionMatrix = m_ProjectionMatrix * view;
+			m_ViewMatrix = mat4::LookAt(m_Position, m_Up, m_Target);
 		}
 	};
 }

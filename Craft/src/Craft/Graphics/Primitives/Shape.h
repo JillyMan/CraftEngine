@@ -22,6 +22,9 @@ namespace Craft { namespace Graphics {
 		mat4 m_ModelMatrix = mat4::Identity();
 		mat4 m_ViewProjectionMatrix;
 
+		mat4 m_ViewMatrix;
+		mat4 m_ProjectionMatrix;
+
 		Shader* m_Shader;
 		Texture* m_Texture;
 		VertexArray* m_VertexArray;
@@ -47,13 +50,23 @@ namespace Craft { namespace Graphics {
 		virtual void EndDraw() = 0;
 
 	public:
-		void SetViewProjectinMatrix(mat4& matrix) 
-		{ 
-			m_ViewProjectionMatrix = matrix; 
+		void SetViewProjectionMatrix(mat4& matrix) 
+		{
+			m_ViewProjectionMatrix = matrix;
+		}
+
+		void SetProjectionMatrix(mat4& matrix)
+		{
+			m_ProjectionMatrix = matrix;
+		}
+
+		void SetViewMatrix(mat4& matrix)
+		{
+			m_ViewMatrix = matrix;
 		}
 
 		void SetColor(Craft::v4& color) 
-		{ 
+		{
 			m_Color = color; 
 		}
 

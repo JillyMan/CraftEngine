@@ -36,7 +36,7 @@ namespace Craft
 		m_Running = true;
 
 		Timer timer;
-		f32 lastTime = timer.ElapsedMillisecond();
+		m_LastTime = timer.ElapsedMillisecond();
 		f32 resetInterval = timer.ElapsedMillisecond();
 		f32 updateTick = 1000.0f / m_FPS;
 		f32 delta = 0.0f;
@@ -46,8 +46,8 @@ namespace Craft
 		while (m_Running)
 		{
 			f32 nowTime = timer.ElapsedMillisecond();
-			delta += nowTime - lastTime;
-			lastTime = nowTime;
+			delta += nowTime - m_LastTime;
+			m_LastTime = nowTime;
 
 			if (delta > updateTick)
 			{
