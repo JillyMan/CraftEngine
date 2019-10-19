@@ -1,17 +1,17 @@
 #include "crpch.h"
-#include "OpenglBuffer.h"
+#include <Platform/OpenGL/OpenglBuffer.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	static GLenum GetOpenGLEnumType(VertexDataType type)
 	{
 		switch (type)
 		{
-			case VertexDataType::Float:			return GL_FLOAT;
-			case VertexDataType::Double:		return GL_FLOAT;
-			case VertexDataType::Int:			return GL_INT;
-			case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
-			case VertexDataType::Bool:			return GL_BOOL;
+		case VertexDataType::Float:			return GL_FLOAT;
+		case VertexDataType::Double:		return GL_FLOAT;
+		case VertexDataType::Int:			return GL_INT;
+		case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
+		case VertexDataType::Bool:			return GL_BOOL;
 		}
 
 		CR_ASSERT(false, "Invalid data type");
@@ -37,12 +37,12 @@ namespace Craft
 		glDeleteBuffers(GL_ARRAY_BUFFER, &m_BufferId);
 	}
 
-	void Craft::OpenGLVertexBuffer::Bind()
+	void OpenGLVertexBuffer::Bind()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferId);
 	}
 
-	void Craft::OpenGLVertexBuffer::Unbind()
+	void OpenGLVertexBuffer::Unbind()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -61,7 +61,7 @@ namespace Craft
 	{
 		glCreateBuffers(1, &m_BufferId);
 		Bind();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size*sizeof(u32), indices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(u32), indices, GL_DYNAMIC_DRAW);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -73,9 +73,9 @@ namespace Craft
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_BufferId);
 	}
-	
+
 	void OpenGLIndexBuffer::Unbind()
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-}
+}}

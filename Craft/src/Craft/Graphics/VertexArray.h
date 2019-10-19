@@ -2,7 +2,7 @@
 
 #include "Buffer.h"
 
-namespace Craft {
+namespace Craft { namespace Graphics {
 
 	class VertexArray
 	{
@@ -18,4 +18,4 @@ namespace Craft {
 
 		static VertexArray* Create();
 	};
-}
+} }

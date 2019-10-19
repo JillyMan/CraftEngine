@@ -1,7 +1,7 @@
 #pragma once
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	enum class VertexDataType
 	{
 		None = 0,
@@ -24,22 +24,22 @@ namespace Craft
 	{
 		switch (DataType)
 		{
-			case VertexDataType::Double:		return 8;
-			case VertexDataType::Bool:			return 1;
+		case VertexDataType::Double:		return 8;
+		case VertexDataType::Bool:			return 1;
 
-			case VertexDataType::Int:			return 4;
-			case VertexDataType::Int2:			return 4 * 2;
-			case VertexDataType::Int3:			return 4 * 3;
-			case VertexDataType::Int4:			return 4 * 4;
-			case VertexDataType::UnsignedInt:	return 4;
+		case VertexDataType::Int:			return 4;
+		case VertexDataType::Int2:			return 4 * 2;
+		case VertexDataType::Int3:			return 4 * 3;
+		case VertexDataType::Int4:			return 4 * 4;
+		case VertexDataType::UnsignedInt:	return 4;
 
-			case VertexDataType::Float:			return 4;
-			case VertexDataType::Float2:		return 4 * 2;
-			case VertexDataType::Float3:		return 4 * 3;
-			case VertexDataType::Float4:		return 4 * 4;
+		case VertexDataType::Float:			return 4;
+		case VertexDataType::Float2:		return 4 * 2;
+		case VertexDataType::Float3:		return 4 * 3;
+		case VertexDataType::Float4:		return 4 * 4;
 
-			case VertexDataType::Mat3:		return 4 * (3 * 3);
-			case VertexDataType::Mat4:		return 4 * (4 * 4);
+		case VertexDataType::Mat3:		return 4 * (3 * 3);
+		case VertexDataType::Mat4:		return 4 * (4 * 4);
 		};
 
 		CR_ASSERT(false, "Invalid DataType.");
@@ -69,22 +69,22 @@ namespace Craft
 		{
 			switch (DataType)
 			{
-				case VertexDataType::Double:		return 1;
-				case VertexDataType::Bool:			return 1;
+			case VertexDataType::Double:		return 1;
+			case VertexDataType::Bool:			return 1;
 
-				case VertexDataType::Int:			return 4;
-				case VertexDataType::Int2:			return 2;
-				case VertexDataType::Int3:			return 3;
-				case VertexDataType::Int4:			return 4;
-				case VertexDataType::UnsignedInt:	return 1;
+			case VertexDataType::Int:			return 4;
+			case VertexDataType::Int2:			return 2;
+			case VertexDataType::Int3:			return 3;
+			case VertexDataType::Int4:			return 4;
+			case VertexDataType::UnsignedInt:	return 1;
 
-				case VertexDataType::Float:			return 1;
-				case VertexDataType::Float2:		return 2;
-				case VertexDataType::Float3:		return 3;
-				case VertexDataType::Float4:		return 4;
+			case VertexDataType::Float:			return 1;
+			case VertexDataType::Float2:		return 2;
+			case VertexDataType::Float3:		return 3;
+			case VertexDataType::Float4:		return 4;
 
-				case VertexDataType::Mat3:		return (3 * 3);
-				case VertexDataType::Mat4:		return (4 * 4);
+			case VertexDataType::Mat3:		return (3 * 3);
+			case VertexDataType::Mat4:		return (4 * 4);
 			};
 
 			CR_ASSERT(false, "i'ts imposible");
@@ -101,23 +101,21 @@ namespace Craft
 		void CalculateStrideAndOffset()
 		{
 			m_Stride = 0;
-			u32 offset = 0;
 
 			for (auto& element : m_Elements)
 			{
-				element.Offset = offset;
-				offset += element.Size;
+				element.Offset = m_Stride;
 				m_Stride += element.Size;
 			}
 		}
 
 	public:
+		BufferLayout() : m_Stride(0) {}
 
-		BufferLayout() = default;
-		
 		//initilize_ilst need use here
 		BufferLayout(std::vector<BufferElement>& elements) :
-			m_Elements(elements)
+			m_Elements(elements),
+			m_Stride(0)
 		{
 			CalculateStrideAndOffset();
 		}
@@ -137,7 +135,7 @@ namespace Craft
 
 	class VertexBuffer
 	{
-	public: 
+	public:
 		virtual ~VertexBuffer() { }
 
 		virtual void Bind() = 0;
@@ -161,4 +159,4 @@ namespace Craft
 
 		static IndexBuffer* Create(u32* indices, s32 count);
 	};
-}
+}}

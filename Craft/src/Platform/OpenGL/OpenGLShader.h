@@ -1,11 +1,11 @@
 #pragma once
 
-#include "OpenGL.h"
-#include "Craft\Math\Vectors.h"
-#include "Craft\Graphics\Shader.h"
+#include <Platform/OpenGL/OpenGL.h>
+#include <Craft/Math/Vectors.h>
+#include <Craft/Graphics/Shader.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	class OpenGLShader : public Shader
 	{
 	private:
@@ -31,4 +31,4 @@ namespace Craft
 		GLint GetLocation(GLuint program, const char* name);
 		void ErrorCode(GLuint object, GLint status);
 	};
-}
+}}

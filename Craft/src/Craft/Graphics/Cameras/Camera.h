@@ -1,5 +1,5 @@
 #pragma once
-#include "Craft\Math\Math.h"
+#include <Craft\Math\Math.h>
 
 namespace Craft
 {

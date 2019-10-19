@@ -2,8 +2,11 @@
 
 #include "Craft\Graphics\Buffer.h"
 
+
 namespace Craft
 {
+	using namespace Craft::Graphics;
+
 	class CraftGLVertexBuffer : public VertexBuffer
 	{
 	public:

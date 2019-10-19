@@ -1,9 +1,9 @@
-#include <Craft\Graphics\Texture.h>
 #include <Platform\OpenGL\OpenGL.h>
+#include <Craft\Graphics\Texture.h>
 #include <Craft\Graphics\Image\ImageLoader.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	class OpenGLTexture2D : public Texture
 	{
 	private:
@@ -22,4 +22,5 @@ namespace Craft
 		virtual void SetParameteri(TextureParameterName paramName, TextureParameter param) override;
 		virtual void SetParameterfv(TextureParameterName paramName, f32* values) override;
 	};
-}
+
+}}

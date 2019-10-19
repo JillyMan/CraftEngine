@@ -148,17 +148,18 @@
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
     <ClInclude Include="src\Craft\Graphics\Buffer.h" />
-    <ClInclude Include="src\Craft\Graphics\Camera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
-    <ClInclude Include="src\Craft\Graphics\FPSCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Craft\Graphics\Image\Image.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h" />
-    <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h" />
-    <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Craft\Graphics\Renderer.h" />
@@ -198,11 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Camera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
-    <ClCompile Include="src\Craft\Graphics\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Craft\Graphics\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />

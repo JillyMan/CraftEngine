@@ -3,8 +3,7 @@
 #include "Craft\Math\Vectors.h"
 #include "VertexArray.h"
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
 	class RendererAPI
 	{
 	public:
@@ -27,4 +26,4 @@ namespace Craft
 	private:
 		static API s_API;
 	};
-}
+} }

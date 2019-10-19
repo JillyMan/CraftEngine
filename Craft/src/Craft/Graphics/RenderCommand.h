@@ -2,8 +2,8 @@
 
 #include "RendererAPI.h"
 
-namespace Craft 
-{
+namespace Craft { namespace Graphics {
+
 	class RenderCommand
 	{
 	public:
@@ -35,4 +35,4 @@ namespace Craft
 	private:
 		static RendererAPI* s_RendererAPI;
 	};
-}
+}}

@@ -1,7 +1,9 @@
 #include "crpch.h"
-#include "RendererAPI.h"
 
-namespace Craft
-{
+#include <Craft/Graphics/RendererAPI.h>
+
+namespace Craft { namespace Graphics {
+
 	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
-}
+
+} }

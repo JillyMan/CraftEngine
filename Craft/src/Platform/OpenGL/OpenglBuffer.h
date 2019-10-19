@@ -3,8 +3,8 @@
 #include "OpenGL.h"
 #include "Craft\Graphics\Buffer.h"
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
@@ -39,4 +39,4 @@ namespace Craft
 		GLuint m_BufferId;
 		GLuint m_Count;
 	};
-}
+}}

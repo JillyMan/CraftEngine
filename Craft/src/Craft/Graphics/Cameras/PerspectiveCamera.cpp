@@ -1,5 +1,7 @@
 #include "crpch.h"
-#include "PerspectiveCamera.h"
+
+#include <Craft/Graphics/Cameras/Camera.h>
+#include <Craft/Graphics/Cameras/PerspectiveCamera.h>
 
 namespace Craft
 {

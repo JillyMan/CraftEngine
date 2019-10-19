@@ -1,9 +1,8 @@
 #include "crpch.h"
 
-#include "Camera.h"
-
-#include "PerspectiveCamera.h"
-#include "OrthographicCamera.h"
+#include <Craft/Graphics/Cameras/Camera.h>
+#include <Craft/Graphics/Cameras/OrthographicCamera.h>
+#include <Craft/Graphics/Cameras/PerspectiveCamera.h>
 
 namespace Craft
 {

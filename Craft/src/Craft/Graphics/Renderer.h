@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Camera.h"
-#include "RenderCommand.h"
+#include <Craft/Graphics/RenderCommand.h>
+#include <Craft/Graphics/Cameras/Camera.h>
+#include <Craft/Graphics/Primitives/Shape.h>
 
-#include "Primitives\Shape.h"
+namespace Craft { namespace Graphics {
 
-namespace Craft
-{
 	class Renderer
 	{
 	public:
@@ -21,4 +20,4 @@ namespace Craft
 
 		static SceneData Data;
 	};
-}
+}}

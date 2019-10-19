@@ -32,7 +32,7 @@ namespace Craft
 
 	private:
 		Input::InputHandler* m_InputHandler;
-		GraphicsContext* m_GraphicsContext;
+		Graphics::GraphicsContext* m_GraphicsContext;
 
 		bool m_IsClosed;
 		WindowSetting m_Setting;

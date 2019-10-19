@@ -5,6 +5,7 @@
 
 namespace Craft {
 	
+	using namespace Craft::Graphics;
 	class CraftGLContext : public GraphicsContext
 	{
 	public:

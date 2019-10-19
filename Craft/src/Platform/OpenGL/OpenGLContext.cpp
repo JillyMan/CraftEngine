@@ -1,10 +1,10 @@
 #include "crpch.h"
 
-#include "OpenGL.h"
-#include "OpenGLContext.h"
+#include <Platform/OpenGL/OpenGL.h>
+#include <Platform/OpenGL/OpenGLContext.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	static void APIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 		GLsizei length, const GLchar* message, const void* userParam)
 	{
@@ -57,4 +57,4 @@ namespace Craft
 	{
 		glVSync(enabled);
 	}
-}
+}}

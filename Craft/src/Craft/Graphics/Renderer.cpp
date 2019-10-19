@@ -1,11 +1,12 @@
 #include "crpch.h"
-#include "Renderer.h"
 
-namespace Craft
-{
+#include <Craft/Graphics/Renderer.h>
+
+namespace Craft { namespace Graphics {
+
 	Renderer::SceneData Renderer::Data;
 
-	void Renderer::BeginScene(Camera& camera)
+	void Renderer::BeginScene(Camera & camera)
 	{
 		Data.m_ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}
@@ -15,6 +16,6 @@ namespace Craft
 		shape.BeginDraw();
 		shape.SetViewProjectinMatrix(Data.m_ViewProjectionMatrix);
 
-		RenderCommand::DrawIndexed(shape.vertexArray);
+		RenderCommand::DrawIndexed(shape.GetVertexArray());
 	}
-}
+} }

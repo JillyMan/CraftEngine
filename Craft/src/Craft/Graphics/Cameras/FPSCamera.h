@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include <Craft/Graphics/Cameras/Camera.h>
 
 namespace Craft
 {
@@ -10,6 +10,7 @@ namespace Craft
 		v3 CamZ;
 		v3 CamX;
 		v3 CamY;
+
 	public:
 		FPSCamera(v3& P) : 
 			Camera(mat4::Perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), P)

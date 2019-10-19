@@ -1,30 +1,30 @@
 #include "crpch.h"
 
-#include "Platform\OpenGL\OpenGL.h"
-#include "OpenGLVertexArray.h"
+#include <Platform/OpenGL/OpenGL.h>
+#include <Platform/OpenGL/OpenGLVertexArray.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	static GLenum FromVertexDataTypeToOpenGLType(VertexDataType type)
 	{
 		switch (type)
 		{
-			case VertexDataType::Float:
-			case VertexDataType::Float2:
-			case VertexDataType::Float3:
-			case VertexDataType::Float4:		return GL_FLOAT;
+		case VertexDataType::Float:
+		case VertexDataType::Float2:
+		case VertexDataType::Float3:
+		case VertexDataType::Float4:		return GL_FLOAT;
 
-			case VertexDataType::Int:
-			case VertexDataType::Int2:
-			case VertexDataType::Int3:
-			case VertexDataType::Int4:			return GL_INT;
+		case VertexDataType::Int:
+		case VertexDataType::Int2:
+		case VertexDataType::Int3:
+		case VertexDataType::Int4:			return GL_INT;
 
-			case VertexDataType::Mat3:			return GL_FLOAT;
-			case VertexDataType::Mat4:			return GL_FLOAT;
+		case VertexDataType::Mat3:			return GL_FLOAT;
+		case VertexDataType::Mat4:			return GL_FLOAT;
 
-			case VertexDataType::Bool:			return GL_BOOL;
-			case VertexDataType::Double:		return GL_DOUBLE;
-			case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
+		case VertexDataType::Bool:			return GL_BOOL;
+		case VertexDataType::Double:		return GL_DOUBLE;
+		case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
 		}
 	}
 
@@ -33,34 +33,41 @@ namespace Craft
 		return new OpenGLVertexArray();
 	}
 
-	Craft::OpenGLVertexArray::OpenGLVertexArray() : 
+	OpenGLVertexArray::OpenGLVertexArray() :
 		m_VertexCount(0)
 	{
 		glCreateVertexArrays(1, &m_BufferId);
 	}
 
-	Craft::OpenGLVertexArray::~OpenGLVertexArray()
+	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		for (auto& buf : m_VertexBuffers) 
+		{
+			delete buf;
+		}
+	
+		delete m_IndexBuffer;
 		glDeleteVertexArrays(1, &m_BufferId);
 	}
 
-	void Craft::OpenGLVertexArray::Bind()
+	void OpenGLVertexArray::Bind()
 	{
 		glBindVertexArray(m_BufferId);
 	}
 
-	void Craft::OpenGLVertexArray::Unbind()
+	void OpenGLVertexArray::Unbind()
 	{
 		glBindVertexArray(0);
 	}
 
-	void Craft::OpenGLVertexArray::AddVertexBuffer(VertexBuffer* buffer)
+	//todo: may be save only ptr on buffer, not for vector<verBuf*>
+	void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* buffer)
 	{
 		CR_ASSERT(buffer, "Buffer not initilized!");
 		Bind();
 		buffer->Bind();
 
-		const BufferLayout&  layout = buffer->GetLayout();
+		const BufferLayout& layout = buffer->GetLayout();
 		u32 bufferSize = buffer->GetCount();
 		u32 stride = layout.GetStride();
 		u32 index = 0;
@@ -83,10 +90,10 @@ namespace Craft
 		m_VertexCount += buffer->GetCount();
 	}
 
-	void Craft::OpenGLVertexArray::SetIndexBuffer(IndexBuffer* buffer)
+	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* buffer)
 	{
 		Bind();
 		buffer->Bind();
 		m_IndexBuffer = buffer;
 	}
-}
+} }
