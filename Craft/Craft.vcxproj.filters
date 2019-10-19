@@ -16,6 +16,9 @@
     <Filter Include="Craft\Graphics\Image">
       <UniqueIdentifier>{E724DA8C-D3B3-6356-7CD2-7751684074FC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Graphics\Primitives">
+      <UniqueIdentifier>{F0E10F5E-5CA4-43E8-A554-D27411561CC6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Math">
       <UniqueIdentifier>{4ED99666-3A91-D8B3-A398-B10F8F6F73A4}</UniqueIdentifier>
     </Filter>
@@ -73,6 +76,9 @@
     <ClInclude Include="src\Craft\Graphics\Buffer.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Camera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClInclude>
@@ -81,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\FPSCamera.h">
+      <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h">
       <Filter>Craft\Graphics</Filter>
@@ -94,10 +103,31 @@
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h">
       <Filter>Craft\Graphics\Image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h">
+      <Filter>Craft\Graphics\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\RenderCommand.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Renderer.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\RendererAPI.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Shader.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Texture.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\VertexArray.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Layer.h">
@@ -107,6 +137,12 @@
       <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Math\Math.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Math\MathUtils.h">
+      <Filter>Craft\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Math\Matrix.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Math\Vectors.h">
@@ -154,10 +190,16 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h">
@@ -170,27 +212,14 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\Math\Matrix.h" />
-    <ClInclude Include="src\Craft\Math\MathUtils.h" />
-    <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
-    <ClInclude Include="src\Craft\Graphics\VertexArray.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
-      <Filter>Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
-    <ClInclude Include="src\Craft\Graphics\Renderer.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
-    <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h" />
-    <ClInclude Include="src\Craft\Graphics\Camera.h" />
-    <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h" />
-    <ClInclude Include="src\Craft\Graphics\FPSCamera.h" />
+    <ClInclude Include="src\Craft\InputHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Camera.cpp">
+      <Filter>Craft\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
@@ -198,8 +227,32 @@
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\OrthographicCamera.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\PerspectiveCamera.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Renderer.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Math\MathUtils.cpp">
+      <Filter>Craft\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Math\Matrix.cpp">
+      <Filter>Craft\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Math\Vectors.cpp">
+      <Filter>Craft\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Window\WindowManager.cpp">
       <Filter>Craft\Window</Filter>
@@ -213,10 +266,19 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
@@ -232,21 +294,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Craft\Math\Matrix.cpp" />
-    <ClCompile Include="src\Craft\Math\Vectors.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
-      <Filter>Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
-    <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Camera.cpp" />
-    <ClCompile Include="src\Craft\Graphics\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Craft\Graphics\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Craft\InputHandler.cpp" />
   </ItemGroup>
 </Project>

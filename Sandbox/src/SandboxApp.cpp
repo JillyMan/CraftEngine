@@ -1,6 +1,6 @@
 #include <map>
 #include <Craft.h>
-
+#include <Craft\InputHandler.h>
 #include "Craft\Graphics\Renderer.h"
 #include "Craft\Graphics\RendererAPI.h"
 #include "Craft\Graphics\RenderCommand.h"
@@ -23,6 +23,11 @@ using namespace Craft;
 
 #define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
 
+#define FOV				45.0f
+#define ASPECT_RATIO	DEFAULT_WINDOW_WIDTH / DEFAULT_WINDOW_HEIGHT
+#define NEAR_PLANE		0.1f
+#define FAR_PLANE		100.0f
+
 const char* ANGLE_STRING = "angle";
 const char* TEXTURE_STRING = "texture";
 const char* MIX_COEFFICIENT_STRING = "mixCoefficient";
@@ -32,8 +37,9 @@ const char* VIEW_MATRIX_STRING = "vw_matrix";
 const char* MODEL_MATRIX_STRING = "ml_matrix";
 const char* PROJECTION_MATRIX_STRING = "pr_matrix";
 
-const char* PathToSmileImage = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\smile.bmp";
-const char* PathToTileSheets = "F:\\C++ projects\\CraftEngine\\CraftEngine\\Assets\\Sprites\\lgbt.bmp";
+String BaseSpritesFolder = "C:\\Users\\Artsiom\\Documents\\Projects\\CraftEngine\\Assets\\Sprites\\";
+String PathToSmileImage = BaseSpritesFolder + "smile.bmp";
+String PathToTileSheets = BaseSpritesFolder + "lgbt.bmp";
 
 const char* GetVertexShader()
 {
@@ -83,10 +89,6 @@ void main()
 })";
 }
 
-#define FOV				45.0f
-#define ASPECT_RATIO	DEFAULT_WINDOW_WIDTH / DEFAULT_WINDOW_HEIGHT
-#define NEAR_PLANE		0.1f
-#define FAR_PLANE		100.0f
 
 class Cube : public Shape
 {
@@ -262,7 +264,7 @@ public:
 	}
 };
 
-class ExampleLayer : public Craft::Layer
+class ExampleScene : public Craft::Layer
 {
 private:
 	Shape* m_Rect;
@@ -273,13 +275,13 @@ private:
 	Camera* m_Camera0;
 
 public:
-	ExampleLayer()
+	ExampleScene()
 	{
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		InitRenderable();
 	}
 
-	~ExampleLayer()
+	~ExampleScene()
 	{
 		delete m_Rect;
 	}
@@ -293,8 +295,8 @@ public:
 		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
 					v3(0.0f, 0.0f, -5.0f));
 
-		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(String(PathToSmileImage));
-		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(String(PathToTileSheets));
+		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(PathToSmileImage);
+		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(PathToTileSheets);
 
 		m_Rect1 = new CRectangle(
 			-2.0f, 0.0f, 1.0f, 1.0f,
@@ -326,13 +328,48 @@ public:
 	virtual void OnEvent(Craft::Event& event) override
 	{
 		Craft::EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(ExampleLayer::OnMouseMove));
-		dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(ExampleLayer::OnResizeWindow));
-		dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(ExampleLayer::OnKeyDown));
+		dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(ExampleScene::OnMouseMove));
+		dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(ExampleScene::OnResizeWindow));
+		dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(ExampleScene::OnKeyDown));
 	}
 
 	virtual void OnUpdate(f32 deltaTime) override
 	{
+		v3 P = m_Camera->GetPosition();
+		v3 force = v3 { 0.01f, 0.01f, 0.01f } * deltaTime;
+
+		if (Input::InputHandler::IsKeyPressed('W'))
+		{
+			P.z += force.z;
+		}
+
+		if (Input::InputHandler::IsKeyPressed('S'))
+		{
+			P.z -= force.z;
+		}
+
+		if (Input::InputHandler::IsKeyPressed('A'))
+		{
+			P.x += force.x;
+		}
+
+		if (Input::InputHandler::IsKeyPressed('D'))
+		{
+			P.x -= force.x;
+		}
+
+		if (Input::InputHandler::IsKeyPressed('Z'))
+		{
+			P.y -= force.y;
+		}
+
+		if (Input::InputHandler::IsKeyPressed('Q'))
+		{
+			P.y += force.y;
+		}
+
+		m_Camera->SetPosition(P);
+
 		static f32 lastTime;
 		lastTime += deltaTime;
 
@@ -340,7 +377,6 @@ public:
 	}
 
 private:
-
 	bool OnKeyDown(Craft::KeyPressedEvent& event)
 	{
 		if (event.GetKeyCode() == VK_F2)
@@ -349,28 +385,11 @@ private:
 			return true;
 		}
 
-		v3 P = m_Camera->GetPosition();
-		if (event.GetKeyCode() == 'W')
-		{
-			P.z += 0.1f;
+		if (event.GetKeyCode() == VK_ESCAPE)
+		{		
+			Sleep(1000);
+			exit(1);
 		}
-
-		if (event.GetKeyCode() == 'S')
-		{
-			P.z -= 0.1f;
-		}
-
-		if (event.GetKeyCode() == 'A')
-		{
-			P.x += 0.2f;
-		}
-
-		if (event.GetKeyCode() == 'D')
-		{
-			P.x -= 0.2f;
-		}
-
-		m_Camera->SetPosition(P);
 
 		return false;
 	}
@@ -378,10 +397,8 @@ private:
 	bool OnMouseMove(Craft::MouseMovedEvent& e)
 	{
 		//static f32 LastY = e.y;
-
 		//v3 P = m_Camera->GetPosition();
 		//f32 y = P.y - LastY;
-
 		//LastY += ;
 		return true;
 	}
@@ -404,7 +421,7 @@ private:
 
 void MathTest()
 {
-#ifdef CRAFT_MATH_TEST
+#ifndef CRAFT_MATH_TEST
 	Craft::v3 a{ 1,2,3 };
 	Craft::v3 b{ 1,2,3 };
 	Craft::v3 c = a + b;
@@ -433,7 +450,7 @@ public:
 	Sandbox(f32 fps, Craft::WindowSetting setting) : Application(fps, setting)
 	{
 		MathTest();
-		PushLayer(new ExampleLayer());
+		PushLayer(new ExampleScene());
 	}
 
 	virtual ~Sandbox()

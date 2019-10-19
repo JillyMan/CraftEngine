@@ -17,8 +17,9 @@ namespace Craft
 		OpengGLContext(GLInitData initData);
 		~OpengGLContext();
 
-		virtual void Init();
-		virtual void SwapBuffers();
+		virtual void Init() override;
+		virtual void SwapBuffers() override;
+		virtual void VSync(bool enabled) override;
 
 	private:
 		GLInitData m_InitData;

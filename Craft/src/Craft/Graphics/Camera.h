@@ -20,10 +20,18 @@ namespace Craft
 		inline mat4 GetViewProjectionMatrix() { return m_ViewProjectionMatrix; }
 
 		inline f32 GetRotation() { return m_Rotation; }
-		inline void SetRotation(f32 rotation) { m_Rotation = rotation; RecalculateMatrix(); }
+		inline void SetRotation(f32 rotation) 
+		{ 
+			m_Rotation = rotation; 
+			RecalculateMatrix(); 
+		}
 
-		inline void SetPosition(v3& position) { m_Position = position; RecalculateMatrix(); }
 		inline const v3& GetPosition() { return m_Position; }
+		inline void SetPosition(v3& position) 
+		{ 
+			m_Position = position; 
+			RecalculateMatrix(); 
+		}
 
 		static Camera* CreatePerspectiveCamera(f32 fov, f32 aspectRatio, f32 near, f32 far, v3& position = v3());
 		static Camera* CreateOrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, v3& position = v3());

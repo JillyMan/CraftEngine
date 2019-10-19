@@ -1,12 +1,10 @@
 #include "crpch.h"
 
 #include "WindowsWindow.h"
-
-#include "Craft/Window/WindowManager.h"
-
 #include "Craft/Event/KeyEvent.h"
 #include "Craft/Event/MouseEvent.h"
 #include "Craft/Event/ApplicationEvent.h"
+#include "Craft/Window/WindowManager.h"
 
 //--------delete dependency
 #include "Platform/OpenGL/OpenGLContext.h"
@@ -25,7 +23,7 @@ namespace Craft {
 	{
 		m_Setting = setting;
 		m_IsClosed = false;
-
+		m_InputHandler = new Input::InputHandler();
 		CR_ASSERT(Init(), "Window init == false, why ??");
 	}
 
@@ -111,6 +109,7 @@ namespace Craft {
 	void WindowsWindow::Shutdown()
 	{
 		DestroyWindow(m_WindowHandle);
+		delete m_InputHandler;
 		delete m_GraphicsContext;
 		CR_FATAL("Window close");
 	}
@@ -123,12 +122,13 @@ namespace Craft {
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
-		//will be implemented.
+		m_Setting.IsVSync = enabled;
+		m_GraphicsContext->VSync(enabled);
 	}
 
 	bool WindowsWindow::IsVSync()
 	{
-		return false;
+		return m_Setting.IsVSync;
 	}
 
 	void WindowsWindow::ToogleFullScreenMode()
@@ -186,12 +186,14 @@ namespace Craft {
 	void OnKeyPressed(WindowsWindow* window, u64 vkCode)
 	{
 		KeyPressedEvent kpe(vkCode, 0);
+		window->m_InputHandler->OnKeyPressed(vkCode);
 		window->OnEvent(kpe);
 	}
 
 	void OnKeyReleased(WindowsWindow* window, u64 vkCode)
 	{
 		KeyReleasedEvent kre(vkCode);
+		window->m_InputHandler->OnKeyReleased(vkCode);
 		window->OnEvent(kre);
 	}
 
@@ -204,6 +206,7 @@ namespace Craft {
 	void OnMouseMove(WindowsWindow* window, s32 x, s32 y)
 	{
 		MouseMovedEvent mme(x, y);
+
 		window->OnEvent(mme);
 	}
 

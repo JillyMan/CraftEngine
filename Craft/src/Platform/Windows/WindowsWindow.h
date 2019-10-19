@@ -3,6 +3,7 @@
 #include "Craft\Core.h"
 #include "Craft\Window\Window.h"
 #include "Craft\Graphics\GraphicsContext.h"
+#include <Craft\InputHandler.h>
 
 namespace Craft
 {
@@ -30,6 +31,7 @@ namespace Craft
 		virtual void Shutdown();
 
 	private:
+		Input::InputHandler* m_InputHandler;
 		GraphicsContext* m_GraphicsContext;
 
 		bool m_IsClosed;

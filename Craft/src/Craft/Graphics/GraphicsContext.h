@@ -15,5 +15,6 @@ namespace Craft {
 	public:
 		virtual void Init() = 0;
 		virtual void SwapBuffers() = 0;
+		virtual void VSync(bool enabled) = 0;
 	};
 }

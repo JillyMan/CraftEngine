@@ -14,6 +14,8 @@ namespace Craft
 
 	struct mat4
 	{
+		f32 e[16];
+
 		mat4() 
 		{
 			for (int i = 0; i < 16; ++i)
@@ -44,9 +46,7 @@ namespace Craft
 		static mat4 VeiwModelMatrix(v3& pos, v3& scale);
 		static mat4 VeiwModelMatrix(v3& pos, f32 rotation, v3& axis);
 		static mat4 VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis);
-		
-		static mat4 LookAt(v3& camX, v3& camY, v3& camZ);
 
-		f32 e[16];
+		static mat4 LookAt(v3& camX, v3& camY, v3& camZ);
 	};
 }

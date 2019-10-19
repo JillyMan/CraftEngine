@@ -111,7 +111,7 @@ namespace Craft
 
 	void glVSync(bool enabled)
 	{
-		wglSwapIntervalEXT( enabled ? 1 : 0);
+		wglSwapIntervalEXT(enabled ? 1 : 0);
 	}
 
 	void glDestroyContext()

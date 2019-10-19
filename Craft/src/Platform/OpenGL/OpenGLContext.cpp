@@ -32,7 +32,7 @@ namespace Craft
 	void OpengGLContext::Init()
 	{
 		CR_ASSERT(glInit(m_InitData.Handle), "Can't init Windows-OpenGL");
-		glVSync(m_InitData.VSync);
+		VSync(m_InitData.VSync);
 
 		opengl_info info = glGetInfo();
 		CR_CORE_TRACE("OpenGL init successed: ");
@@ -51,5 +51,10 @@ namespace Craft
 	void OpengGLContext::SwapBuffers()
 	{
 		glSwapBuffers();
+	}
+
+	void OpengGLContext::VSync(bool enabled)
+	{
+		glVSync(enabled);
 	}
 }
