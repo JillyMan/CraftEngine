@@ -10,12 +10,12 @@ namespace Craft { namespace Graphics {
 	{
 		if (type == GL_DEBUG_TYPE_ERROR)
 		{
-			CR_ERROR("%s [type 0x%x], [severity = 0x%x], [message=%s]\n",
+			CR_CORE_ERROR("%s [type 0x%x], [severity = 0x%x], [message=%s]\n",
 				"** GL ERROR **", type, severity, message);
 		}
 		else
 		{
-			CR_INFO("GL CALLBACK: [type = 0x%x], [severity = 0x%x] \t \nmessage = %s\n", type, severity, message);
+			CR_CORE_INFO("GL CALLBACK: [type = 0x%x], [severity = 0x%x] \t \nmessage = %s\n", type, severity, message);
 		}
 	}
 
@@ -42,7 +42,7 @@ namespace Craft { namespace Graphics {
 
 		GLint shaderInputs;
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &shaderInputs);
-		CR_INFO("MAX shader inputs: %d", shaderInputs);
+		CR_CORE_INFO("MAX shader inputs: %d", shaderInputs);
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);

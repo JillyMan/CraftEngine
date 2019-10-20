@@ -58,7 +58,7 @@ namespace Craft
 				}
 				else
 				{
-					CR_WARN("Can't read, win32-error-code: [%d]", GetLastError());
+					CR_CORE_WARN("Can't read, win32-error-code: [%d]", GetLastError());
 					free(Result);
 				}
 			}
@@ -67,7 +67,7 @@ namespace Craft
 		}
 		else
 		{
-			CR_ERROR("Can't find file [%d]", fileName);
+			CR_CORE_ERROR("Can't find file [%d]", fileName);
 		}
 
 		return Result;
@@ -83,7 +83,7 @@ namespace Craft
 			DWORD WriteSize = 0;
 			if (!WriteFile(FileHandle, buffer, bytesToWrite, &WriteSize, 0))
 			{
-				CR_ERROR("Can't write to file");
+				CR_CORE_ERROR("Can't write to file");
 			}	
 
 			Result = WriteSize == bytesToWrite;
@@ -92,7 +92,7 @@ namespace Craft
 		}
 		else
 		{
-			CR_WARN("Can't find file [%s]", fileName.c_str());
+			CR_CORE_WARN("Can't find file [%s]", fileName.c_str());
 		}
 		return Result;
 	}

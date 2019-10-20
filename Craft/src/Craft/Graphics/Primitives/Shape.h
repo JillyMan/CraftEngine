@@ -30,13 +30,22 @@ namespace Craft { namespace Graphics {
 		VertexArray* m_VertexArray;
 
 	public:
-		Shape(v3 pos, Image& image) :
+		Shape(v3& pos, Image& image) :
 			m_Shader(NULL),
 			m_Texture(NULL),
 			m_VertexArray(NULL)
 		{
 			SetPosition(pos);
 			SetImage(image);
+		}
+
+		Shape(v3& pos, v4& color) : 
+			m_Shader(NULL),
+			m_Texture(NULL),
+			m_VertexArray(NULL)
+		{
+			SetPosition(pos);
+			SetColor(color);
 		}
 
 		virtual ~Shape()
@@ -50,11 +59,6 @@ namespace Craft { namespace Graphics {
 		virtual void EndDraw() = 0;
 
 	public:
-		void SetViewProjectionMatrix(mat4& matrix) 
-		{
-			m_ViewProjectionMatrix = matrix;
-		}
-
 		void SetProjectionMatrix(mat4& matrix)
 		{
 			m_ProjectionMatrix = matrix;
@@ -98,7 +102,7 @@ namespace Craft { namespace Graphics {
 	private:
 		void RecalculateModelMatrix()
 		{
-			m_ModelMatrix = mat4::VeiwModelMatrix(m_Position, m_Scale, m_Rotation, m_Axis);
+			m_ModelMatrix = mat4::ModelMatrix(m_Position, m_Scale, m_Rotation, m_Axis);
 		}
 	};
 } }

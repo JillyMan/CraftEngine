@@ -8,21 +8,37 @@ namespace Craft
 	{
 	private:
 		v3 m_Up;
-		v3 m_Target;
+		v3 m_Front;
 
 	public:
-		FPSCamera(v3& P, mat4& projMatrix, v3& target = v3(0.0f, 0.0f, 0.0f), v3& up = v3(0.0f, 1.0f, 0.0f)) : 
-			Camera(projMatrix, P),
-			m_Target(target),
+		FPSCamera(f32 cameraSpeed, v3& P, v3& front, v3& up, mat4& projMatrix) :
+			Camera(projMatrix, P, cameraSpeed),
+			m_Front(front),
 			m_Up(up)
 		{
-			RecalculateMatrix();
+		}
+
+		virtual void Move(MoveDirection dir, f32 dt) override 
+		{
+			if (dir == MoveDirection::Up) {
+				m_Position -= m_Front * m_CameraSpeed * dt;
+			}
+			if (dir == MoveDirection::Down) {
+				m_Position += m_Front * m_CameraSpeed * dt;
+			}
+			if (dir == MoveDirection::Right) {
+				m_Position -= Normalize(Cross(m_Front, m_Up)) * m_CameraSpeed * dt;
+			}
+			if (dir == MoveDirection::Left) {
+				m_Position += Normalize(Cross(m_Front, m_Up))* m_CameraSpeed* dt;;
+			}
+			RecalculateViewMatrix();
 		}
 
 	protected:
-		virtual void RecalculateMatrix() override
+		virtual void RecalculateViewMatrix() override
 		{
-			m_ViewMatrix = mat4::LookAt(m_Position, m_Up, m_Target);
+			m_ViewMatrix = mat4::LookAt(m_Position, m_Position - m_Front, m_Up);
 		}
 	};
 }

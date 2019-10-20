@@ -91,26 +91,27 @@ namespace Craft
 	mat4 mat4::Rotate(f32 angle, v3& axis)
 	{
 		mat4 result = Identity();
-		float r = ToRadians(angle);
-		float c = cos(r);
-		float s = sin(r);
-		float omc = 1.0f - c;
 
-		float x = axis.x;
-		float y = axis.y;
-		float z = axis.z;
+		f32 r = ToRadians(angle);
+		f32 c = cos(r);
+		f32 s = sin(r);
+		f32 omc = 1.0f - c;
 
-		result.e[0 + 4 * 0] = x * omc + c;
-		result.e[1 + 4 * 0] = y * x * omc + z * s;
-		result.e[2 + 4 * 0] = x * z * omc - y * s;
+		f32 x = axis.x;
+		f32 y = axis.y;
+		f32 z = axis.z;
 
-		result.e[0 + 4 * 1] = x * y * omc - z * s;
-		result.e[1 + 4 * 1] = y * omc + c;
-		result.e[2 + 4 * 1] = y * z * omc + x * s;
+		result[0 + 4 * 0] = x * omc + c;
+		result[1 + 4 * 0] = y * x * omc + z * s;
+		result[2 + 4 * 0] = x * z * omc - y * s;
 
-		result.e[0 + 4 * 2] = x * z * omc + y * s;
-		result.e[1 + 4 * 2] = y * z * omc - x * s;
-		result.e[2 + 4 * 2] = z * omc + c;
+		result[0 + 4 * 1] = x * y * omc - z * s;
+		result[1 + 4 * 1] = y * omc + c;
+		result[2 + 4 * 1] = y * z * omc + x * s;
+
+		result[0 + 4 * 2] = x * z * omc + y * s;
+		result[1 + 4 * 2] = y * z * omc - x * s;
+		result[2 + 4 * 2] = z * omc + c;
 
 		return result;
 	}
@@ -147,25 +148,25 @@ namespace Craft
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, f32 rotation, v3& axis) 
+	mat4 mat4::ModelMatrix(v3& pos, f32 rotation, v3& axis) 
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Rotate(rotation, axis);
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale)
+	mat4 mat4::ModelMatrix(v3& pos, v3& scale)
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Scale(scale);
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis)
+	mat4 mat4::ModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis)
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Scale(scale) * mat4::Rotate(rotation, axis);
 		return result;
 	}
 
-	mat4 mat4::LookAt(v3& pos, v3& up, v3& target)
+	mat4 mat4::LookAt(v3& pos, v3& target, v3& up)
 	{
 		v3 dir = pos - target;
 		v3 camZ = Normalize(dir);

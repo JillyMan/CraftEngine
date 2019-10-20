@@ -43,10 +43,10 @@ namespace Craft
 		static mat4 Ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 		static mat4 Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far);
 
-		static mat4 VeiwModelMatrix(v3& pos, v3& scale);
-		static mat4 VeiwModelMatrix(v3& pos, f32 rotation, v3& axis);
-		static mat4 VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis);
+		static mat4 ModelMatrix(v3& pos, v3& scale);
+		static mat4 ModelMatrix(v3& pos, f32 rotation, v3& axis);
+		static mat4 ModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis);
 
-		static mat4 LookAt(v3& pos, v3& up, v3& target);
+		static mat4 LookAt(v3& pos, v3& target, v3& up);
 	};
 }

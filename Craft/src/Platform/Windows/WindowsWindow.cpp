@@ -48,7 +48,7 @@ namespace Craft {
 	{
 		if (WindowClassInit() == 0)
 		{
-			CR_ERROR("Can't register window class");
+			CR_CORE_ERROR("Can't register window class");
 			return false;
 		}
 
@@ -86,7 +86,7 @@ namespace Craft {
 
 		if (!m_WindowHandle)
 		{
-			CR_INFO("Can't create Window handle. [error code = %d]", GetLastError());
+			CR_CORE_INFO("Can't create Window handle. [error code = %d]", GetLastError());
 			return false;
 		}
 
@@ -111,7 +111,7 @@ namespace Craft {
 		DestroyWindow(m_WindowHandle);
 		delete m_InputHandler;
 		delete m_GraphicsContext;
-		CR_FATAL("Window close");
+		CR_CORE_FATAL("Window close");
 	}
 
 	void WindowsWindow::SetTitle(String& title)
@@ -232,7 +232,7 @@ namespace Craft {
 		{
 			case WM_CREATE:
 			{
-				CR_INFO("Window is created");
+				CR_CORE_INFO("Window is created");
 				break;
 			}
 			case WM_CLOSE:
@@ -275,7 +275,7 @@ namespace Craft {
 			case WM_RBUTTONUP:
 			case WM_MBUTTONUP:
 			{
-				CR_INFO("mouse button click");
+				CR_CORE_INFO("mouse button click");
 				break;
 			}
 			case WM_SIZE:

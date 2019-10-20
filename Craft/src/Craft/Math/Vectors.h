@@ -143,7 +143,7 @@ namespace Craft
 	f32 Length(v3& a);
 	f32 Dot(v3& a, v3& b);
 	v3  Cross(v3& a, v3& b);
-	v3  Normalize(v3 a);
+	v3 Normalize(v3& a);
 
 //-----------
 //----v4-----
