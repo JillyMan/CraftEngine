@@ -23,7 +23,7 @@ namespace Craft {
 		std::vector<Layer*> m_pLayers;
 
 	public:
-		Application(f32 fps = 60.0f, WindowSetting& setting = WindowSetting());
+		Application(WindowSetting& setting = WindowSetting());
 		virtual ~Application();
 
 		void Run();

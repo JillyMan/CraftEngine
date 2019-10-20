@@ -7,9 +7,9 @@
 
 namespace Craft
 {
-	Application::Application(f32 fps, WindowSetting& setting) :
+	Application::Application(WindowSetting& setting) :
 		m_Running(false),
-		m_FPS(fps)
+		m_FPS(setting.Fps)
 	{
 		m_WindowSetting = setting;
 		m_MainWindow = WindowManager::Create(setting);

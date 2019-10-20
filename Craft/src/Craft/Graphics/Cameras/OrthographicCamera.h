@@ -8,5 +8,9 @@ namespace Craft
 	{
 	public:
 		OrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, v3& position, f32 cameraSpeed = 0.0f);
+
+		virtual void MouseMove(s32 xPos, s32 yPos) override
+		{
+		}
 	};
 }

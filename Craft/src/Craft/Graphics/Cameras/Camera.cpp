@@ -11,7 +11,6 @@ namespace Craft
 		m_CameraSpeed(cameraSpeed),
 		m_ProjectionMatrix(projectionMatrix)
 	{
-		RecalculateViewMatrix();
 	}
 
 	void Camera::Move(MoveDirection dir, f32 dt)

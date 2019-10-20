@@ -37,12 +37,14 @@ namespace Craft
 		inline mat4 GetProjectionMatrix() { return m_ProjectionMatrix; }
 
 		inline f32 GetRotation() { return m_Rotation; }
-		inline void SetRotation(f32 rotation, v3& axis) 
+		inline virtual void SetRotation(f32 rotation, v3& axis) 
 		{
 			m_RotateAxis = axis;
 			m_Rotation = rotation; 
 			RecalculateViewMatrix();
 		}
+
+		virtual void MouseMove(s32 xPos, s32 yPos) = 0;
 
 		inline const v3& GetPosition() { return m_Position; }
 		inline void SetPosition(v3& position) 
