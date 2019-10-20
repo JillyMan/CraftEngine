@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Craft\Window\WindowHandle.h"
-#include "Craft\Graphics\GraphicsContext.h"
+#include <Craft\Window\WindowHandle.h>
+#include <Craft\Graphics\GraphicsContext.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	struct GLInitData
 	{
 		bool VSync;
@@ -24,4 +24,4 @@ namespace Craft
 	private:
 		GLInitData m_InitData;
 	};
-}
+}}

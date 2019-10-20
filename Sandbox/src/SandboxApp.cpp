@@ -1,27 +1,27 @@
 #include <map>
 #include <Craft.h>
 #include <Craft\InputHandler.h>
-#include "Craft\Graphics\Renderer.h"
-#include "Craft\Graphics\RendererAPI.h"
-#include "Craft\Graphics\RenderCommand.h"
+#include <Craft\Graphics\Renderer.h>
+#include <Craft\Graphics\RendererAPI.h>
+#include <Craft\Graphics\RenderCommand.h>
 
-#include "Craft\Graphics\Camera.h"
+#include <Craft\Graphics\Cameras\Camera.h>
+#include <Craft\Graphics\Cameras\FPSCamera.h>
 
-#include "Craft\Graphics\Texture.h"
-#include "Craft\Graphics\Image\ImageLoader.h"
+#include <Craft\Graphics\Texture.h>
+#include <Craft\Graphics\Image\ImageLoader.h>
 
 //------ PLATFORM CODE -------
-#include "Platform\OpenGL\OpenGL.h"
-#include "Platform\OpenGL\OpenGLShader.h"
-#include "Platform\OpenGL\OpenGLBuffer.h"
-#include "Platform\OpenGL\OpenGLTexture.h"
-#include "Platform\OpenGL\OpenGLVertexArray.h"
-#include "Platform\OpenGL\OpenGLRendererAPI.h"
+#include <Platform\OpenGL\OpenGL.h>
+#include <Platform\OpenGL\OpenGLShader.h>
+#include <Platform\OpenGL\OpenGLBuffer.h>
+#include <Platform\OpenGL\OpenGLTexture.h>
+#include <Platform\OpenGL\OpenGLVertexArray.h>
+#include <Platform\OpenGL\OpenGLRendererAPI.h>
 //----------------------------
 
 using namespace Craft;
-
-#define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
+using namespace Graphics;
 
 #define FOV				45.0f
 #define ASPECT_RATIO	DEFAULT_WINDOW_WIDTH / DEFAULT_WINDOW_HEIGHT
@@ -37,9 +37,25 @@ const char* VIEW_MATRIX_STRING = "vw_matrix";
 const char* MODEL_MATRIX_STRING = "ml_matrix";
 const char* PROJECTION_MATRIX_STRING = "pr_matrix";
 
-String BaseSpritesFolder = "C:\\Users\\Artsiom\\Documents\\Projects\\CraftEngine\\Assets\\Sprites\\";
-String PathToSmileImage = BaseSpritesFolder + "smile.bmp";
-String PathToTileSheets = BaseSpritesFolder + "lgbt.bmp";
+String RootSpritesFolder = "C:\\Users\\Artsiom\\Documents\\Projects\\CraftEngine\\Assets\\Sprites\\";
+String PathToGrassImage = "grass.bmp";
+String PathToSmileImage = "smile.bmp";
+String PathToTileSheets = "lgbt.bmp";
+
+class Vfs {
+private:
+	String m_Root;
+
+public:
+	Vfs(String root) : m_Root(root)
+	{
+	}
+
+	Image* GetImage(String path)
+	{
+		return ImageLoader::LoadBMPImage(m_Root + path);
+	}
+};
 
 const char* GetVertexShader()
 {
@@ -83,38 +99,44 @@ out vec4 color;
 
 void main()
 {
-	color = u_color * mix(texture(texture0, TexCoord1), 
-				texture(texture1, TexCoord2), 
-				mixCoefficient);
+	color = u_color * texture(texture0, TexCoord1);
 })";
 }
-
 
 class Cube : public Shape
 {
 public:
-	Cube(f32 x, f32 y, std::vector<Craft::Image*> images)
+	Cube(v3& pos, Image& image) : 
+		Shape(pos, image)
 	{
-		Init();
-		SetPosition(v3(x, y, 0.0f));
-		this->TexturesInit(images);
+		InitTextureCube();
+		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
+	}
+
+	Cube(v3& pos, v4& color) :
+		Shape(pos, color)
+	{
 	}
 
 	virtual void BeginDraw() override
 	{
-		shader->Use();
-		for (s32 i = 0; i < m_Textures.size(); ++i)
+		m_Shader->Use();
+		m_VertexArray->Bind();
+
+		if (m_Texture != NULL) 
 		{
-			m_Textures[i]->Bind(i);
-			String name = TEXTURE_STRING + std::to_string(i);
-			shader->SetUniform1i(name.c_str(), i);
+			m_Texture->Bind(0);
+			String name(TEXTURE_STRING);
+			name.append("0");
+			m_Shader->SetUniform1i(name.c_str(), 0);
 		}
-
-		shader->SetUniform4f(U_COLOR_STRING, v4(1.0f, 0.0f, 0.0f, 1.0f));
-		shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
-		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
-
-		vertexArray->Bind();
+		else 
+		{
+			m_Shader->SetUniform4f(U_COLOR_STRING, m_Color);
+		}
+		m_Shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
+		m_Shader->SetUniformMatrix4fv(VIEW_MATRIX_STRING, m_ViewMatrix);
+		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ProjectionMatrix);
 	}
 
 	virtual void EndDraw() override
@@ -122,46 +144,10 @@ public:
 	}
 
 private: 
-	void Init()
+	void InitTextureCube()
 	{
+		//m_Mesh = Mesh::GenerateCubeWithTextureCoord();
 		f32 vertices[] = {
-			//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-			//0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			//-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			//0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			//0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			//-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			//-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			//-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			//0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			//0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			//0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			//0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			//0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			//-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			//-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			// 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			// 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			//-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-			//-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-
 			0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 			1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
@@ -187,34 +173,60 @@ private:
 			0, 1, 6
 		};
 
-		shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
-		vertexArray = Craft::VertexArray::Create();
-		vertexBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
-		indexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
+		BufferElement pos("Position", VertexDataType::Float3);
+		BufferElement textCoord1("First texture cordinates", VertexDataType::Float2);
+		BufferLayout layout(std::vector<BufferElement> { pos, textCoord1 });
 
-		Craft::BufferElement pos("Position", Craft::VertexDataType::Float3);
-		Craft::BufferElement textCoord1("First texture cordinates", Craft::VertexDataType::Float2);
-
-		Craft::BufferLayout layout(std::vector<Craft::BufferElement> { pos, textCoord1 });
-
+		VertexBuffer* vertexBuffer = VertexBuffer::Create(vertices, ArrayCount(vertices));
 		vertexBuffer->SetLayout(layout);
-		vertexArray->AddVertexBuffer(vertexBuffer);
-		vertexArray->SetIndexBuffer(indexBuffer);
+
+		m_VertexArray = VertexArray::Create();
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		
+		m_VertexArray->SetIndexBuffer(
+			IndexBuffer::Create(indices, ArrayCount(indices))
+		);
 	}
 };
 
-class CRectangle : public Shape
+class Sprite : public Shape
 {
 public:
-	CRectangle(f32 x, f32 y, f32 w, f32 h, 
-		std::vector<Craft::Image*> images)
+	Sprite(f32 x, f32 y, f32 w, f32 h, Image& image) : 
+		Shape(v3(x, y, 0.0f), image)
+	{
+		SetPosition(v3(x, y, 0.0f));
+		InitVertices(x, y, w, h);
+		m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
+	}
+
+	virtual void BeginDraw() override
+	{
+		m_Shader->Use();
+		m_Texture->Bind(0);
+		String name(TEXTURE_STRING);
+		name.append("0");
+		m_Shader->SetUniform1i(name.c_str(), 0);
+
+		m_Shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
+		m_Shader->SetUniformMatrix4fv(VIEW_MATRIX_STRING, m_ViewMatrix);
+		m_Shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ProjectionMatrix);
+		m_VertexArray->Bind();
+	}
+
+	virtual void EndDraw() override
+	{
+		//...unbind...
+	}
+
+	void InitVertices(f32 x, f32 y, f32 w, f32 h)
 	{
 		GLfloat vertices[] =
 		{
-			w,    0.0f, 1.0f,		1.0f, 1.0f,		1.0f, 1.0f,	// Top Right
-			w,    -h,	1.0f,		1.0f, 0.0f,		1.0f, 0.0f,	// Bottom Right
-			0.0f, -h,	1.0f,		0.0f, 0.0f,		0.0f, 0.0f,	// Bottom Left
-			0.0f, 0.0f, 1.0f,		0.0f, 1.0f,		0.0f, 1.0f,	// Top Left 
+			w,    0.0f, 1.0f,	1.0f, 1.0f,	// Top Right
+			w,    -h,	1.0f,	1.0f, 0.0f,	// Bottom Right
+			0.0f, -h,	1.0f,	0.0f, 0.0f,	// Bottom Left
+			0.0f, 0.0f, 1.0f,	0.0f, 1.0f,	// Top Left 
 		};
 
 		GLuint indices[] =
@@ -223,106 +235,130 @@ public:
 			1, 2, 3
 		};
 
-		SetPosition(v3{ x, y, 0.0f });
+		m_VertexArray = VertexArray::Create();
 
-		TexturesInit(images);
+		IndexBuffer* indexBuffer = IndexBuffer::Create(indices, ArrayCount(indices));
+		VertexBuffer* vertexBuffer = VertexBuffer::Create(vertices, ArrayCount(vertices));
 
-		shader = new Craft::OpenGLShader(GetVertexShader(), GetFragmentShader());
-		vertexArray = Craft::VertexArray::Create();
-		vertexBuffer = Craft::VertexBuffer::Create(vertices, ArrayCount(vertices));
-		indexBuffer = Craft::IndexBuffer::Create(indices, ArrayCount(indices));
+		BufferElement pos("Position", VertexDataType::Float3);
+		BufferElement textCoord1("First texture cordinates", VertexDataType::Float2);
 
-		Craft::BufferElement pos("Position", Craft::VertexDataType::Float3);
-		Craft::BufferElement textCoord1("First texture cordinates", Craft::VertexDataType::Float2);
-		Craft::BufferElement textCoord2("Second texture cordinates", Craft::VertexDataType::Float2);
-
-		Craft::BufferLayout layout( std::vector<Craft::BufferElement> {pos, textCoord1, textCoord2} );
+		BufferLayout layout(std::vector<BufferElement> {pos, textCoord1 });
 
 		vertexBuffer->SetLayout(layout);
-		vertexArray->AddVertexBuffer(vertexBuffer);
-		vertexArray->SetIndexBuffer(indexBuffer);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 	}
+};
 
-	virtual void BeginDraw() override
-	{
-		shader->Use();
-		for (s32 i = 0; i < m_Textures.size(); ++i)
-		{
-			m_Textures[i]->Bind(i);
-			String name = TEXTURE_STRING + std::to_string(i);
-			shader->SetUniform1i(name.c_str(), i);
-		}
 
-		shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
-		shader->SetUniformMatrix4fv(PROJECTION_MATRIX_STRING, m_ViewProjectionMatrix);
-		vertexArray->Bind();
-	}
-
-	virtual void EndDraw() override
-	{
-		//...unbind...
-	}
+enum class RotationKind
+{
+	X,
+	Y,
+	Z
 };
 
 class ExampleScene : public Craft::Layer
 {
 private:
-	Shape* m_Rect;
-	Shape* m_Rect1;
-	Shape* m_Cube;
+	std::vector<Shape*> m_Shapes;
 
-	Camera* m_Camera;
-	Camera* m_Camera0;
+	Camera* m_PerspCamera;
+	Camera* m_MainCamera;
+	Camera* m_FpsCamera;
+
+	f32 timer = 0.0f;
+	RotationKind rotKind;
+	std::map<RotationKind, v3> rotors;
+
+	s32 lastX, lastY;
+
+	Vfs* m_Vfs;
 
 public:
 	ExampleScene()
 	{
+		rotKind = RotationKind::X;
+		rotors[RotationKind::X] = v3(1.0f, 0.0f, 0.0f);
+		rotors[RotationKind::Y] = v3(0.0f, 1.0f, 0.0f);
+		rotors[RotationKind::Z] = v3(0.0f, 0.0f, 1.0f);
+		
+		m_Vfs = new Vfs(RootSpritesFolder);
+
+		v2 pos = Input::InputHandler::GetMousePosition();
+		lastX = pos.x;
+		lastY = pos.y;
+
 		glViewport(0, 0, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		InitRenderable();
 	}
 
 	~ExampleScene()
 	{
-		delete m_Rect;
+		for (int i = 0; i < m_Shapes.size(); ++i) 
+		{
+			delete m_Shapes[i];
+		}
 	}
-	
+
 	void InitRenderable()
 	{
 		RenderCommand::ZTest(true);
-		RenderCommand::SetClearColor(v4{ 0.0f, 0.1f, 0.1f, 1.0f });
+		RenderCommand::SetClearColor(v4(0.0f, 0.1f, 0.1f, 1.0f));
 
-		m_Camera = Camera::CreateOrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
-		m_Camera0 = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
-					v3(0.0f, 0.0f, -5.0f));
+		v3 cameraPos = v3(0.0f, 0.0f, -5.0f);
+		v3 cameraFront = v3(0.0f, 0.0f, -1.0f);
+		v3 cameraUp = v3(0.0f, 1.0f, 0.0f);
 
-		Craft::Image* smile = Craft::ImageLoader::LoadBMPImage(PathToSmileImage);
-		Craft::Image* image = Craft::ImageLoader::LoadBMPImage(PathToTileSheets);
+		m_FpsCamera = new FPSCamera(0.005f,
+			cameraPos, cameraFront, cameraUp,
+			mat4::Perspective(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE));
 
-		m_Rect1 = new CRectangle(
-			-2.0f, 0.0f, 1.0f, 1.0f,
-			std::vector<Craft::Image*> { image, smile } );
-		m_Rect1->SetRotation(-75.0f, v3(1.0f, 0.0f, 0.0f));
+		m_PerspCamera = Camera::CreatePerspectiveCamera(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE,
+					v3(0.0f, 0.0f, -5.0f), 0.01f);
 
-		m_Rect = new CRectangle(
-			-1.0f, 0.0f, 1.0f, 1.0f,
-			std::vector<Craft::Image*> { image });
+		Craft::Image* smile = m_Vfs->GetImage(PathToSmileImage);
+		Craft::Image* image = m_Vfs->GetImage(PathToTileSheets);
+		Craft::Image* grass = m_Vfs->GetImage(PathToGrassImage);
 
-		m_Cube = new Cube(0.0f, 0.0f, std::vector<Craft::Image*> { smile });
+		Sprite* m_Plane = new Sprite(-5.0f, -2.0f, 10.0f, 10.0f, *grass);
+		m_Plane->SetRotation(-90.0f, v3(1.0f, 0.0f, 0.0f));
+
+		Sprite* m_Rect = new Sprite(-4.0f, 0.0f, 1.0f, 1.0f, *smile);
+		m_Rect->SetRotation(45.0f, v3(0.0f, 1.0f, 0.0f));
+
+		Cube* m_Cube = new Cube(v3(0.0f, 0.0f, 0.0f), *image);
 		m_Cube->SetRotation(55.0f, v3(0.0f, 0.0f, 1.0f));
 
+		Cube* m_Cube1 = new Cube(v3(1.0f, -1.0f, 0.0f), *smile);
+		m_Cube1->SetRotation(24.0f, v3(0.0f, 0.0f, 1.0f));
+
+		Cube* m_Cube2 = new Cube(v3(3.0f, 1.0f, 0.0f), *smile);
+
+		m_Shapes = { 
+			m_Plane, 
+			m_Rect,
+			m_Cube, 
+			m_Cube1,
+			m_Cube2 
+		};
+
+		m_MainCamera = m_FpsCamera;
+
 		delete smile;
+		delete grass;
 		delete image;
 	}
 
 	virtual void OnRender() override
 	{
 		RenderCommand::Clear();
+		Renderer::BeginScene(*m_MainCamera);
 
-		Renderer::BeginScene(*m_Camera);
-
-		Renderer::Submit(*m_Rect);
-		Renderer::Submit(*m_Rect1);
-		Renderer::Submit(*m_Cube);
+		for (Shape* shape : m_Shapes) {
+			Renderer::Submit(*shape);
+		}
 	}
 
 	virtual void OnEvent(Craft::Event& event) override
@@ -335,45 +371,70 @@ public:
 
 	virtual void OnUpdate(f32 deltaTime) override
 	{
-		v3 P = m_Camera->GetPosition();
-		v3 force = v3 { 0.01f, 0.01f, 0.01f } * deltaTime;
+		UpdataSettings();
+		UpdataCamera(deltaTime);
+		UpdataShapes(deltaTime);
+	}
 
+	void UpdataSettings() 
+	{
+		if (Input::InputHandler::IsKeyPressed('1'))
+		{
+			rotKind = RotationKind::X;
+		} 
+		else if (Input::InputHandler::IsKeyPressed('2'))
+		{
+			rotKind = RotationKind::Y;
+		} 
+		else if (Input::InputHandler::IsKeyPressed('3'))
+		{
+			rotKind = RotationKind::Z;
+		}
+	}
+
+	void UpdataShapes(f32 deltaTime)
+	{
+		timer += deltaTime;
+		m_Shapes[2]->SetRotation(timer / 20.0f, v3(1.0f, 0.0f, 0.0f));
+	}
+
+	void UpdataCamera(f32 deltaTime)
+	{
+		UpdateCameraMove(deltaTime);
+		UpdateCameraRotation(deltaTime, m_MainCamera->GetRotation(), rotors[rotKind]);
+	}
+
+	void UpdateCameraMove(f32 dt) 
+	{
 		if (Input::InputHandler::IsKeyPressed('W'))
 		{
-			P.z += force.z;
+			m_MainCamera->Move(MoveDirection::Up, dt);
 		}
-
 		if (Input::InputHandler::IsKeyPressed('S'))
 		{
-			P.z -= force.z;
+			m_MainCamera->Move(MoveDirection::Down, dt);
 		}
 
 		if (Input::InputHandler::IsKeyPressed('A'))
 		{
-			P.x += force.x;
+			m_MainCamera->Move(MoveDirection::Left, dt);
 		}
-
 		if (Input::InputHandler::IsKeyPressed('D'))
 		{
-			P.x -= force.x;
+			m_MainCamera->Move(MoveDirection::Right, dt);
 		}
+	}
 
-		if (Input::InputHandler::IsKeyPressed('Z'))
-		{
-			P.y -= force.y;
-		}
-
+	void UpdateCameraRotation(f32 dt, f32 angle, v3& axis)
+	{
 		if (Input::InputHandler::IsKeyPressed('Q'))
 		{
-			P.y += force.y;
+			m_MainCamera->SetRotation(angle + 1, axis);
 		}
-
-		m_Camera->SetPosition(P);
-
-		static f32 lastTime;
-		lastTime += deltaTime;
-
-		m_Cube->SetRotation(lastTime/20.0f, v3(1.0, 0.0, 0.0f));
+		if (Input::InputHandler::IsKeyPressed('E'))
+		{
+			m_MainCamera->SetRotation(angle - 1, axis);
+		}
 	}
 
 private:
@@ -387,7 +448,6 @@ private:
 
 		if (event.GetKeyCode() == VK_ESCAPE)
 		{		
-			Sleep(1000);
 			exit(1);
 		}
 
@@ -396,10 +456,8 @@ private:
 
 	bool OnMouseMove(Craft::MouseMovedEvent& e)
 	{
-		//static f32 LastY = e.y;
-		//v3 P = m_Camera->GetPosition();
-		//f32 y = P.y - LastY;
-		//LastY += ;
+		s32 offsetX = lastX - e.x;
+		s32 offsetY = lastY - e.y;
 		return true;
 	}
 
@@ -411,9 +469,8 @@ private:
 
 	void ChangeCamera()
 	{
-		Camera* temp = m_Camera;
-		m_Camera = m_Camera0;
-		m_Camera0 = temp;
+		CR_INFO("Toogle camera type");
+		m_MainCamera = m_MainCamera == m_FpsCamera ? m_PerspCamera : m_FpsCamera;
 	}
 };
 

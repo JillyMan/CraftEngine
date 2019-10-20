@@ -2,8 +2,8 @@
 
 #include <Craft\Math\Math.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	class Shader
 	{
 	public:
@@ -19,4 +19,4 @@ namespace Craft
 
 		virtual void SetUniformMatrix4fv(const char* name, mat4& mat) = 0;
 	};
-}
+} }

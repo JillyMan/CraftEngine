@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Glew\Glew.h"
-#include <Craft\Window\WindowHandle.h>
+#include <Platform/OpenGL/Glew/Glew.h>
+#include <Craft/Window/WindowHandle.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	struct opengl_info
 	{
 		bool ModernContext;
@@ -20,4 +20,4 @@ namespace Craft
 	void glSwapBuffers();
 	void glVSync(bool enabled);
 	void glDestroyContext();
-}
+}}

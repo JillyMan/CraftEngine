@@ -2,8 +2,8 @@
 
 #include "Platform\OpenGL\OpenGL.h"
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+
 	static HDC WindowDC;
 
 	static void InitOpenGLExtensions(void)
@@ -132,4 +132,4 @@ namespace Craft
 
 		return Result;
 	}
-}
+}}

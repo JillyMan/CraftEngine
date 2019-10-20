@@ -3,7 +3,8 @@
 
 #include "Platform\OpenGL\OpenGLRendererAPI.h"
 
-namespace Craft 
-{
+namespace Craft { namespace Graphics {
+
 	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI;
-}
+
+}}

@@ -1,8 +1,9 @@
 #include "crpch.h"
-#include "OpenGLShader.h"
 
-namespace Craft
-{
+#include <Platform/OpenGL/OpenGLShader.h>
+
+namespace Craft { namespace Graphics {
+	
 	OpenGLShader::OpenGLShader(const char* vertexShader, const char* fragmentShader)
 	{
 		GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -115,4 +116,4 @@ namespace Craft
 			}
 		}
 	}
-}
+} }

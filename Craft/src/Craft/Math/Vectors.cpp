@@ -209,22 +209,14 @@ namespace Craft
 
 	f32 Length(v3& a)
 	{
-		f32 result = 0.0f;
-		for (int i = 0; i < 3; ++i)
-		{
-			result += a.e[i] * a.e[i];
-		}
+		f32 result = a.x * a.x + a.y * a.y + a.z * a.z;
 		result = sqrt(result);
 		return result;
 	}
 
 	f32 Dot(v3& a, v3& b)
 	{
-		f32 result = 0.0f;
-		for (int i = 0; i < 3; ++i)
-		{
-			result += (a.e[i] * b.e[i]);
-		}
+		f32 result = a.x * a.x + a.y * a.y + a.z * a.z;
 		return result;
 	}
 
@@ -237,7 +229,7 @@ namespace Craft
 		return ñ;
 	}
 
-	v3 Normalize(v3 a)
+	v3 Normalize(v3& a)
 	{
 		f32 len = Length(a);
 		return a / len;

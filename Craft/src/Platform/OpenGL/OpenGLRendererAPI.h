@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Craft\Graphics\RendererAPI.h"
+#include <Craft\Graphics\RendererAPI.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
+	
 	class OpenGLRendererAPI : public RendererAPI
 	{
 	public:
@@ -15,4 +15,5 @@ namespace Craft
 
 		virtual void ZTest(bool enabled) override;
 	};
-}
+
+}}

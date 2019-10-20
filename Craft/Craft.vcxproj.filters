@@ -76,9 +76,6 @@
     <ClInclude Include="src\Craft\Graphics\Buffer.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Camera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClInclude>
@@ -87,9 +84,6 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\FPSCamera.h">
-      <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h">
       <Filter>Craft\Graphics</Filter>
@@ -102,12 +96,6 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h">
       <Filter>Craft\Graphics\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\OrthographicCamera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\PerspectiveCamera.h">
-      <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h">
       <Filter>Craft\Graphics\Primitives</Filter>
@@ -213,25 +201,29 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\InputHandler.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Camera.cpp">
-      <Filter>Craft\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\OrthographicCamera.cpp">
-      <Filter>Craft\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\PerspectiveCamera.cpp">
-      <Filter>Craft\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp">
       <Filter>Craft\Graphics</Filter>
@@ -295,5 +287,14 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\InputHandler.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp">
+      <Filter>Craft\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

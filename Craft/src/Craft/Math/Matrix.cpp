@@ -1,5 +1,6 @@
 #include "crpch.h"
-#include "Math.h"
+
+#include <Craft/Math/Math.h>
 
 namespace Craft
 {
@@ -90,26 +91,27 @@ namespace Craft
 	mat4 mat4::Rotate(f32 angle, v3& axis)
 	{
 		mat4 result = Identity();
-		float r = ToRadians(angle);
-		float c = cos(r);
-		float s = sin(r);
-		float omc = 1.0f - c;
 
-		float x = axis.x;
-		float y = axis.y;
-		float z = axis.z;
+		f32 r = ToRadians(angle);
+		f32 c = cos(r);
+		f32 s = sin(r);
+		f32 omc = 1.0f - c;
 
-		result.e[0 + 4 * 0] = x * omc + c;
-		result.e[1 + 4 * 0] = y * x * omc + z * s;
-		result.e[2 + 4 * 0] = x * z * omc - y * s;
+		f32 x = axis.x;
+		f32 y = axis.y;
+		f32 z = axis.z;
 
-		result.e[0 + 4 * 1] = x * y * omc - z * s;
-		result.e[1 + 4 * 1] = y * omc + c;
-		result.e[2 + 4 * 1] = y * z * omc + x * s;
+		result[0 + 4 * 0] = x * omc + c;
+		result[1 + 4 * 0] = y * x * omc + z * s;
+		result[2 + 4 * 0] = x * z * omc - y * s;
 
-		result.e[0 + 4 * 2] = x * z * omc + y * s;
-		result.e[1 + 4 * 2] = y * z * omc - x * s;
-		result.e[2 + 4 * 2] = z * omc + c;
+		result[0 + 4 * 1] = x * y * omc - z * s;
+		result[1 + 4 * 1] = y * omc + c;
+		result[2 + 4 * 1] = y * z * omc + x * s;
+
+		result[0 + 4 * 2] = x * z * omc + y * s;
+		result[1 + 4 * 2] = y * z * omc - x * s;
+		result[2 + 4 * 2] = z * omc + c;
 
 		return result;
 	}
@@ -131,7 +133,7 @@ namespace Craft
 	mat4 mat4::Perspective(f32 fov, f32 aspectRatio, f32 near, f32 far)
 	{
 		mat4 result = Identity();
-		f32 p = 1.0f / tanf(ToRadians(0.5 * fov));
+		f32 p = 1.0f / tanf(ToRadians(0.5f * fov));
 		f32 a = p / aspectRatio;
 
 		f32 b = (near + far) / (near - far);
@@ -146,40 +148,49 @@ namespace Craft
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, f32 rotation, v3& axis) 
+	mat4 mat4::ModelMatrix(v3& pos, f32 rotation, v3& axis) 
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Rotate(rotation, axis);
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale)
+	mat4 mat4::ModelMatrix(v3& pos, v3& scale)
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Scale(scale);
 		return result;
 	}
 
-	mat4 mat4::VeiwModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis)
+	mat4 mat4::ModelMatrix(v3& pos, v3& scale, f32 rotation, v3& axis)
 	{
 		mat4 result = mat4::Translate(pos) * mat4::Scale(scale) * mat4::Rotate(rotation, axis);
 		return result;
 	}
 
-	mat4 LookAt(v3& camX, v3& camY, v3& camZ)
+	mat4 mat4::LookAt(v3& pos, v3& target, v3& up)
 	{
-		mat4 result;
-		result[0 + 0 * 4] = camX.x;
-		result[1 + 0 * 4] = camX.y;
-		result[2 + 0 * 4] = camX.z;
+		v3 dir = pos - target;
+		v3 camZ = Normalize(dir);
+		v3 camX = Normalize(Cross(up, camZ));
+		v3 camY = Cross(camZ, camX);
 
-		result[0 + 1 * 4] = camY.x;
-		result[1 + 1 * 4] = camY.y;
-		result[2 + 1 * 4] = camY.z;
+		mat4 view;
+		view[0 + 0 * 4] = camX.x;
+		view[1 + 0 * 4] = camX.y;
+		view[2 + 0 * 4] = camX.z;
 
-		result[0 + 2 * 4] = camZ.x;
-		result[1 + 2 * 4] = camZ.y;
-		result[2 + 2 * 4] = camZ.z;
+		view[0 + 1 * 4] = camY.x;
+		view[1 + 1 * 4] = camY.y;
+		view[2 + 1 * 4] = camY.z;
 
-		return result;
+		view[0 + 2 * 4] = camZ.x;
+		view[1 + 2 * 4] = camZ.y;
+		view[2 + 2 * 4] = camZ.z;
+
+		view[3 + 3 * 4] = 1.0f;
+
+		mat4 transform = mat4::Translate(-pos);
+
+		return view * transform;
 	}
 
 	std::ostream& operator << (std::ostream& os, mat4& mat)

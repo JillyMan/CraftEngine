@@ -48,7 +48,7 @@ namespace Craft {
 	{
 		if (WindowClassInit() == 0)
 		{
-			CR_ERROR("Can't register window class");
+			CR_CORE_ERROR("Can't register window class");
 			return false;
 		}
 
@@ -86,17 +86,17 @@ namespace Craft {
 
 		if (!m_WindowHandle)
 		{
-			CR_INFO("Can't create Window handle. [error code = %d]", GetLastError());
+			CR_CORE_INFO("Can't create Window handle. [error code = %d]", GetLastError());
 			return false;
 		}
 
 		WindowManager::RegisterWindowClass(m_WindowHandle, this);
 
 //--------------------
-		GLInitData setting; 
+		Graphics::GLInitData setting; 
 		setting.VSync = m_Setting.IsVSync;
 		setting.Handle = m_WindowHandle;
-		m_GraphicsContext = new OpengGLContext(setting);
+		m_GraphicsContext = new Graphics::OpengGLContext(setting);
 //--------------------
 		m_GraphicsContext->Init();
 
@@ -111,7 +111,7 @@ namespace Craft {
 		DestroyWindow(m_WindowHandle);
 		delete m_InputHandler;
 		delete m_GraphicsContext;
-		CR_FATAL("Window close");
+		CR_CORE_FATAL("Window close");
 	}
 
 	void WindowsWindow::SetTitle(String& title)
@@ -185,47 +185,42 @@ namespace Craft {
 
 	void OnKeyPressed(WindowsWindow* window, u64 vkCode)
 	{
-		KeyPressedEvent kpe(vkCode, 0);
 		window->m_InputHandler->OnKeyPressed(vkCode);
-		window->OnEvent(kpe);
+		window->OnEvent(KeyPressedEvent(vkCode, 0));
 	}
 
 	void OnKeyReleased(WindowsWindow* window, u64 vkCode)
 	{
-		KeyReleasedEvent kre(vkCode);
 		window->m_InputHandler->OnKeyReleased(vkCode);
-		window->OnEvent(kre);
+		window->OnEvent(KeyReleasedEvent(vkCode));
 	}
 
 	void OnResizeWindow(WindowsWindow* window, u32 width, u32 height)
 	{
-		WindowResizeEvent wre(width, height);
-		window->OnEvent(wre);
+		window->OnEvent(WindowResizeEvent(width, height));
 	}
 
 	void OnMouseMove(WindowsWindow* window, s32 x, s32 y)
-	{
-		MouseMovedEvent mme(x, y);
-
-		window->OnEvent(mme);
+	{	
+		window->m_InputHandler->SetMousePosition(x, y);
+		window->OnEvent(MouseMovedEvent(x, y));
 	}
 
 	void OnMouseButtonPressed(WindowsWindow* window, u32 button)
-	{
-		MouseButtonPressedEvent mbpe(button);
-		window->OnEvent(mbpe);
+	{	
+//		window->m_InputHandler->OnMouseKeyPressed(button);
+		window->OnEvent(MouseButtonPressedEvent(button));
 	}
 
 	void OnMouseButtonReleased(WindowsWindow* window, u32 button)
 	{
-		MouseButtonReleasedEvent mbre(button);
-		window->OnEvent(mbre);
+//		window->m_InputHandler->OnMouseKeyReleased(button);
+		window->OnEvent(MouseButtonReleasedEvent(button));
 	}
 
 	void OnWindowClose(WindowsWindow* window)
 	{
-		WindowCloseEvent mce;
-		window->OnEvent(mce);
+		window->OnEvent(WindowCloseEvent());
 	}
 
 	LRESULT CALLBACK WindowProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -237,7 +232,7 @@ namespace Craft {
 		{
 			case WM_CREATE:
 			{
-				CR_INFO("Window is created");
+				CR_CORE_INFO("Window is created");
 				break;
 			}
 			case WM_CLOSE:
@@ -280,7 +275,7 @@ namespace Craft {
 			case WM_RBUTTONUP:
 			case WM_MBUTTONUP:
 			{
-				CR_INFO("mouse button click");
+				CR_CORE_INFO("mouse button click");
 				break;
 			}
 			case WM_SIZE:

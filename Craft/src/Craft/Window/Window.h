@@ -13,6 +13,7 @@ namespace Craft
 	{
 		bool IsVSync;
 		bool IsFullscreen;
+		u32 Fps;
 		u32 Style;
 		s32 Width, Height;
 		String Title;
@@ -22,6 +23,7 @@ namespace Craft
 			Height(DEFAULT_WINDOW_HEIGHT),
 			IsFullscreen(false),
 			IsVSync(false),
+			Fps(60.0f),
 			Style(Style::Default),
 			Title("Craft game engine")
 		{

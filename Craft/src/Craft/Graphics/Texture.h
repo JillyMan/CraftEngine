@@ -2,8 +2,7 @@
 
 #include <Craft\Graphics\Image\Image.h>
 
-namespace Craft
-{
+namespace Craft { namespace Graphics {
 	//Specify bihevior when texture coords out of range
 	enum class TextureParameter
 	{
@@ -53,4 +52,4 @@ namespace Craft
 
 		static Texture* Create(TextureType type);
 	};
-}
+} }
