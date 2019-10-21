@@ -23,8 +23,8 @@ namespace Craft
 			m_Front(front),
 			m_Up(up),
 			m_Pitch(0.0f),
-			m_Yaw(0.0f),
-			m_Sensitivity(0.05f),
+			m_Yaw(-90.0f),
+			m_Sensitivity(0.1f),
 			m_LastX(camLastPos.x),
 			m_LastY(camLastPos.y)
 		{

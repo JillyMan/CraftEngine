@@ -139,18 +139,6 @@
     <ClInclude Include="src\Craft\System\FileSystem.h">
       <Filter>Craft\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\System\Vfs\VFS.h">
-      <Filter>Craft\System\Vfs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h">
-      <Filter>Craft\System\Vfs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h">
-      <Filter>Craft\System\Vfs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h">
-      <Filter>Craft\System\Vfs</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -214,6 +202,12 @@
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h" />
+    <ClInclude Include="src\Craft\System\Vfs\Vfs.h" />
+    <ClInclude Include="src\Logger\LogStream.h" />
+    <ClInclude Include="src\Logger\ConsoleLogStream.h" />
+    <ClInclude Include="src\Logger\LogCore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
@@ -296,5 +290,9 @@
     <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp">
       <Filter>Craft\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Logger\ConsoleLogStream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Graphics\Shaders\ShaderFactory.h" />
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ namespace Craft
 			Height(DEFAULT_WINDOW_HEIGHT),
 			IsFullscreen(false),
 			IsVSync(false),
-			Fps(60.0f),
+			Fps(60),
 			Style(Style::Default),
 			Title("Craft game engine")
 		{

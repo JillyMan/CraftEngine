@@ -9,6 +9,7 @@
 
 #include "Craft\Math\Math.h"
 
+#include <Craft\System\Vfs\Vfs.h>
 #include "Craft\System\FileSystem.h"
 
 //--------------------------------------

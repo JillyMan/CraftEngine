@@ -4,17 +4,19 @@
     <Filter Include="src">
       <UniqueIdentifier>{caaa8a1a-c740-436a-94af-2728517e0504}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Shaders">
-      <UniqueIdentifier>{9a877885-f846-4ada-9808-ea6fbe9b8084}</UniqueIdentifier>
+    <Filter Include="src\Layers">
+      <UniqueIdentifier>{a0ea2bb9-4fe9-403a-bf17-435732553d45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SandboxApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Layers\Sample2DLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Todo-list.todo" />
-    <None Include="src\Shaders\basic.vertex.shader" />
+    <ClInclude Include="src\Layers\Sample3DLayer.h" />
+    <ClInclude Include="src\Layers\Constants.h" />
+    <ClInclude Include="src\Layers\Sample2DLayer.h" />
   </ItemGroup>
 </Project>

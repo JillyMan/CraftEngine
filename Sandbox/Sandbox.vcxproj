@@ -127,12 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Layers\Sample2DLayer.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Craft\Craft.vcxproj">
       <Project>{5597FB0C-C1AB-23BE-8A2D-C71DF60020EF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Layers\Constants.h" />
+    <ClInclude Include="src\Layers\Sample2DLayer.h" />
+    <ClInclude Include="src\Layers\Sample3DLayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

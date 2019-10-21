@@ -14,7 +14,7 @@ namespace Craft {
 	class CRAFT_API Application
 	{
 	private:
-		f32 m_FPS;
+		u32 m_FPS;
 		f32 m_LastTime;
 		bool m_Running;
 

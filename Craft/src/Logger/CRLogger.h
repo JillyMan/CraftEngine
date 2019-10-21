@@ -1,46 +1,11 @@
 #pragma once
 
 #include <string>
+#include <Logger/LogCore.h>
+#include <Logger/LogStream.h>
 
 namespace crlogger
 {
-	static const char* LogNames[] = { "Info", "Fatal", "Warn", "Error", "Trace" };
-
-	enum ConsoleColor
-	{
-		GRAY	= 8,
-		BLUE	= 9,
-		RED		= 12,
-		YELLOW	= 14,
-		WHITE	= 15
-	};
-
-	enum LevelLog
-	{
-		Info = 0,
-		Fatal,
-		Warn,
-		Error,
-		Trace
-	};
-
-	class LogStream
-	{
-	public:
-		virtual void Write(LevelLog level, const char* msg) = 0;
-	};
-
-	class ConsoleLogStream : public LogStream
-	{
-	private:
-		FILE* m_File;
-		std::map<LevelLog, ConsoleColor> m_LogColors;
-
-	public:
-		ConsoleLogStream();
-		virtual void Write(LevelLog level, const char* msg) override;
-	};
-
 	class Logger
 	{
 	private:

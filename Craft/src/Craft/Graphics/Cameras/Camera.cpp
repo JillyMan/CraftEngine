@@ -36,9 +36,9 @@ namespace Craft
 		return new PerspectiveCamera(fov, aspectRatio, _near, _far, position, speed);
 	}
 
-	Camera* Camera::CreateOrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, v3& position, f32 speed)
+	Camera* Camera::CreateOrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, f32 _near, f32 _far, v3& position, f32 speed)
 	{
-		return new OrthographicCamera(left, right, bottom, top, position, speed);
+		return new OrthographicCamera(left, right, bottom, top, _near, _far, position, speed);
 	}
 
 	void Camera::RecalculateViewMatrix()
