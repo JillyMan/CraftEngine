@@ -1,6 +1,7 @@
 #include "crpch.h"
 
 #include <Craft/Graphics/Renderer.h>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 namespace Craft { namespace Graphics {
 
@@ -14,11 +15,22 @@ namespace Craft { namespace Graphics {
 
 	void Renderer::Submit(Shape& shape)
 	{
-		shape.BeginDraw();
-
 		shape.SetViewMatrix(Data.m_ViewMatrix);
 		shape.SetProjectionMatrix(Data.m_ProjectionMatrix);
 
+		shape.BeginDraw();
+
 		RenderCommand::DrawIndexed(shape.GetVertexArray());
+	}
+
+	void Renderer::Submit(VertexArray* vertexArray, Shader* shader, Craft::mat4& transform)
+	{
+		shader->SetUniformMatrix4fv("vw_matrix", Data.m_ViewMatrix);
+		shader->SetUniformMatrix4fv("pr_matrix", Data.m_ProjectionMatrix);
+		shader->SetUniformMatrix4fv("ml_matrix", transform);
+		shader->Use();
+
+		vertexArray->Bind();
+		RenderCommand::DrawIndexed(vertexArray);
 	}
 } }

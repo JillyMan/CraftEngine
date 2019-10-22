@@ -157,10 +157,12 @@
     <ClInclude Include="src\Craft\Graphics\Image\Image.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
     <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h" />
     <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h" />
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Craft\Graphics\Renderer.h" />
     <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
@@ -175,16 +177,16 @@
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VFS_Config.h" />
-    <ClInclude Include="src\Craft\System\Vfs\VfsBasic.h" />
-    <ClInclude Include="src\Craft\System\Vfs\Vfs_Implementation.h" />
+    <ClInclude Include="src\Craft\System\Vfs\Vfs.h" />
     <ClInclude Include="src\Craft\Types.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
     <ClInclude Include="src\Craft\Window\WindowManager.h" />
     <ClInclude Include="src\Craft\Window\WindowStyle.h" />
+    <ClInclude Include="src\Logger\ConsoleLogStream.h" />
     <ClInclude Include="src\Logger\CRLogger.h" />
+    <ClInclude Include="src\Logger\LogCore.h" />
+    <ClInclude Include="src\Logger\LogStream.h" />
     <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -213,6 +215,7 @@
     <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
+    <ClCompile Include="src\Logger\ConsoleLogStream.cpp" />
     <ClCompile Include="src\Logger\CRLogger.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
@@ -228,6 +231,9 @@
     <ClCompile Include="src\crpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Graphics\Shaders\ShaderFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
