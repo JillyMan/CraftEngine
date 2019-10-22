@@ -3,7 +3,7 @@
 #include <Craft/Graphics/Primitives/Shape.h>
 
 #include <Platform/OpenGL/OpenGLShader.h>
-#include <Craft/Graphics/Shaders/ShaderFactory.h>
+//#include <Craft/Graphics/Shaders/ShaderFactory.h>
 
 namespace Craft { namespace Graphics {
 

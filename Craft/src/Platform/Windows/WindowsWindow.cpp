@@ -206,6 +206,12 @@ namespace Craft {
 		window->OnEvent(MouseMovedEvent(x, y));
 	}
 
+	void OnMouseWheel(WindowsWindow* window, s32 zDelta) 
+	{
+	//	window->m_InputHandler->SetMouseWheelPos(xPos, yPos);
+		window->OnEvent(MouseScrollWheelEvent(zDelta));
+	}
+
 	void OnMouseButtonPressed(WindowsWindow* window, u32 button)
 	{	
 //		window->m_InputHandler->OnMouseKeyPressed(button);
@@ -266,6 +272,15 @@ namespace Craft {
 			case WM_MOUSEMOVE:
 			{
 				OnMouseMove(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
+			}
+			case WM_MOUSEWHEEL: 
+			{
+				CR_INFO("Scrool");
+
+				s32 zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+
+				OnMouseWheel(window, zDelta);
 				break;
 			}
 			case WM_LBUTTONDOWN:

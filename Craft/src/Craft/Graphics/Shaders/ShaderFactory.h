@@ -57,4 +57,31 @@ void main()
 })";
 	}
 
+	const char* GetSimpleVertexShader()
+	{
+		return R"(
+#version 460 core
+layout (location = 0) in vec3 pos;
+
+uniform mat4 pr_matrix = mat4(1.0f);
+uniform mat4 vw_matrix = mat4(1.0f);
+uniform mat4 ml_matrix = mat4(1.0f);
+
+void main() {
+	gl_Position = pr_matrix * vw_matrix * ml_matrix * vec4(pos, 1.0f);
+})";
+	}
+
+	const char* GetFragmentColorShader() {
+		return R"(
+#version 460 core
+
+uniform vec3 u_color;
+
+out vec4 color;
+
+void main() {
+	color = vec4(u_color, 1.0f);
+})";
+	}
 } }

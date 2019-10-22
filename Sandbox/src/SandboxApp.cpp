@@ -3,6 +3,11 @@
 #include "Layers/Sample2DLayer.h"
 //#include "Layers/Sample3DLayer.h"
 
+/*
+	todo: Shader: make local cache for names location
+
+*/
+
 #define CRAFT_TEST
 
 #ifndef CRAFT_TEST
@@ -44,6 +49,7 @@ public:
 	{
 		CommonTest();
 		PushLayer(new Sample2DLayer());
+		//PushLayer(new Sample3DLayer());
 	}
 
 	virtual ~Sandbox()

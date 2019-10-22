@@ -30,6 +30,30 @@ namespace Craft
 		s32 m_XOffset, m_YOffset;
 	};
 
+	class CRAFT_API MouseScrollWheelEvent : public Event
+	{
+	public:
+		MouseScrollWheelEvent(s32 zDelta) :
+			m_ZDelta(zDelta)
+		{
+		}
+
+		inline s32 GetZDelta() { return m_ZDelta; }
+
+		EVENT_CLASS_TYPE(MouseScrolled)
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+
+		String ToString() const override
+		{
+			std::stringstream ss;
+			ss << "Mouse scrol wheel: (" << m_ZDelta << ")";
+			return ss.str();
+		}
+
+	private:
+		s32 m_ZDelta;
+	};
+
 	class CRAFT_API MouseMovedEvent : public Event
 	{
 	public:

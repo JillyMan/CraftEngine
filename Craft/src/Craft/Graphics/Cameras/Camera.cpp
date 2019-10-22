@@ -9,7 +9,8 @@ namespace Craft
 	Camera::Camera(mat4& projectionMatrix, v3& position, f32 cameraSpeed) :
 		m_Position(position),
 		m_CameraSpeed(cameraSpeed),
-		m_ProjectionMatrix(projectionMatrix)
+		m_ProjectionMatrix(projectionMatrix),
+		m_Scale(v3(1.0f, 1.0f, 1.0f))
 	{
 	}
 
@@ -43,6 +44,6 @@ namespace Craft
 
 	void Camera::RecalculateViewMatrix()
 	{
-		m_ViewMatrix = mat4::Translate(m_Position) * mat4::Rotate(m_Rotation, m_RotateAxis);
+		m_ViewMatrix = mat4::Translate(m_Position) * mat4::Scale(m_Scale) * mat4::Rotate(m_Rotation, m_RotateAxis);
 	}
 }
