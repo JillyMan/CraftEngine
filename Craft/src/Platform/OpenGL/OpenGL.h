@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Platform/OpenGL/Glew/Glew.h>
+#include "win32gl/win32gl.h"
 #include <Craft/Window/WindowHandle.h>
 
 namespace Craft { namespace Graphics {

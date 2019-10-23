@@ -16,7 +16,7 @@ namespace Craft
 	{
 		f32 e[16];
 
-		mat4() 
+		mat4()
 		{
 			for (int i = 0; i < 16; ++i)
 			{

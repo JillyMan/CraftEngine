@@ -1,5 +1,4 @@
 #pragma once 
-#include <Craft/Math/Vectors.h>
 
 namespace Craft { namespace Input {
 
@@ -17,18 +16,20 @@ namespace Craft { namespace Input {
 	private:
 		static bool s_Keys[MAX_KEY_COUNT];
 		static bool s_MouseKeys[MAX_MOUSE_KEY_COUNT];
-		static v2 s_MousePosition;
-
+		
+		static s32 s_MouseX;
+		static s32 s_MouseY;
+	
 	public:
-		static bool IsKeyPressed(s32 keyCode);
-		void OnKeyPressed(s32 keyCode);
-		void OnKeyReleased(s32 keyCode);
+		static bool IsKeyPressed(u32 keyCode);
+		void OnKeyPressed(u32 keyCode);
+		void OnKeyReleased(u32 keyCode);
 
-		static bool IsMouseKeyPressed(s32 keyCode);
-		void OnMouseKeyPressed(s32 keyCode);
-		void OnMouseKeyReleased(s32 keyCode);
+		static bool IsMouseKeyPressed(u32 keyCode);
+		void OnMouseKeyPressed(u32 keyCode);
+		void OnMouseKeyReleased(u32 keyCode);
 
-		static v2 GetMousePosition();
+		static void GetMousePosition(s32& x, s32 y);
 		void SetMousePosition(s32 x, s32 y);
 };
 } }

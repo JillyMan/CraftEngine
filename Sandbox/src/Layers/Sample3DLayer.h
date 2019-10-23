@@ -110,6 +110,14 @@ public:
 		delete image;
 	}
 
+	void OnAttach()
+	{
+	}
+
+	void OnDetach()
+	{
+	}
+
 	virtual void OnRender() override
 	{
 		RenderCommand::Clear();

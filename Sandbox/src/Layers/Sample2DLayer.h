@@ -19,6 +19,9 @@ private:
 
 	s32 xLast = 0, yLast = 0;
 
+	Craft::v3 m_PlayerPos;
+	Craft::mat4 m_PlayerTransform;
+
 public:
 	Sample2DLayer();
 	~Sample2DLayer();
@@ -27,8 +30,14 @@ public:
 	virtual void OnUpdate(f32 deltaTime)  override;
 	virtual void OnRender() override;
 
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+
 private:
 	bool OnKeyDown(Craft::KeyPressedEvent& event);
 	bool OnResizeWindow(Craft::WindowResizeEvent& event);
 	bool OnMouseWheelScroll(Craft::MouseScrollWheelEvent& event);
+
+	void UpdatePlayer(f32 dt);
+
 };

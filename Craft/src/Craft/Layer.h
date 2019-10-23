@@ -13,6 +13,9 @@ namespace Craft
 		inline bool IsVisible() { return m_Visible; }
 		void SetVisible(bool visible) { m_Visible = visible; }
 
+		virtual void OnAttach() = 0;
+		virtual void OnDetach() = 0;
+
 		virtual void OnEvent(Event& event) = 0;
 		virtual void OnUpdate(f32 deltaTime) = 0;
 		virtual void OnRender() = 0;

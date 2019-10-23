@@ -10,6 +10,9 @@
     <Filter Include="Craft\Graphics">
       <UniqueIdentifier>{356F6B85-213D-5F8B-0AD1-CFB1F63D3BF0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Graphics\Cameras">
+      <UniqueIdentifier>{20F8F342-0CF2-1C95-F55E-B3A5E1F78201}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Graphics\CraftGL">
       <UniqueIdentifier>{2716C369-1310-ECBB-FC7C-82CCE8155228}</UniqueIdentifier>
     </Filter>
@@ -18,6 +21,12 @@
     </Filter>
     <Filter Include="Craft\Graphics\Primitives">
       <UniqueIdentifier>{F0E10F5E-5CA4-43E8-A554-D27411561CC6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Craft\Graphics\Shaders">
+      <UniqueIdentifier>{0EF91122-FAF2-3A74-E35F-D184CFF8A0E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Craft\ImGui">
+      <UniqueIdentifier>{3F782F39-AB2D-A82E-3422-A205A0D69E32}</UniqueIdentifier>
     </Filter>
     <Filter Include="Craft\Math">
       <UniqueIdentifier>{4ED99666-3A91-D8B3-A398-B10F8F6F73A4}</UniqueIdentifier>
@@ -39,9 +48,6 @@
     </Filter>
     <Filter Include="Platform\OpenGL">
       <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platform\OpenGL\Glew">
-      <UniqueIdentifier>{5CA7F816-4836-82E0-F154-96DBDDC29286}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
@@ -76,6 +82,18 @@
     <ClInclude Include="src\Craft\Graphics\Buffer.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClInclude>
@@ -97,7 +115,16 @@
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h">
       <Filter>Craft\Graphics\Image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h">
+      <Filter>Craft\Graphics\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h">
+      <Filter>Craft\Graphics\Primitives</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h">
+      <Filter>Craft\Graphics\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h">
       <Filter>Craft\Graphics\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h">
@@ -112,11 +139,20 @@
     <ClInclude Include="src\Craft\Graphics\Shader.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Shaders\ShaderFactory.h">
+      <Filter>Craft\Graphics\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Texture.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\VertexArray.h">
       <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\ImGui\ImGuiLayer.h">
+      <Filter>Craft\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\InputHandler.h">
+      <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Layer.h">
       <Filter>Craft</Filter>
@@ -139,6 +175,9 @@
     <ClInclude Include="src\Craft\System\FileSystem.h">
       <Filter>Craft\System</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\System\Vfs\Vfs.h">
+      <Filter>Craft\System\Vfs</Filter>
+    </ClInclude>
     <ClInclude Include="src\Craft\Types.h">
       <Filter>Craft</Filter>
     </ClInclude>
@@ -157,8 +196,17 @@
     <ClInclude Include="src\Logger\CRLogger.h">
       <Filter>Logger</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h">
-      <Filter>Platform\OpenGL\Glew</Filter>
+    <ClInclude Include="src\Logger\ConsoleLogStream.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Logger\LogCore.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Logger\LogStream.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiImplOpenGL3.h">
+      <Filter>Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h">
       <Filter>Platform\OpenGL</Filter>
@@ -181,6 +229,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\ImGuiImplWin32.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -188,30 +239,19 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
-    <ClInclude Include="src\Craft\InputHandler.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h" />
-    <ClInclude Include="src\Craft\System\Vfs\Vfs.h" />
-    <ClInclude Include="src\Logger\LogStream.h" />
-    <ClInclude Include="src\Logger\ConsoleLogStream.h" />
-    <ClInclude Include="src\Logger\LogCore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Application.cpp">
       <Filter>Craft</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
@@ -227,6 +267,12 @@
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp">
       <Filter>Craft\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\ImGui\ImGuiLayer.cpp">
+      <Filter>Craft\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\InputHandler.cpp">
+      <Filter>Craft</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Log.cpp">
       <Filter>Craft</Filter>
@@ -246,8 +292,11 @@
     <ClCompile Include="src\Logger\CRLogger.cpp">
       <Filter>Logger</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp">
-      <Filter>Platform\OpenGL\Glew</Filter>
+    <ClCompile Include="src\Logger\ConsoleLogStream.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiImplOpenGL3.cpp">
+      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
@@ -267,6 +316,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\ImGuiImplWin32.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -280,19 +332,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
-    <ClCompile Include="src\Craft\InputHandler.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp">
-      <Filter>Craft\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp">
-      <Filter>Craft\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp">
-      <Filter>Craft\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Logger\ConsoleLogStream.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Craft\Graphics\Shaders\ShaderFactory.h" />
   </ItemGroup>
 </Project>
