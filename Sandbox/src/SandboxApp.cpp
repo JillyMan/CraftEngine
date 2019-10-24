@@ -1,5 +1,7 @@
 #include <Craft.h>
 
+#include "Craft/ImGui/ImGuiLayer.h"
+
 #include "Layers/Sample2DLayer.h"
 //#include "Layers/Sample3DLayer.h"
 

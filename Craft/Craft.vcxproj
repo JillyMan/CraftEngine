@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>crpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRAFT_PLATFORM_WINDOWS;CRAFT_BUILD_DLL;CR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CRAFT_BUILD_DLL;CRAFT_PLATFORM_WINDOWS;CR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Depends\Glad\include;..\Depends\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,8 +97,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>crpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRAFT_PLATFORM_WINDOWS;CRAFT_BUILD_DLL;CR_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CRAFT_BUILD_DLL;CRAFT_PLATFORM_WINDOWS;CR_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Depends\Glad\include;..\Depends\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -122,17 +122,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>crpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRAFT_PLATFORM_WINDOWS;CRAFT_BUILD_DLL;CR_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CRAFT_BUILD_DLL;CRAFT_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Depends\Glad\include;..\Depends\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/FI crpch.h %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -140,54 +138,57 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
-    <ClInclude Include="src\Craft\Application.h" />
-    <ClInclude Include="src\Craft\Core.h" />
-    <ClInclude Include="src\Craft\EntryPoint.h" />
+    <ClInclude Include="src\Craft\Core\Application.h" />
+    <ClInclude Include="src\Craft\Core\Core.h" />
+    <ClInclude Include="src\Craft\Core\EntryPoint.h" />
+    <ClInclude Include="src\Craft\Core\InputHandler.h" />
+    <ClInclude Include="src\Craft\Core\Layer.h" />
+    <ClInclude Include="src\Craft\Core\LayerStack.h" />
+    <ClInclude Include="src\Craft\Core\Log.h" />
+    <ClInclude Include="src\Craft\Core\Types.h" />
     <ClInclude Include="src\Craft\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
     <ClInclude Include="src\Craft\Graphics\Buffer.h" />
     <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.h" />
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGLContext.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h" />
     <ClInclude Include="src\Craft\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Craft\Graphics\Image\Image.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h" />
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Craft\Graphics\Renderer.h" />
     <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
     <ClInclude Include="src\Craft\Graphics\Shader.h" />
+    <ClInclude Include="src\Craft\Graphics\Shaders\ShaderFactory.h" />
     <ClInclude Include="src\Craft\Graphics\Texture.h" />
     <ClInclude Include="src\Craft\Graphics\VertexArray.h" />
-    <ClInclude Include="src\Craft\InputHandler.h" />
-    <ClInclude Include="src\Craft\Layer.h" />
-    <ClInclude Include="src\Craft\Log.h" />
+    <ClInclude Include="src\Craft\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />
     <ClInclude Include="src\Craft\Math\MathUtils.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
-    <ClInclude Include="src\Craft\System\Vfs\Vfs.h" />
-    <ClInclude Include="src\Craft\Types.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
     <ClInclude Include="src\Craft\Window\WindowManager.h" />
     <ClInclude Include="src\Craft\Window\WindowStyle.h" />
-    <ClInclude Include="src\Logger\ConsoleLogStream.h" />
     <ClInclude Include="src\Logger\CRLogger.h" />
+    <ClInclude Include="src\Logger\ConsoleLogStream.h" />
     <ClInclude Include="src\Logger\LogCore.h" />
     <ClInclude Include="src\Logger\LogStream.h" />
-    <ClInclude Include="src\Platform\OpenGL\Glew\Glew.h" />
+    <ClInclude Include="src\Platform\OpenGL\ImGuiImplOpenGL3.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -195,35 +196,39 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenglBuffer.h" />
+    <ClInclude Include="src\Platform\Windows\ImGuiImplWin32.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Craft\Application.cpp" />
+    <ClCompile Include="src\Craft\Core\Application.cpp" />
+    <ClCompile Include="src\Craft\Core\InputHandler.cpp" />
+    <ClCompile Include="src\Craft\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Craft\Core\Log.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp" />
-    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
-    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
+    <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
     <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />
-    <ClCompile Include="src\Craft\InputHandler.cpp" />
-    <ClCompile Include="src\Craft\Log.cpp" />
+    <ClCompile Include="src\Craft\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
     <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />
     <ClCompile Include="src\Craft\Window\WindowManager.cpp" />
-    <ClCompile Include="src\Logger\ConsoleLogStream.cpp" />
     <ClCompile Include="src\Logger\CRLogger.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\Glew\Glew.cpp" />
+    <ClCompile Include="src\Logger\ConsoleLogStream.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\ImGuiImplOpenGL3.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenglBuffer.cpp" />
+    <ClCompile Include="src\Platform\Windows\ImGuiImplWin32.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32FileSystem.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32OpenGL.cpp" />
     <ClCompile Include="src\Platform\Windows\Win32Timer.cpp" />
@@ -233,7 +238,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Craft\Graphics\Shaders\ShaderFactory.h" />
+    <ProjectReference Include="..\Depends\Glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Depends\ImGui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

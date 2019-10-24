@@ -1,5 +1,6 @@
 workspace "Craft"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations {
 		"Debug",
@@ -9,7 +10,15 @@ workspace "Craft"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-IncludeDir = {} 
+IncludeDir = {}
+IncludeDir["Glad"] = "Depends/Glad/include"
+IncludeDir["ImGui"] = "Depends/ImGui"
+
+group "Dependencies"
+	include "Depends/Glad"
+	include "Depends/ImGui"
+
+group ""
 
 project "Craft"
 	location "Craft"
@@ -27,11 +36,19 @@ project "Craft"
 		"%{prj.name}/src/**.cpp"
 	}
 
-	includedirs {
-		"%{prj.name}/src",
+	defines {
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 
-	links { 
+	includedirs {
+		"%{prj.name}/src",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
+	}
+
+	links {
+		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 
@@ -43,11 +60,10 @@ project "Craft"
 		pchsource "Craft/src/crpch.cpp"
 		
 		defines {
-			"CRAFT_PLATFORM_WINDOWS",
-			"CRAFT_BUILD_DLL"
+			"CRAFT_BUILD_DLL",
+			"CRAFT_PLATFORM_WINDOWS"
 		}
-
-		--aren't work..
+		
 		buildoptions { 
 			"/FI " .. "crpch.h"
 		}
@@ -60,10 +76,7 @@ project "Craft"
 			defines "CR_RELEASE"
 			optimize "on"
 		
-		filter "configurations:Dist"
-			defines "CR_DIST"
-			symbols "on"
-		
+
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
@@ -82,16 +95,20 @@ project "Sandbox"
 
 	includedirs {
 		"Craft/src",
+		"Depends/Glad/include",
+		"Depends/ImGui"
+	}
+
+	defines {
+		"CRAFT_PLATFORM_WINDOWS",
 	}
 
 	links {
 		"Craft"
-		--"opengl32.lib"
 	}
 
 	filter "system:windows"
 		systemversion "latest"
-		defines { "CRAFT_PLATFORM_WINDOWS" }
 
 	filter "configurations:Debug"
 		defines "CR_DEBUG"
@@ -100,7 +117,3 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines "CR_RELEASE"
 		optimize "on"
-		
-	filter "configurations:Dist"
-		defines "CR_DIST"
-		symbols "on"

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Craft\Core.h"
+#include "Craft\Core\Core.h"
+#include <Craft\Core\InputHandler.h>
+
 #include "Craft\Window\Window.h"
 #include "Craft\Graphics\GraphicsContext.h"
-#include <Craft\InputHandler.h>
 
 namespace Craft
 {

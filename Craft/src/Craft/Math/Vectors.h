@@ -47,9 +47,9 @@ namespace Craft
 			f32 e[3];
 		};
 
-		v3()
+		v3(f32 val = 0.0f)
 		{
-			x = y = z = 0;
+			x = y = z = val;
 		}
 
 		v3(f32 x, f32 y, f32 z) :

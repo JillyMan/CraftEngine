@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\KHR">
+      <UniqueIdentifier>{7D5AC031-E90F-3927-7204-33FEDEB82F2B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\glad">
+      <UniqueIdentifier>{30A0DB69-1C03-6B0E-C588-A3C4B1CA3691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\wglext">
+      <UniqueIdentifier>{13984274-FF65-367A-E8F9-A6A0D46612DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\win32gl">
+      <UniqueIdentifier>{BE864701-2A12-B5C5-3323-38BA9F2D11C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\KHR\khrplatform.h">
+      <Filter>include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glad\glad.h">
+      <Filter>include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wglext\wglext.h">
+      <Filter>include\wglext</Filter>
+    </ClInclude>
+    <ClInclude Include="include\win32gl\win32gl.h">
+      <Filter>include\win32gl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\glad.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32gl.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -26,6 +26,9 @@ namespace Craft { namespace Graphics {
 		case VertexDataType::Double:		return GL_DOUBLE;
 		case VertexDataType::UnsignedInt:	return GL_UNSIGNED_INT;
 		}
+
+		CR_ASSERT(false, "Invalid vertex data type!");
+		return GL_NONE;
 	}
 
 	VertexArray* VertexArray::Create()
@@ -34,7 +37,9 @@ namespace Craft { namespace Graphics {
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray() :
-		m_VertexCount(0)
+		m_VertexCount(0),
+		m_BufferId(0),
+		m_VertexBuffers()
 	{
 		glCreateVertexArrays(1, &m_BufferId);
 	}

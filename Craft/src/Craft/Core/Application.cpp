@@ -1,34 +1,51 @@
 #include "crpch.h"
 
-#include "Application.h"
+#include "Craft\Core\Application.h"
 #include "Utils\Timer.h"
 
 #include "Craft\Window\WindowManager.h"
 
 namespace Craft
 {
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application(WindowSetting& setting) :
 		m_Running(false),
 		m_FPS(setting.Fps)
 	{
+		CR_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
 		m_WindowSetting = setting;
 		m_MainWindow = WindowManager::Create(setting);
 		m_MainWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+	
+		m_ImguiLayer = new ImGuiLayer();
+		PushOverlay(m_ImguiLayer);
 	}
 
 	Application::~Application()
 	{
 		WindowManager::Destroy(m_MainWindow);
-
-		for (int i = 0; i < m_pLayers.size(); ++i)
-		{
-			delete m_pLayers[i];
-		}
 	}
 
 	void Application::PushLayer(Layer* layer)
 	{
-		m_pLayers.emplace_back(layer);
+		m_layerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		m_layerStack.PushOverlay(layer);
+	}
+
+	void Application::PopLayer(Layer* layer)
+	{
+		m_layerStack.PopLayer(layer);
+	}
+
+	void Application::PopOverlay(Layer* layer)
+	{
+		m_layerStack.PopOverlay(layer);
 	}
 
 	void Application::Run()
@@ -80,8 +97,8 @@ namespace Craft
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(Application::OnKeyEvent));
 		
-		for (auto layer = begin(m_pLayers);
-			layer != end(m_pLayers);
+		for (auto layer = m_layerStack.begin();
+			layer != m_layerStack.end();
 			++layer)
 		{
 			(*layer)->OnEvent(event);
@@ -90,18 +107,27 @@ namespace Craft
 
 	void Application::OnUpdate(f32 deltaTime)
 	{
-		for (u64 i = 0; i < m_pLayers.size(); ++i)
+		for (auto layer = m_layerStack.begin();
+			layer != m_layerStack.end();
+			++layer)
 		{
-			m_pLayers[i]->OnUpdate(deltaTime);
+			(*layer)->OnUpdate(deltaTime);
 		}
 	}
 
 	void Application::OnRender()
 	{
-		for(s64 i = m_pLayers.size() - 1; i >= 0; --i)
+		m_ImguiLayer->Begin();
+		
+		for (auto layer = m_layerStack.begin();
+			layer != m_layerStack.end();
+			++layer)
 		{
-			m_pLayers[i]->OnRender();
+			(*layer)->OnRender();
+			(*layer)->OnDebugRender();
 		}
+
+		m_ImguiLayer->End();
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)

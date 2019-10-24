@@ -11,7 +11,7 @@
 		#define CRAFT_API
 	#endif
 #else
-	#error Craft one support Windows
+	#error Craft is supporting only Windows
 #endif
 
 #ifdef CR_DEBUG

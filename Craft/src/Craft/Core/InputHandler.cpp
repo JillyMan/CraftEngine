@@ -1,12 +1,13 @@
-#include <Craft/InputHandler.h>
+#include <Craft\Core\InputHandler.h>
 
 namespace Craft { namespace Input { 
 
-	v2 InputHandler::s_MousePosition;
+	s32 InputHandler::s_MouseX;
+	s32 InputHandler::s_MouseY;
 	bool InputHandler::s_Keys[MAX_KEY_COUNT];
 	bool InputHandler::s_MouseKeys[MAX_MOUSE_KEY_COUNT];
 
-	bool InputHandler::IsKeyPressed(s32 keyCode)
+	bool InputHandler::IsKeyPressed(u32 keyCode)
 	{
 		if (keyCode < MAX_KEY_COUNT)
 		{
@@ -16,7 +17,7 @@ namespace Craft { namespace Input {
 		return false;
 	}
 
-	void InputHandler::OnKeyPressed(s32 keyCode)
+	void InputHandler::OnKeyPressed(u32 keyCode)
 	{
 		if (keyCode < MAX_KEY_COUNT)
 		{
@@ -24,7 +25,7 @@ namespace Craft { namespace Input {
 		}
 	}
 
-	void InputHandler::OnKeyReleased(s32 keyCode)
+	void InputHandler::OnKeyReleased(u32 keyCode)
 	{
 		if (keyCode < MAX_KEY_COUNT)
 		{
@@ -32,7 +33,7 @@ namespace Craft { namespace Input {
 		}
 	}
 
-	bool InputHandler::IsMouseKeyPressed(s32 keyCode)
+	bool InputHandler::IsMouseKeyPressed(u32 keyCode)
 	{
 		if (keyCode < MAX_MOUSE_KEY_COUNT)
 		{
@@ -42,7 +43,7 @@ namespace Craft { namespace Input {
 		return false;
 	}
 
-	void InputHandler::OnMouseKeyPressed(s32 keyCode)
+	void InputHandler::OnMouseKeyPressed(u32 keyCode)
 	{
 		if (keyCode < MAX_MOUSE_KEY_COUNT)
 		{
@@ -50,7 +51,7 @@ namespace Craft { namespace Input {
 		}
 	}
 
-	void InputHandler::OnMouseKeyReleased(s32 keyCode)
+	void InputHandler::OnMouseKeyReleased(u32 keyCode)
 	{
 		if (keyCode < MAX_MOUSE_KEY_COUNT)
 		{
@@ -58,14 +59,15 @@ namespace Craft { namespace Input {
 		}
 	}
 
-	v2 InputHandler::GetMousePosition()
+	void InputHandler::GetMousePosition(s32& x, s32 y)
 	{
-		return s_MousePosition;
+		x = s_MouseX;
+		y = s_MouseY;
 	}
 
 	void InputHandler::SetMousePosition(s32 x, s32 y) 
 	{
-		s_MousePosition.x = x;
-		s_MousePosition.y = y;
+		s_MouseX = x;
+		s_MouseY = y;
 	}
 }}

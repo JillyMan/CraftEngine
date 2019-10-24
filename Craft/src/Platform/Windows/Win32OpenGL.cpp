@@ -55,7 +55,7 @@ namespace Craft { namespace Graphics {
 
 		CR_ASSERT(tempContext, "Failed to create a dummy OpenGL rendering context.");
 		CR_ASSERT(wglMakeCurrent(tempDC, tempContext), "Failed to activate dummy OpenGL rendering context.");
-		CR_ASSERT(pfnGLLoad(), "Failed to load PFN GL.");
+		CR_ASSERT(win32_gl_load(), "Failed to load PFN GL.");
 
 		wglMakeCurrent(tempDC, tempContext);
 		wglDeleteContext(tempContext);
