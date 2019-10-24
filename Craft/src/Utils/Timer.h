@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Craft/Core.h"
+#include "Craft/Core/Core.h"
 
 namespace Craft
 {
@@ -17,11 +17,9 @@ namespace Craft
 		Timer();
 		~Timer();
 
-		// Resets and restarts timer
+		
 		virtual void Reset();
-		// Returns time in seconds
 		virtual f32 Elapsed();
-		// Returns time in milliseconds
 		virtual f32 ElapsedMillisecond();
 	};
 }

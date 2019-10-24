@@ -95,7 +95,8 @@ project "Sandbox"
 
 	includedirs {
 		"Craft/src",
-		"Depends/Glad/include"
+		"Depends/Glad/include",
+		"Depends/ImGui"
 	}
 
 	defines {

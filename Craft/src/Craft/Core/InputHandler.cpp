@@ -1,4 +1,4 @@
-#include <Craft/InputHandler.h>
+#include <Craft\Core\InputHandler.h>
 
 namespace Craft { namespace Input { 
 

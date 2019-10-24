@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Craft\Log.h"
-#include "Craft\Application.h"
+#include "Craft\Core\Log.h"
+#include "Craft\Core\Application.h"
 
 #include "Craft\Event\KeyEvent.h"
 #include "Craft\Event\MouseEvent.h"
@@ -12,5 +12,7 @@
 #include <Craft\System\Vfs\Vfs.h>
 #include "Craft\System\FileSystem.h"
 
+#include "Craft/ImGui/ImGuiLayer.h"
+
 //--------------------------------------
-#include "Craft\EntryPoint.h"
+#include "Craft\Core\EntryPoint.h"

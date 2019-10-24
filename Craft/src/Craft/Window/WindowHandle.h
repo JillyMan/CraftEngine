@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Craft\Core.h"
+#include "Craft\Core\Core.h"
 
 #ifdef CRAFT_PLATFORM_WINDOWS
 	struct HWND__;

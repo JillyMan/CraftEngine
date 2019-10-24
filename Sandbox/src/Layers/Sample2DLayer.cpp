@@ -2,10 +2,11 @@
 #include "Sample2DLayer.h"
 
 #include <Craft/Graphics/RenderCommand.h>
-
-#include <Craft/InputHandler.h>
+#include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Renderer.h>
 #include <Craft/Graphics/Primitives/Sprite.h>
+
+#include <imgui.h>
 
 Sample2DLayer::Sample2DLayer() 
 {
@@ -82,12 +83,16 @@ void Sample2DLayer::OnRender()
 	//}
 }
 
-void Sample2DLayer::OnAttach()
-{
-}
+f32 timer = 0.0f;
+f32 rate = 20.0f;
+f32 radius = 3.0f;
 
-void Sample2DLayer::OnDetach()
+void Sample2DLayer::OnDebugRender()
 {
+	ImGui::Begin("Move test");
+	ImGui::SliderFloat("Rate", &rate, 0.0f, 10.0f);
+	ImGui::SliderFloat("Radius", &radius, 0.0f, 10.0f);
+	ImGui::End();
 }
 
 void Sample2DLayer::OnUpdate(f32 dt)
@@ -118,15 +123,12 @@ void Sample2DLayer::OnUpdate(f32 dt)
 
 }
 
-f32 timer = 0.0f;
-
 void Sample2DLayer::UpdatePlayer(f32 dt) 
 {
 	timer += dt / 1000.0f;
-	f32 radius = 5.0f;
 
-	m_PlayerPos.x = cosf(timer) * radius;
-	m_PlayerPos.y = sinf(timer) * radius;
+//	m_PlayerPos.x = cosf(timer*rate) * radius;
+	m_PlayerPos.y = sinf(timer*rate) * radius;
 }
 
 bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)

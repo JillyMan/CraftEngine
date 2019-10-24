@@ -8,6 +8,8 @@
 
 //--------delete dependency
 #include "Platform/OpenGL/OpenGLContext.h"
+#include "imgui.h"
+#include "Platform/Windows/ImGuiImplWin32.h"
 //--------
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -231,7 +233,7 @@ namespace Craft {
 
 	LRESULT CALLBACK WindowProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		LRESULT Result = 0;
+		LRESULT Result = ImGui_ImplWin32_WndProcHandler(hWindow, uMsg, wParam, lParam);
 		WindowsWindow* window = (WindowsWindow*)WindowManager::GetWindowClass(hWindow);
 
 		switch (uMsg)

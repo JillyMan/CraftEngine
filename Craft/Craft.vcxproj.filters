@@ -4,6 +4,9 @@
     <Filter Include="Craft">
       <UniqueIdentifier>{5597FB0C-C1AB-23BE-8A2D-C71DF60020EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Craft\Core">
+      <UniqueIdentifier>{CD989166-B950-D3B3-2258-AC0F0E2F6EA4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Craft\Event">
       <UniqueIdentifier>{6684EC38-D239-652E-5B2E-5F05C7E25B32}</UniqueIdentifier>
     </Filter>
@@ -58,14 +61,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
-    <ClInclude Include="src\Craft\Application.h">
-      <Filter>Craft</Filter>
+    <ClInclude Include="src\Craft\Core\Application.h">
+      <Filter>Craft\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Core.h">
-      <Filter>Craft</Filter>
+    <ClInclude Include="src\Craft\Core\Core.h">
+      <Filter>Craft\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\EntryPoint.h">
-      <Filter>Craft</Filter>
+    <ClInclude Include="src\Craft\Core\EntryPoint.h">
+      <Filter>Craft\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Core\InputHandler.h">
+      <Filter>Craft\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Core\Layer.h">
+      <Filter>Craft\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Core\LayerStack.h">
+      <Filter>Craft\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Core\Log.h">
+      <Filter>Craft\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Core\Types.h">
+      <Filter>Craft\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Event\ApplicationEvent.h">
       <Filter>Craft\Event</Filter>
@@ -151,15 +169,6 @@
     <ClInclude Include="src\Craft\ImGui\ImGuiLayer.h">
       <Filter>Craft\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\InputHandler.h">
-      <Filter>Craft</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Layer.h">
-      <Filter>Craft</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Log.h">
-      <Filter>Craft</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Math\Math.h">
       <Filter>Craft\Math</Filter>
     </ClInclude>
@@ -175,11 +184,8 @@
     <ClInclude Include="src\Craft\System\FileSystem.h">
       <Filter>Craft\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\System\Vfs\Vfs.h">
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h">
       <Filter>Craft\System\Vfs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Types.h">
-      <Filter>Craft</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\Window\Window.h">
       <Filter>Craft\Window</Filter>
@@ -241,8 +247,17 @@
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Craft\Application.cpp">
-      <Filter>Craft</Filter>
+    <ClCompile Include="src\Craft\Core\Application.cpp">
+      <Filter>Craft\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Core\InputHandler.cpp">
+      <Filter>Craft\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Core\LayerStack.cpp">
+      <Filter>Craft\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Core\Log.cpp">
+      <Filter>Craft\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp">
       <Filter>Craft\Graphics\Cameras</Filter>
@@ -270,12 +285,6 @@
     </ClCompile>
     <ClCompile Include="src\Craft\ImGui\ImGuiLayer.cpp">
       <Filter>Craft\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\InputHandler.cpp">
-      <Filter>Craft</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Log.cpp">
-      <Filter>Craft</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Math\MathUtils.cpp">
       <Filter>Craft\Math</Filter>

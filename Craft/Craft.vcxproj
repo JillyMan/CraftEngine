@@ -138,9 +138,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Craft.h" />
-    <ClInclude Include="src\Craft\Application.h" />
-    <ClInclude Include="src\Craft\Core.h" />
-    <ClInclude Include="src\Craft\EntryPoint.h" />
+    <ClInclude Include="src\Craft\Core\Application.h" />
+    <ClInclude Include="src\Craft\Core\Core.h" />
+    <ClInclude Include="src\Craft\Core\EntryPoint.h" />
+    <ClInclude Include="src\Craft\Core\InputHandler.h" />
+    <ClInclude Include="src\Craft\Core\Layer.h" />
+    <ClInclude Include="src\Craft\Core\LayerStack.h" />
+    <ClInclude Include="src\Craft\Core\Log.h" />
+    <ClInclude Include="src\Craft\Core\Types.h" />
     <ClInclude Include="src\Craft\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
@@ -169,16 +174,12 @@
     <ClInclude Include="src\Craft\Graphics\Texture.h" />
     <ClInclude Include="src\Craft\Graphics\VertexArray.h" />
     <ClInclude Include="src\Craft\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Craft\InputHandler.h" />
-    <ClInclude Include="src\Craft\Layer.h" />
-    <ClInclude Include="src\Craft\Log.h" />
     <ClInclude Include="src\Craft\Math\Math.h" />
     <ClInclude Include="src\Craft\Math\MathUtils.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
-    <ClInclude Include="src\Craft\System\Vfs\Vfs.h" />
-    <ClInclude Include="src\Craft\Types.h" />
+    <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
     <ClInclude Include="src\Craft\Window\Window.h" />
     <ClInclude Include="src\Craft\Window\WindowHandle.h" />
     <ClInclude Include="src\Craft\Window\WindowManager.h" />
@@ -201,7 +202,10 @@
     <ClInclude Include="src\crpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Craft\Application.cpp" />
+    <ClCompile Include="src\Craft\Core\Application.cpp" />
+    <ClCompile Include="src\Craft\Core\InputHandler.cpp" />
+    <ClCompile Include="src\Craft\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Craft\Core\Log.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp" />
@@ -211,8 +215,6 @@
     <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />
     <ClCompile Include="src\Craft\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Craft\InputHandler.cpp" />
-    <ClCompile Include="src\Craft\Log.cpp" />
     <ClCompile Include="src\Craft\Math\MathUtils.cpp" />
     <ClCompile Include="src\Craft\Math\Matrix.cpp" />
     <ClCompile Include="src\Craft\Math\Vectors.cpp" />

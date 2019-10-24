@@ -4,7 +4,7 @@
 #include <Craft/Event/MouseEvent.h>
 #include <Craft/Event/ApplicationEvent.h>
 
-#include <Craft/Layer.h>
+#include <Craft/Core/Layer.h>
 #include <Craft/Graphics/Cameras/Camera.h>
 #include <Craft/Graphics/Primitives/Shape.h>
 
@@ -29,9 +29,7 @@ public:
 	virtual void OnEvent(Craft::Event& e) override;
 	virtual void OnUpdate(f32 deltaTime)  override;
 	virtual void OnRender() override;
-
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
+	virtual void OnDebugRender() override;
 
 private:
 	bool OnKeyDown(Craft::KeyPressedEvent& event);

@@ -2,7 +2,7 @@
 
 #include "crpch.h"
 
-#include "Craft/Core.h"
+#include "Craft\Core\Core.h"
 
 namespace Craft
 {
