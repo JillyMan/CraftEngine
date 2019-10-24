@@ -8,6 +8,13 @@
 #include <Craft/Graphics/Cameras/Camera.h>
 #include <Craft/Graphics/Primitives/Shape.h>
 
+struct RigidBody
+{
+	Craft::v3 P;
+	Craft::v3 V;
+	Craft::v3 A;
+};
+
 class Sample2DLayer : public Craft::Layer
 {
 private:
@@ -17,10 +24,13 @@ private:
 	Craft::Graphics::VertexArray* m_VertexArray;
 	Craft::v3 m_Color = { 0.8f, 0.5f, 0.3f };
 
-	s32 xLast = 0, yLast = 0;
-
 	Craft::v3 m_PlayerPos;
 	Craft::mat4 m_PlayerTransform;
+
+	f32 m_ScaleRatio = 0.8f;
+	f32 m_Speed = 1.0f;
+
+	RigidBody m_Player;
 
 public:
 	Sample2DLayer();
@@ -37,5 +47,4 @@ private:
 	bool OnMouseWheelScroll(Craft::MouseScrollWheelEvent& event);
 
 	void UpdatePlayer(f32 dt);
-
 };

@@ -40,6 +40,7 @@ namespace Craft {
 		inline Window& GetWindow() { return *m_MainWindow; }
 
 		f32 GetElapsedTime() { return m_LastTime; }
+		f32 GetFps() { return m_FPS; }
 
 	private:
 
