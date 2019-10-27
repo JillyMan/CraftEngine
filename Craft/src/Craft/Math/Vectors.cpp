@@ -6,7 +6,7 @@ namespace Craft
 	//-------------
 	//v2 operations
 	//-------------
-	inline v2 operator + (v2& a, v2&b)
+	v2 operator + (v2& a, v2&b)
 	{
 		v2 c;
 		c.x = a.x + b.x;
@@ -14,7 +14,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v2 operator - (v2& a, v2& b)
+	v2 operator - (v2& a, v2& b)
 	{
 		v2 c;
 		c.x = a.x - b.x;
@@ -22,7 +22,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v2 operator * (v2& a, v2& b)
+	v2 operator * (v2& a, v2& b)
 	{
 		v2 c;
 		c.x = a.x * b.x;
@@ -30,7 +30,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v2 operator / (v2& a, v2& b)
+	v2 operator / (v2& a, v2& b)
 	{
 		v2 c;
 		c.x = a.x / b.x;
@@ -38,37 +38,104 @@ namespace Craft
 		return c;
 	}
 
-	inline v2 operator *= (v2& a, v2& b)
+	v2 operator *= (v2& a, v2& b)
 	{
 		a = a * b;
 		return a;
 	}
 
-	inline v2 operator /= (v2& a, v2& b)
+	v2 operator /= (v2& a, v2& b)
 	{
 		a = a / b;
 		return a;
 	}
 
-	inline v2 operator -= (v2& a, v2& b)
+	v2 operator -= (v2& a, v2& b)
 	{
 		a = a - b;
 		return a;
 	}
 
-	inline v2 operator += (v2& a, v2& b)
+	v2 operator += (v2& a, v2& b)
 	{
 		a = a + b;
 		return a;
 	}
 
-	inline f32 Length(v2& a)
+
+	v2 operator + (v2& a, f32 value)
+	{
+		v2 c;
+		c.x = a.x + value;
+		c.y = a.y + value;
+		return c;
+	}
+
+	v2 operator - (v2& a, f32 value)
+	{
+		v2 c;
+		c.x = a.x - value;
+		c.y = a.y - value;
+		return c;
+	}
+
+	v2 operator - (v2& a)
+	{
+		v2 c;
+		c.x = -a.x;
+		c.y = -a.y;
+		return c;
+	}
+
+
+	v2 operator * (v2& a, f32 value)
+	{
+		v2 c;
+		c.x = a.x * value;
+		c.y = a.y * value;
+		return c;
+	}
+
+	v2 operator / (v2& a, f32 value)
+	{
+		v2 c;
+		c.x = a.x / value;
+		c.y = a.y / value;
+		return c;
+	}
+
+	v2 operator *= (v2& a, f32 value)
+	{
+		a = a * value;
+		return a;
+	}
+
+	v2 operator /= (v2& a, f32 value)
+	{
+		a = a / value;
+		return a;
+	}
+
+	v2 operator -= (v2& a, f32 value)
+	{
+		a = a - value;
+		return a;
+	}
+
+	v2 operator += (v2& a, f32 value)
+	{
+		a = a + value;
+		return a;
+	}
+
+
+	f32 Length(v2& a)
 	{
 		f32 result = sqrt(a.x * a.x + a.y * a.y);
 		return result;
 	}
 
-	inline f32 Dot(v2& a, v2& b)
+	f32 Dot(v2& a, v2& b)
 	{
 		f32 result = a.x * b.x + a.y * b.y;
 		return result;
@@ -238,7 +305,7 @@ namespace Craft
 	//-------------
 	//v4 operations
 	//-------------
-	inline v4 operator + (v4& a, v4&b)
+	v4 operator + (v4& a, v4& b)
 	{
 		v4 c;
 		c.x = a.x + b.x;
@@ -248,7 +315,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v4 operator - (v4& a, v4&b)
+	v4 operator - (v4& a, v4& b)
 	{
 		v4 c;
 		c.x = a.x - b.x;
@@ -258,7 +325,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v4 operator * (v4& a, v4&b)
+	v4 operator * (v4& a, v4& b)
 	{
 		v4 c;
 		c.x = a.x * b.x;
@@ -268,7 +335,7 @@ namespace Craft
 		return c;
 	}
 
-	inline v4 operator / (v4& a, v4&b)
+	v4 operator / (v4& a, v4& b)
 	{
 		v4 c;
 		c.x = a.x / b.x;
@@ -278,25 +345,25 @@ namespace Craft
 		return c;
 	}
 
-	inline v4 operator *= (v4& a, v4&b)
+	v4 operator *= (v4& a, v4& b)
 	{
 		a = a * b;
 		return a;
 	}
 
-	inline v4 operator /= (v4& a, v4&b)
+	v4 operator /= (v4& a, v4& b)
 	{
 		a = a / b;
 		return a;
 	}
 
-	inline v4 operator -= (v4& a, v4&b)
+	v4 operator -= (v4& a, v4& b)
 	{
 		a = a - b;
 		return a;
 	}
 
-	inline v4 operator += (v4& a, v4&b)
+	v4 operator += (v4& a, v4& b)
 	{
 		a = a + b;
 		return a;

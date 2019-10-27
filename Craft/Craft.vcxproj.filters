@@ -245,6 +245,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
+    <ClInclude Include="src\Craft\Physic\Physic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -341,5 +342,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
+    <ClCompile Include="src\Craft\Physic\Physic.cpp" />
   </ItemGroup>
 </Project>

@@ -52,6 +52,11 @@ namespace Craft
 			x = y = z = val;
 		}
 
+		v3(v2& vec, f32 z) : 
+			xy(vec), z(z)
+		{
+		}
+
 		v3(f32 x, f32 y, f32 z) :
 			x(x), y(y), z(z)
 		{
@@ -104,29 +109,43 @@ namespace Craft
 		}
 	};
 
-	v2 operator + (v2& a, v2&b);
-	v2 operator - (v2& a, v2&b);
-	v2 operator * (v2& a, v2&b);
-	v2 operator / (v2& a, v2&b);
+	v2 operator + (v2& a, v2& b);
+	v2 operator - (v2& a, v2& b);
+	v2 operator * (v2& a, v2& b);
+	v2 operator / (v2& a, v2& b);
 
-	v2 operator *= (v2& a, v2&b);
-	v2 operator /= (v2& a, v2&b);
-	v2 operator -= (v2& a, v2&b);
-	v2 operator += (v2& a, v2&b);
+	v2 operator + (v2& a, f32 value);
+	v2 operator - (v2& a, f32 value);
+	v2 operator * (v2& a, f32 value);
+	v2 operator / (v2& a, f32 value);
+	 
+	v2 operator - (v2& a);
+	 
+	v2 operator *= (v2& a, f32 value);
+	v2 operator /= (v2& a, f32 value);
+	v2 operator -= (v2& a, f32 value);
+	v2 operator += (v2& a, f32 value);
 
+	v2 operator *= (v2& a, v2& b);
+	v2 operator /= (v2& a, v2& b);
+	v2 operator -= (v2& a, v2& b);
+	v2 operator += (v2& a, v2& b);
+
+	f32 Length(v2& a);
+	f32 Dot(v2& a, v2& b);
 
 //-----------
 //----v3-----
 //-----------
-	v3 operator + (v3& a, v3&b);
-	v3 operator - (v3& a, v3&b);
-	v3 operator * (v3& a, v3&b);
-	v3 operator / (v3& a, v3&b);
+	v3 operator + (v3& a, v3& b);
+	v3 operator - (v3& a, v3& b);
+	v3 operator * (v3& a, v3& b);
+	v3 operator / (v3& a, v3& b);
 
-	v3 operator *= (v3& a, v3&b);
-	v3 operator /= (v3& a, v3&b);
-	v3 operator -= (v3& a, v3&b);
-	v3 operator += (v3& a, v3&b);
+	v3 operator *= (v3& a, v3& b);
+	v3 operator /= (v3& a, v3& b);
+	v3 operator -= (v3& a, v3& b);
+	v3 operator += (v3& a, v3& b);
 
 	v3 operator + (v3& a, f32 value);
 	v3 operator - (v3& a, f32 value);
@@ -148,22 +167,19 @@ namespace Craft
 //-----------
 //----v4-----
 //-----------
-	v4 operator + (v4& a, v4&b);
-	v4 operator - (v4& a, v4&b);
-	v4 operator * (v4& a, v4&b);
-	v4 operator / (v4& a, v4&b);
+	v4 operator + (v4& a, v4& b);
+	v4 operator - (v4& a, v4& b);
+	v4 operator * (v4& a, v4& b);
+	v4 operator / (v4& a, v4& b);
 
-	v4 operator *= (v4& a, v4&b);
-	v4 operator /= (v4& a, v4&b);
-	v4 operator -= (v4& a, v4&b);
-	v4 operator += (v4& a, v4&b);
+	v4 operator *= (v4& a, v4& b);
+	v4 operator /= (v4& a, v4& b);
+	v4 operator -= (v4& a, v4& b);
+	v4 operator += (v4& a, v4& b);
 
 	std::ostream& operator << (std::ostream& os, v2& v);
 	std::ostream& operator << (std::ostream& os, v3& v);
 	std::ostream& operator << (std::ostream& os, v4& v);
-
-	f32 Length(v2& a);
-	f32 Dot(v2& a, v2& b);
 
 	f32 Length(v4& a);
 	f32 Dot(v4& a, v4& b);

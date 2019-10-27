@@ -8,29 +8,25 @@
 #include <Craft/Graphics/Cameras/Camera.h>
 #include <Craft/Graphics/Primitives/Shape.h>
 
-struct RigidBody
-{
-	Craft::v3 P;
-	Craft::v3 V;
-	Craft::v3 A;
-};
+#include <Craft/Physic/Physic.h>
+
+using namespace Craft;
 
 class Sample2DLayer : public Craft::Layer
 {
 private:
-	Craft::Camera* m_Camera;
+	Camera* m_Camera;
 
-	Craft::Graphics::Shader* m_Shader;
-	Craft::Graphics::VertexArray* m_VertexArray;
-	Craft::v3 m_Color = { 0.8f, 0.5f, 0.3f };
+	Graphics::Shader* m_Shader;
+	Graphics::VertexArray* m_VertexArray;
 
-	Craft::v3 m_PlayerPos;
-	Craft::mat4 m_PlayerTransform;
+	v3 m_Color = { 0.8f, 0.5f, 0.3f };
+	f32 m_ScaleRatio = 1.0f;
+	f32 m_Speed = 0.5f;
+	v2 m_Origin = { 0.5f, 0.5f };
 
-	f32 m_ScaleRatio = 0.8f;
-	f32 m_Speed = 1.0f;
-
-	RigidBody m_Player;
+	Physic::RigidBody* m_Player;
+	Physic::RigidBody* m_Block;
 
 public:
 	Sample2DLayer();
@@ -42,6 +38,10 @@ public:
 	virtual void OnDebugRender() override;
 
 private:
+
+	void GraphicsInit();
+	void PlayerInit();
+
 	bool OnKeyDown(Craft::KeyPressedEvent& event);
 	bool OnResizeWindow(Craft::WindowResizeEvent& event);
 	bool OnMouseWheelScroll(Craft::MouseScrollWheelEvent& event);

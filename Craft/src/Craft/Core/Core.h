@@ -24,3 +24,6 @@
 
 #define ArrayCount(x) sizeof((x)) / sizeof((x[0]))
 #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+#define InternalVariable static
+#define InternalFunction static
