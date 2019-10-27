@@ -103,9 +103,6 @@
     <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCamera.h">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
@@ -246,6 +243,10 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Physic\Physic.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.h" />
+    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCameraController.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -343,5 +344,6 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Physic\Physic.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.cpp" />
   </ItemGroup>
 </Project>

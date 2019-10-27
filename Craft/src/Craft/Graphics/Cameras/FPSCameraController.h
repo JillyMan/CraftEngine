@@ -4,7 +4,7 @@
 
 namespace Craft
 {
-	class FPSCamera : public Camera
+	class FPSCameraController : public Camera
 	{
 	private:
 		v3 m_Up;
@@ -17,9 +17,12 @@ namespace Craft
 		f32 m_LastY;
 		f32 m_Sensitivity;
 
+		f32 m_CameraSpeed;
+
 	public:
-		FPSCamera(f32 cameraSpeed, v3& P, v3& front, v3& up, v2 camLastPos, mat4& projMatrix) :
-			Camera(projMatrix, P, cameraSpeed),
+		FPSCameraController(f32 cameraSpeed, v3& P, v3& front, v3& up, v2 camLastPos, mat4& projMatrix) :
+			Camera(projMatrix, P),
+			m_CameraSpeed(cameraSpeed),
 			m_Front(front),
 			m_Up(up),
 			m_Pitch(0.0f),
@@ -31,7 +34,7 @@ namespace Craft
 			RecalculateViewMatrix();
 		}
 
-		virtual void MouseMove(s32 xPos, s32 yPos) override
+		void MouseMove(s32 xPos, s32 yPos)
 		{
 			s32 xOffset = (xPos - m_LastX);
 			s32 yOffset = (m_LastY - yPos);
@@ -54,7 +57,7 @@ namespace Craft
 			RecalculateViewMatrix();
 		}
 
-		virtual void Move(MoveDirection dir, f32 dt) override 
+		void Move(MoveDirection dir, f32 dt)
 		{
 			if (dir == MoveDirection::Up) {
 				m_Position += m_Front * m_CameraSpeed * dt;

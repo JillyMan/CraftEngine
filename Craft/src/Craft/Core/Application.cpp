@@ -68,7 +68,7 @@ namespace Craft
 
 			if (delta > updateTick)
 			{
-				OnUpdate(delta);
+				OnUpdate(delta/1000.0f);
 				delta = 0.0f;
 				++updates;
 			}
