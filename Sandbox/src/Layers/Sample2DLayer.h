@@ -11,6 +11,8 @@
 
 #include <Craft/Physic/Physic.h>
 
+#include "../Scripts/PlayerController.h"
+
 using namespace Craft;
 
 class Sample2DLayer : public Layer
@@ -26,8 +28,9 @@ private:
 	f32 m_Speed = 5.0f;
 	v2 m_Origin = { 0.5f, 0.5f };
 
-	Physic::RigidBody* m_Player;
 	Physic::RigidBody* m_Block;
+
+	PlayerController* m_PlayerController;
 
 public:
 	Sample2DLayer();
@@ -42,6 +45,8 @@ private:
 
 	void GraphicsInit();
 	void PlayerInit();
+
+	void SystemsUpdate(f32 dt);
 
 	bool OnKeyDown(Craft::KeyPressedEvent& event);
 	bool OnResizeWindow(Craft::WindowResizeEvent& event);

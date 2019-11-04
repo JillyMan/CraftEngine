@@ -134,6 +134,8 @@ namespace Craft
 	f32 Length(v2& a);
 	f32 Dot(v2& a, v2& b);
 
+	Craft::v2 Lerp(Craft::v2& start, Craft::v2& end, f32 dt);
+
 //-----------
 //----v3-----
 //-----------

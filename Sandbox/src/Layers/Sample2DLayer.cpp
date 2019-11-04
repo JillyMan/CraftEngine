@@ -56,29 +56,28 @@ void Sample2DLayer::PlayerInit()
 	Physic::AABB aabb;
 	aabb.min = v2(0.0f, 0.0f);
 	aabb.max = v2(1.0f, 1.0f);
-	m_Player = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
-	Physic::AddRigidBody(m_Player);
-	m_Speed = 12.5f;
+	Physic::RigidBody* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
+	m_PlayerController = new PlayerController(m_PlayerBody, 40);
 
 	Physic::AABB aabbBlock;
 	aabbBlock.min = v2(0.0f, 0.0f);
 	aabbBlock.max = v2(1.0f, 1.0f);
 	m_Block = Physic::CreateRigidBody(1.0f, 100.0f, v2(-0.5f, -0.5f) - m_Origin, aabbBlock);
 
-	Physic::AddRigidBody(m_Block);
 	//Physic::AddGlobalForce(v2( 0.0f, -0.00098f)); // gravity
 }
 
 Sample2DLayer::~Sample2DLayer()
 {
+	delete m_PlayerController;
 }
 
 void Sample2DLayer::OnDebugRender()
 {
 	ImGui::Begin("2D game settings");
-	ImGui::SliderFloat("Speed", &m_Speed, 0.0f, 100.0f);
-	ImGui::Text("Player.X: %f", m_Player->pos.x);
-	ImGui::Text("Player.Y: %f", m_Player->pos.y);
+	ImGui::SliderFloat("Speed", &m_PlayerController->Speed, 0.0f, 200.0f);
+	ImGui::Text("Player.X: %f", m_PlayerController->GetPosition().x);
+	ImGui::Text("Player.Y: %f", m_PlayerController->GetPosition().y);
 
 	ImGui::SliderFloat("Scale", &m_ScaleRatio, 0.0f, 3.0f);
 	ImGui::ColorPicker3("Tiles color", m_Color.e);
@@ -94,7 +93,7 @@ void Sample2DLayer::OnRender()
 	m_Shader->SetUniform3f("u_color", m_Color);
 
 	Craft::mat4 scaleMat = Craft::mat4::Scale(Craft::v3(m_ScaleRatio));
-	Craft::mat4 transofrm = Craft::mat4::Translate(v3(m_Player->pos, 0.0f)) * scaleMat;
+	Craft::mat4 transofrm = Craft::mat4::Translate(v3(m_PlayerController->GetPosition(), 0.0f)) * scaleMat;
 	Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
 
 	m_Shader->SetUniform3f("u_color", v3(1.0f, 0.0f, 0.0f));
@@ -106,36 +105,14 @@ void Sample2DLayer::OnRender()
 void Sample2DLayer::OnUpdate(f32 dt)
 {
 	m_Camera.Update(dt);
-	UpdatePlayer(dt);
+	m_PlayerController->Update(dt);
 
-	Physic::UpdatePhysics(dt);
+	SystemsUpdate(dt);
 }
 
-void Sample2DLayer::UpdatePlayer(f32 dt) 
+void Sample2DLayer::SystemsUpdate(f32 dt)
 {
-	v2 force;
-	
-	if (Craft::Input::InputHandler::IsKeyPressed(VK_UP))
-	{
-		force.y = 1.0f;
-	}
-	else if (Craft::Input::InputHandler::IsKeyPressed(VK_DOWN))
-	{
-		force.y = -1.0f;
-	}
-
-	if (Craft::Input::InputHandler::IsKeyPressed(VK_RIGHT))
-	{
-		force.x = 1.0f;
-	}
-	else if (Craft::Input::InputHandler::IsKeyPressed(VK_LEFT))
-	{
-		force.x = -1.0f;
-	}
-
-	force *= m_Speed;
-
-	ApplyForce(*m_Player, force, dt/100.0f);
+	Physic::UpdatePhysics(dt);
 }
 
 void Sample2DLayer::OnEvent(Craft::Event& e)
@@ -156,7 +133,7 @@ bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)
 	
 	if (event.GetKeyCode() == 'F') 
 	{
-//		m_Camera.SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
+		m_Camera.GetCamera().SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
 	}
 	return false;
 }

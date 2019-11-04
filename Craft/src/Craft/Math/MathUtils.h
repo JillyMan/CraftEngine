@@ -9,4 +9,5 @@ namespace Craft
 	f32 ToAngle(f32 radian);
 
 	f32 Lerp(f32 v0, f32 v1, f32 t);
+	f32 Claim01(f32 x);
 }

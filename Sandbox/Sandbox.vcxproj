@@ -128,6 +128,7 @@
     <ClInclude Include="src\Layers\Constants.h" />
     <ClInclude Include="src\Layers\Sample2DLayer.h" />
     <ClInclude Include="src\Layers\Sample3DLayer.h" />
+    <ClInclude Include="src\Scripts\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp" />
