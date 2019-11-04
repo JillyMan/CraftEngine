@@ -9,12 +9,9 @@
 
 #include <imgui.h>
 
-Sample2DLayer::Sample2DLayer()
-{	//m_Player = { };
-	//m_Player.A = { 0.0f, -0.98f, 0.0f };
-	//m_Player.V = { -0.5f, 5.0f, 0.0f };
-	//m_Player.P = { 0.0f, 0.0f, 1.0f };
-
+Sample2DLayer::Sample2DLayer() :
+	m_Camera(16.0f / 9.0f)
+{
 	GraphicsInit();
 	PlayerInit();
 	Physic::Init();
@@ -22,8 +19,6 @@ Sample2DLayer::Sample2DLayer()
 
 void Sample2DLayer::GraphicsInit() {
 	Craft::Graphics::RenderCommand::SetClearColor(Craft::v4(0.0f, 0.1f, 0.1f, 1.0f));
-	m_Camera = Craft::Camera::CreateOrthographicCamera(
-		-16.0, 16.0f, -9.0f, 9.0f, 0.1f, 1000.0f);
 
 	f32 w = 1.0f, h = 1.0f;
 
@@ -61,30 +56,28 @@ void Sample2DLayer::PlayerInit()
 	Physic::AABB aabb;
 	aabb.min = v2(0.0f, 0.0f);
 	aabb.max = v2(1.0f, 1.0f);
-	m_Player = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 8.0f) - m_Origin, aabb);
-	Physic::AddRigidBody(m_Player);
-	m_Speed = 0.5f;
+	Physic::RigidBody* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
+	m_PlayerController = new PlayerController(m_PlayerBody, 40);
 
 	Physic::AABB aabbBlock;
 	aabbBlock.min = v2(0.0f, 0.0f);
 	aabbBlock.max = v2(1.0f, 1.0f);
-	m_Block = Physic::CreateRigidBody(1.0f, 10.0f, v2(-3.0f, -3.0f) - m_Origin, aabbBlock);
+	m_Block = Physic::CreateRigidBody(1.0f, 100.0f, v2(-0.5f, -0.5f) - m_Origin, aabbBlock);
 
-	Physic::AddRigidBody(m_Block);
 	//Physic::AddGlobalForce(v2( 0.0f, -0.00098f)); // gravity
 }
 
 Sample2DLayer::~Sample2DLayer()
 {
-	delete m_Camera;
+	delete m_PlayerController;
 }
 
 void Sample2DLayer::OnDebugRender()
 {
 	ImGui::Begin("2D game settings");
-	ImGui::SliderFloat("Speed", &m_Speed, 0.0f, 100.0f);
-	ImGui::Text("Player.X: %f", m_Player->pos.x);
-	ImGui::Text("Player.Y: %f", m_Player->pos.y);
+	ImGui::SliderFloat("Speed", &m_PlayerController->Speed, 0.0f, 200.0f);
+	ImGui::Text("Player.X: %f", m_PlayerController->GetPosition().x);
+	ImGui::Text("Player.Y: %f", m_PlayerController->GetPosition().y);
 
 	ImGui::SliderFloat("Scale", &m_ScaleRatio, 0.0f, 3.0f);
 	ImGui::ColorPicker3("Tiles color", m_Color.e);
@@ -94,88 +87,41 @@ void Sample2DLayer::OnDebugRender()
 void Sample2DLayer::OnRender()
 {
 	Craft::Graphics::RenderCommand::Clear();
-	Craft::Graphics::Renderer::BeginScene(*m_Camera);
+	Craft::Graphics::Renderer::BeginScene(m_Camera.GetCamera());
 
 	m_Shader->Use();
 	m_Shader->SetUniform3f("u_color", m_Color);
 
 	Craft::mat4 scaleMat = Craft::mat4::Scale(Craft::v3(m_ScaleRatio));
-	Craft::mat4 transofrm = Craft::mat4::Translate(v3(m_Player->pos, 1.0f)) * scaleMat;
+	Craft::mat4 transofrm = Craft::mat4::Translate(v3(m_PlayerController->GetPosition(), 0.0f)) * scaleMat;
 	Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
 
 	m_Shader->SetUniform3f("u_color", v3(1.0f, 0.0f, 0.0f));
 	scaleMat = Craft::mat4::Scale(Craft::v3(m_ScaleRatio));
-	transofrm = Craft::mat4::Translate(v3(m_Block->pos, 1.0f)) * scaleMat;
+	transofrm = Craft::mat4::Translate(v3(m_Block->pos, 0.0f)) * scaleMat;
 	Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
 }
 
-void UpdateCamera(Craft::Camera* camera, f32 dt);
-
 void Sample2DLayer::OnUpdate(f32 dt)
 {
-	UpdateCamera(m_Camera, dt);
-	UpdatePlayer(dt);
+	m_Camera.Update(dt);
+	m_PlayerController->Update(dt);
 
+	SystemsUpdate(dt);
+}
+
+void Sample2DLayer::SystemsUpdate(f32 dt)
+{
 	Physic::UpdatePhysics(dt);
 }
 
-static void UpdateCamera(Craft::Camera* camera, f32 dt)
+void Sample2DLayer::OnEvent(Craft::Event& e)
 {
-	Craft::v3 P = camera->GetPosition();
-	f32 cameraSpeed = 0.05f * dt;
+	m_Camera.OnEvent(e);
 
-	if (Craft::Input::InputHandler::IsKeyPressed('W'))
-	{
-		P.y -= cameraSpeed;
-	}
-	if (Craft::Input::InputHandler::IsKeyPressed('S'))
-	{
-		P.y += cameraSpeed;
-	}
-	if (Craft::Input::InputHandler::IsKeyPressed('A'))
-	{
-		P.x += cameraSpeed;
-	}
-	if (Craft::Input::InputHandler::IsKeyPressed('D'))
-	{
-		P.x -= cameraSpeed;
-	}
-	camera->SetPosition(P);
-}
-
-void Sample2DLayer::UpdatePlayer(f32 dt) 
-{
-	v2 force;
-	
-	if (Craft::Input::InputHandler::IsKeyPressed(VK_UP))
-	{
-		force.y = 1.0f;
-	}
-	else if (Craft::Input::InputHandler::IsKeyPressed(VK_DOWN))
-	{
-		force.y = -1.0f;
-	}
-
-	if (Craft::Input::InputHandler::IsKeyPressed(VK_RIGHT))
-	{
-		force.x = 1.0f;
-	}
-	else if (Craft::Input::InputHandler::IsKeyPressed(VK_LEFT))
-	{
-		force.x = -1.0f;
-	}
-
-	force *= m_Speed;
-
-	ApplyForce(*m_Player, force, dt/100.0f);
-}
-
-void Sample2DLayer::OnEvent(Craft::Event& event)
-{
-	Craft::EventDispatcher dispatcher(event);
+	Craft::EventDispatcher dispatcher(e);
 	dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(Sample2DLayer::OnKeyDown));
 	dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(Sample2DLayer::OnResizeWindow));
-	dispatcher.Dispatch<Craft::MouseScrollWheelEvent>(BIND_EVENT_FN(Sample2DLayer::OnMouseWheelScroll));
 }
 
 bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)
@@ -187,7 +133,7 @@ bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)
 	
 	if (event.GetKeyCode() == 'F') 
 	{
-		m_Camera->SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
+		m_Camera.GetCamera().SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
 	}
 	return false;
 }
@@ -195,17 +141,5 @@ bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)
 bool Sample2DLayer::OnResizeWindow(Craft::WindowResizeEvent& event) {
 	//todo: move to renderer static method!!
 	glViewport(0, 0, event.GetWidth(), event.GetHeight());
-	return true;
-}
-
-bool Sample2DLayer::OnMouseWheelScroll(Craft::MouseScrollWheelEvent& event)
-{
-	s32 offset = event.GetZDelta();
-	offset /= abs(offset);
-
-	Craft::v3 s = m_Camera->GetScale();
-	s += 0.1f * offset;
-	m_Camera->SetScale(s);
-
 	return true;
 }

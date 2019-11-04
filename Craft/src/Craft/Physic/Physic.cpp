@@ -44,9 +44,18 @@ InternalFunction void ApplyGlobalForcesForEachBody(Container<Craft::Physic::Rigi
 	}
 }
 
+InternalFunction void ApplyVelocityForEachBody(Container<Craft::Physic::RigidBody*> bodies, f32 dt)
+{
+	for (Craft::Physic::RigidBody* body : bodies)
+	{
+		body->pos = Craft::Lerp(body->pos, body->pos + body->vel, dt);
+	}
+}
+
 void Craft::Physic::UpdatePhysics(f32 dt)
 {
 	ApplyGlobalForcesForEachBody(Bodies, dt);
+	ApplyVelocityForEachBody(Bodies, dt);
 
 	for (RigidBodyPair& pair : RigidBodyPairs)
 	{
@@ -61,9 +70,7 @@ void Craft::Physic::UpdatePhysics(f32 dt)
 
 void Craft::Physic::ApplyForce(RigidBody& rigidBody, v2& force, f32 dt) 
 {
-//	rigidBody.vel += force * dt;
-//	rigidBody.pos += rigidBody.vel * dt;
-	rigidBody.pos += force * dt;
+	rigidBody.vel += force * dt;
 }
 
 Craft::Physic::RigidBody* Craft::Physic::CreateRigidBody(f32 restitution, f32 mass, const v2& pos, AABB& shape, const v2& vel)
@@ -79,6 +86,9 @@ Craft::Physic::RigidBody* Craft::Physic::CreateRigidBody(f32 restitution, f32 ma
 	body->pos = pos;
 	body->vel = vel;
 	body->shape = shape;
+	
+	Physic::AddRigidBody(body);
+
 	return body;
 }
 
@@ -94,7 +104,7 @@ InternalFunction inline bool GetOverlap(
 	f32 b_y_half = (b.max.y - b.min.y) / 2.0f;
 
 	xOverlap = a_x_half + b_x_half - fabs(fromAToB.x);
-	if (xOverlap > 0) 
+	if (xOverlap > 0)
 	{
 		yOverlap = a_y_half + b_y_half - fabs(fromAToB.y);
 		if (yOverlap > 0) 
@@ -177,7 +187,6 @@ void Craft::Physic::PositionCorrection(Manifold& manifold)
 	a.pos -= correction * a.invertMass;
 	b.pos += correction * b.invertMass;
 }
-
 
 bool Craft::Physic::CirclevsCicle(Circle& a, Circle& b)
 {

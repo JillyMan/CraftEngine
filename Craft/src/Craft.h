@@ -15,5 +15,16 @@
 
 #include "Craft/ImGui/ImGuiLayer.h"
 
+//-Graphics
+
+#include "Craft/Graphics/Buffer.h"
+#include "Craft/Graphics/VertexArray.h"
+#include "Craft/Graphics/Texture.h"
+#include "Craft/Graphics/Shader.h"
+#include "Craft/Graphics/Renderer.h"
+#include "Craft/Graphics/RenderCommand.h"
+
+#include "Craft/Graphics/Cameras/OrthoCameraContorller.h"
+
 //--------------------------------------
 #include "Craft/Core/EntryPoint.h"

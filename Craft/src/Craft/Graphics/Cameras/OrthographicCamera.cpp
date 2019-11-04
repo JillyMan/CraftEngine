@@ -3,9 +3,14 @@
 
 namespace Craft 
 {
-	OrthographicCamera::OrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far,
-		v3& position, f32 cameraSpeed) :
-		Camera(mat4::Ortho(left, right, bottom, top, near, far), position, cameraSpeed)
+	OrthographicCamera::OrthographicCamera(f32 left, f32 right, f32 bottom, f32 top) :
+		Camera(mat4::Ortho(left, right, bottom, top, -1.0f, 1.0f))
 	{
+	
+	}
+
+	void OrthographicCamera::SetProjection(f32 left, f32 right, f32 bottom, f32 top)
+	{
+		m_ProjectionMatrix = mat4::Ortho(left, right, bottom, top, -1.0f, 1.0f);
 	}
 }

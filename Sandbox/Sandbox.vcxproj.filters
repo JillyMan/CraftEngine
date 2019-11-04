@@ -15,6 +15,7 @@
     <ClInclude Include="src\Layers\Sample3DLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripts\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">

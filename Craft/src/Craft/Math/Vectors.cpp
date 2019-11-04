@@ -1,5 +1,6 @@
 #include "crpch.h"
 #include "Vectors.h"
+#include "MathUtils.h"
 
 namespace Craft
 {
@@ -128,6 +129,13 @@ namespace Craft
 		return a;
 	}
 
+	v2 Lerp(Craft::v2& start, Craft::v2& end, f32 t)
+	{
+		return v2 (
+			Lerp(start.x, end.x, t),
+			Lerp(start.y, end.y, t)
+		);
+	}
 
 	f32 Length(v2& a)
 	{

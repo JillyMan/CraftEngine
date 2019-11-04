@@ -68,14 +68,14 @@ namespace Craft
 
 			if (delta > updateTick)
 			{
-				OnUpdate(delta);
+				OnUpdate(delta/1000.0f);
 				delta = 0.0f;
 				++updates;
-			}
 
-			++frames;
-			OnRender();
-			m_MainWindow->Update();
+				++frames;
+				OnRender();
+				m_MainWindow->Update();
+			}
 
 			if (timer.ElapsedMillisecond() - resetInterval > 1000.0f)
 			{
