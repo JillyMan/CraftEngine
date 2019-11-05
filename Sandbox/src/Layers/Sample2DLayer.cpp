@@ -53,13 +53,13 @@ void Sample2DLayer::GraphicsInit() {
 
 void Sample2DLayer::PlayerInit() 
 {
-	Physic::AABB aabb;
+	Physic::BoxCollider2DComponent aabb;
 	aabb.min = v2(0.0f, 0.0f);
 	aabb.max = v2(1.0f, 1.0f);
-	Physic::RigidBody* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
-	m_PlayerController = new PlayerController(m_PlayerBody, 40);
+	Physic::RigidBody2DComponent* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
+	m_PlayerController = new PlayerController(m_PlayerBody, 54);
 
-	Physic::AABB aabbBlock;
+	Physic::BoxCollider2DComponent aabbBlock;
 	aabbBlock.min = v2(0.0f, 0.0f);
 	aabbBlock.max = v2(1.0f, 1.0f);
 	m_Block = Physic::CreateRigidBody(1.0f, 100.0f, v2(-0.5f, -0.5f) - m_Origin, aabbBlock);

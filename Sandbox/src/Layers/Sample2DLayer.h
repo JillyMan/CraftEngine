@@ -28,7 +28,7 @@ private:
 	f32 m_Speed = 5.0f;
 	v2 m_Origin = { 0.5f, 0.5f };
 
-	Physic::RigidBody* m_Block;
+	Physic::RigidBody2DComponent* m_Block;
 
 	PlayerController* m_PlayerController;
 

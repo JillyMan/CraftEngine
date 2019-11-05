@@ -146,6 +146,7 @@
     <ClInclude Include="src\Craft\Core\LayerStack.h" />
     <ClInclude Include="src\Craft\Core\Log.h" />
     <ClInclude Include="src\Craft\Core\Types.h" />
+    <ClInclude Include="src\Craft\Ecs\Ecs.h" />
     <ClInclude Include="src\Craft\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Craft\Event\Event.h" />
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
@@ -179,6 +180,8 @@
     <ClInclude Include="src\Craft\Math\MathUtils.h" />
     <ClInclude Include="src\Craft\Math\Matrix.h" />
     <ClInclude Include="src\Craft\Math\Vectors.h" />
+    <ClInclude Include="src\Craft\Physic\Components\BoxCollider2DComponent.h" />
+    <ClInclude Include="src\Craft\Physic\Components\RigidBody2DComponent.h" />
     <ClInclude Include="src\Craft\Physic\Physic.h" />
     <ClInclude Include="src\Craft\System\FileSystem.h" />
     <ClInclude Include="src\Craft\System\Vfs\VFS.h" />
@@ -248,6 +251,9 @@
     <ProjectReference Include="..\Depends\ImGui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Ecs\Components\TransofrmComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

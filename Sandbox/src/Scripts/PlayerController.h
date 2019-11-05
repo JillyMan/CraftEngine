@@ -26,12 +26,12 @@ class PlayerController
 {
 private:
 	BoxCollider2D* boxCollider;
-	Craft::Physic::RigidBody* m_RigidBody;
+	Craft::Physic::RigidBody2DComponent* m_RigidBody;
 
 public:
 	f32 Speed;
 
-	PlayerController(Craft::Physic::RigidBody* rigidBody, f32 speed) :
+	PlayerController(Craft::Physic::RigidBody2DComponent* rigidBody, f32 speed) :
 		m_RigidBody(rigidBody), 
 		Speed(speed)
 	{

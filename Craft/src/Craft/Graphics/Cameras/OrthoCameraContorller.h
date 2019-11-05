@@ -29,7 +29,7 @@ namespace Craft
 		bool OnMouseScrollEvent(MouseScrollWheelEvent& e);
 
 		f32 m_AspectRation;
-		f32 m_ZoomLevel = 1.0f;
+		f32 m_ZoomLevel = 5.0f;
 		f32 m_CameraSpeed = 5.0f;
 		v3 m_CemeraPos = { 0.0f, 0.0f, 0.0f };
 		OrthographicCamera m_Camera;

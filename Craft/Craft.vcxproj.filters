@@ -247,6 +247,9 @@
     <ClInclude Include="src\Craft\Graphics\Cameras\FPSCameraController.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Ecs\Ecs.h" />
+    <ClInclude Include="src\Craft\Physic\Components\RigidBody2DComponent.h" />
+    <ClInclude Include="src\Craft\Physic\Components\BoxCollider2DComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -345,5 +348,8 @@
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Physic\Physic.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Craft\Ecs\Components\TransofrmComponent.h" />
   </ItemGroup>
 </Project>
