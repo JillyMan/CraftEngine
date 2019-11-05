@@ -53,14 +53,19 @@ void Sample2DLayer::GraphicsInit() {
 
 void Sample2DLayer::PlayerInit() 
 {
-	v2 playerPos;
+	Craft::TransoformComponent* playerTransform = new TransoformComponent();
+	playerTransform = {};
 	Physic::RigidBody2DComponent* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f);
 	Physic::BoxCollider2DComponent* boxPlayerCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
-	m_PlayerController = new PlayerController(m_PlayerBody, 54);
+	m_PlayerController = new PlayerController(m_PlayerBody, playerTransform, 54);
 
-	v2 boxPos = v2(-0.5f, -0.5f) - m_Origin;
+#pragma region BoxCreate
+	Craft::TransoformComponent* boxTransform = new TransoformComponent();
+	*boxTransform = {};
+	boxTransform->pos = v3(-0.5f, -0.5f, 0.0f);
 	m_Block = Physic::CreateRigidBody(1.0f, 100.0f);
 	Physic::BoxCollider2DComponent* boxCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
+#pragma endregion
 }
 
 Sample2DLayer::~Sample2DLayer()

@@ -10,15 +10,18 @@
 class PlayerController
 {
 private:
-	Craft::TransoformComponent* transform;
+	Craft::TransoformComponent* m_Transform;
 	Craft::Physic::RigidBody2DComponent* m_RigidBody;
 
 public:
 	f32 Speed;
 
 	PlayerController(
-		Craft::Physic::RigidBody2DComponent* rigidBody, f32 speed) :
-		m_RigidBody(rigidBody), 
+		Craft::Physic::RigidBody2DComponent* rigidBody,
+		Craft::TransoformComponent* transform,
+		f32 speed) :
+		m_RigidBody(rigidBody),
+		m_Transform(transform),
 		Speed(speed)
 	{
 	}
@@ -49,8 +52,7 @@ public:
 			Craft::v2(),
 			m_RigidBody->vel + force,
 			Craft::Claim01(dt * Speed));
-
 	}
 
-	Craft::v2 GetPosition() { return transform->pos.xy; }
+	Craft::v2& GetPosition() { return m_Transform->pos.xy; }
 };
