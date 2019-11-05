@@ -310,6 +310,15 @@ namespace Craft
 		return a / len;
 	}
 
+	v3 Lerp(Craft::v3& start, Craft::v3& end, f32 t)
+	{
+		return v3(
+			Lerp(start.x, end.x, t),
+			Lerp(start.y, end.y, t),
+			Lerp(start.z, end.z, t)
+		);
+	}
+
 	//-------------
 	//v4 operations
 	//-------------

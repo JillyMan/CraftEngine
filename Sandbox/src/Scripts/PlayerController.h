@@ -1,37 +1,23 @@
 #pragma once
 
-#include "Craft/Math/Math.h"
-#include "Craft/Physic/Physic.h"
-#include <Craft\Core\InputHandler.h>
-
-class BoxCollider2D
-{
-public:
-	BoxCollider2D(Craft::v2 pos, Craft::v2 size)
-	{
-		this->min = pos;
-		this->max = pos + size;
-	}
-
-	bool IsCollide(BoxCollider2D& other, f32 xOverlap, f32 yOverlap) 
-	{
-	}
-
-public:
-	Craft::v2 min;
-	Craft::v2 max;
-};
+#include <Craft/Math/Math.h>
+#include <Craft/Physic/Physic.h>
+#include <Craft/Core/InputHandler.h>
+#include <Craft/Physic/Components/BoxCollider2DComponent.h>
+#include <Craft/Physic/Components/RigidBody2DComponent.h>
+#include <Craft/Ecs/Components/TransofrmComponent.h>
 
 class PlayerController
 {
 private:
-	BoxCollider2D* boxCollider;
+	Craft::TransoformComponent* transform;
 	Craft::Physic::RigidBody2DComponent* m_RigidBody;
 
 public:
 	f32 Speed;
 
-	PlayerController(Craft::Physic::RigidBody2DComponent* rigidBody, f32 speed) :
+	PlayerController(
+		Craft::Physic::RigidBody2DComponent* rigidBody, f32 speed) :
 		m_RigidBody(rigidBody), 
 		Speed(speed)
 	{
@@ -64,8 +50,7 @@ public:
 			m_RigidBody->vel + force,
 			Craft::Claim01(dt * Speed));
 
-		//Craft::Physic::ApplyForce(*m_RigidBody, force, dt / 100.0f);
 	}
 
-	Craft::v2& GetPosition() { return m_RigidBody->pos; }
+	Craft::v2 GetPosition() { return transform->pos.xy; }
 };

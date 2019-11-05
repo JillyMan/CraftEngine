@@ -5,7 +5,7 @@
 
 namespace Craft { namespace Physic {
 
-	struct BoxCollider2DComponent : Ecs::BaseComponent
+	struct BoxCollider2DComponent : BaseComponent
 	{
 		v2 min;
 		v2 max;

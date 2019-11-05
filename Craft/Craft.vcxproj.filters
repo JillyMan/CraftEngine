@@ -250,6 +250,7 @@
     <ClInclude Include="src\Craft\Ecs\Ecs.h" />
     <ClInclude Include="src\Craft\Physic\Components\RigidBody2DComponent.h" />
     <ClInclude Include="src\Craft\Physic\Components\BoxCollider2DComponent.h" />
+    <ClInclude Include="src\Craft\Ecs\Components\BaseComponents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -351,5 +352,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Craft\Ecs\Components\TransofrmComponent.h" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

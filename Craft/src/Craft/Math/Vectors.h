@@ -165,6 +165,7 @@ namespace Craft
 	f32 Dot(v3& a, v3& b);
 	v3  Cross(v3& a, v3& b);
 	v3 Normalize(v3& a);
+	v3 Lerp(Craft::v3& start, Craft::v3& end, f32 t);
 
 //-----------
 //----v4-----

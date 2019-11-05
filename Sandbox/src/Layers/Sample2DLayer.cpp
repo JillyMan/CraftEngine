@@ -53,18 +53,14 @@ void Sample2DLayer::GraphicsInit() {
 
 void Sample2DLayer::PlayerInit() 
 {
-	Physic::BoxCollider2DComponent aabb;
-	aabb.min = v2(0.0f, 0.0f);
-	aabb.max = v2(1.0f, 1.0f);
-	Physic::RigidBody2DComponent* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f, v2(0.0f, 0.0f) - m_Origin, aabb);
+	v2 playerPos;
+	Physic::RigidBody2DComponent* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f);
+	Physic::BoxCollider2DComponent* boxPlayerCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
 	m_PlayerController = new PlayerController(m_PlayerBody, 54);
 
-	Physic::BoxCollider2DComponent aabbBlock;
-	aabbBlock.min = v2(0.0f, 0.0f);
-	aabbBlock.max = v2(1.0f, 1.0f);
-	m_Block = Physic::CreateRigidBody(1.0f, 100.0f, v2(-0.5f, -0.5f) - m_Origin, aabbBlock);
-
-	//Physic::AddGlobalForce(v2( 0.0f, -0.00098f)); // gravity
+	v2 boxPos = v2(-0.5f, -0.5f) - m_Origin;
+	m_Block = Physic::CreateRigidBody(1.0f, 100.0f);
+	Physic::BoxCollider2DComponent* boxCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
 }
 
 Sample2DLayer::~Sample2DLayer()

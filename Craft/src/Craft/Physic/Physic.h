@@ -20,9 +20,11 @@ namespace Craft { namespace Physic {
  
 	void Init();
 	void UpdatePhysics(f32 dt);
-	void AddRigidBody(RigidBody2DComponent* body);
-	RigidBody2DComponent* CreateRigidBody(f32 restitution, f32 mass, const v2& pos, BoxCollider2DComponent& shape, const v2& vel = v2());
+
+	RigidBody2DComponent* CreateRigidBody(f32 restitution, f32 mass, const v2& vel = v2());
+
+	BoxCollider2DComponent* CreateBoxCollider2D(v2 min, v2 max);
+
 
 	void AddGlobalForce(v2& force);
-	void ApplyForce(RigidBody2DComponent& rigidBody, v2& force, f32 dt);
 } }

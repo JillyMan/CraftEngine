@@ -5,15 +5,18 @@
 
 namespace Craft { namespace Physic {
 
-	struct RigidBody2DComponent : Ecs::BaseComponent
+	struct RigidBody2DComponent : BaseComponent
 	{
-		f32 restitution;
-
 		f32 mass;
 		f32 invertMass;
+		f32 restitution;
 
 		v2 vel;
-		v2 force;
+
+		void ApplyForce(v2 force) 
+		{
+			vel += force;
+		}
 	};
 
 }}

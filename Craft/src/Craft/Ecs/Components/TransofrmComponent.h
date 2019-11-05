@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Craft/Math/Math.h>
-#include <Craft/Ecs/Ecs.h>
+#include <Craft/Ecs/Components/BaseComponents.h>
 
-namespace Craft { namespace Ecs {
+namespace Craft {
 
 	struct TransoformComponent : BaseComponent
 	{
@@ -13,4 +13,4 @@ namespace Craft { namespace Ecs {
 		v3 scale;
 	};
 
-} }
+}

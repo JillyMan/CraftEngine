@@ -1,5 +1,8 @@
 #include "crpch.h"
 #include "Physic.h"
+
+#include <Craft/Ecs/Components/TransofrmComponent.h>
+
 namespace Craft { namespace Physic {
 
 	template<typename T>
@@ -25,6 +28,7 @@ namespace Craft { namespace Physic {
 	InternalFunction void ResolveCollision(Manifold& manifold);
 	InternalFunction void PositionCorrection(Manifold& manifold);
 	InternalFunction bool CirclevsCicle(Circle& a, Circle& b);
+	InternalFunction void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*> bodies);
 
 	void Craft::Physic::Init()
 	{
@@ -47,9 +51,38 @@ namespace Craft { namespace Physic {
 		}
 	}
 
-	void Craft::Physic::AddRigidBody(Craft::Physic::RigidBody2DComponent* body)
+	void Craft::Physic::AddGlobalForce(v2& force)
 	{
-		Bodies.push_back(body);
+		Forces.emplace_back(force);
+	}
+
+	Craft::Physic::RigidBody2DComponent* Craft::Physic::CreateRigidBody(f32 restitution, f32 mass, const v2& vel)
+	{
+		RigidBody2DComponent* body = new RigidBody2DComponent();
+		CR_ASSERT(body, "Memory suck");
+
+		body->mass = mass;
+		body->invertMass = mass == 0 ? 0.0f : 1.0f / mass;
+		body->restitution = restitution;
+		body->vel = vel;
+
+		Physic::AddRigidBody(body, Bodies);
+
+		return body;
+	}
+
+	BoxCollider2DComponent* Craft::Physic::CreateBoxCollider2D(v2 min, v2 max)
+	{
+		BoxCollider2DComponent* collider = new BoxCollider2DComponent();
+		CR_ASSERT(collider, "Memory suck");
+		collider->min = min;
+		collider->max = max;
+		return collider;
+	}
+
+	void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*> bodies)
+	{
+		bodies.push_back(body);
 
 		for (int i = 0; i < Bodies.size() - 1; ++i)
 		{
@@ -58,41 +91,13 @@ namespace Craft { namespace Physic {
 		}
 	}
 
-	void Craft::Physic::AddGlobalForce(v2& force)
-	{
-		Forces.emplace_back(force);
-	}
-
-	void Craft::Physic::ApplyForce(RigidBody2DComponent& rigidBody, v2& force, f32 dt)
-	{
-		rigidBody.vel += force * dt;
-	}
-
-	Craft::Physic::RigidBody2DComponent* Craft::Physic::CreateRigidBody(f32 restitution, f32 mass, const v2& pos, BoxCollider2DComponent& collider, const v2& vel)
-	{
-		RigidBody2DComponent* body = (RigidBody2DComponent*)malloc(sizeof(RigidBody2DComponent));
-		if (body == nullptr)
-		{
-			return nullptr;
-		}
-		body->mass = mass;
-		body->invertMass = mass == 0 ? 0.0f : 1.0f / mass;
-		body->restitution = restitution;
-		body->pos = pos;
-		body->vel = vel;
-
-		Physic::AddRigidBody(body);
-
-		return body;
-	}
-
 	void ApplyGlobalForcesForEachBody(Container<Craft::Physic::RigidBody2DComponent*> bodies, f32 dt)
 	{
 		for (Craft::Physic::RigidBody2DComponent* body : bodies)
 		{
 			for (Craft::v2& force : Forces)
 			{
-				Craft::Physic::ApplyForce(*body, force, dt);
+				body->ApplyForce(force * dt);
 			}
 		}
 	}
@@ -101,7 +106,8 @@ namespace Craft { namespace Physic {
 	{
 		for (Craft::Physic::RigidBody2DComponent* body : bodies)
 		{
-			body->pos = Craft::Lerp(body->pos, body->pos + body->vel, dt);
+			TransoformComponent& transform = *Ecs::Ecs::GetComponentById<TransoformComponent>(body->ownderId);
+			transform.pos = Craft::Lerp(transform.pos, transform.pos + v3(body->vel, 0.0f), dt);
 		}
 	}
 
@@ -132,12 +138,17 @@ namespace Craft { namespace Physic {
 	bool CollisionAABB(RigidBody2DComponent& a, RigidBody2DComponent& b, Manifold& result)
 	{
 		bool isInterset = false;
-		RigidBody2DComponent& abox;// = a.shape;
-		RigidBody2DComponent& bbox;// = b.shape;
-		v2 fromAToB = b.pos - a.pos;
+
+		BoxCollider2DComponent& aBox = *Ecs::Ecs::GetComponentById<BoxCollider2DComponent>(a.ownderId);
+		BoxCollider2DComponent& bBox = *Ecs::Ecs::GetComponentById<BoxCollider2DComponent>(b.ownderId);
+
+		TransoformComponent& aTransform = *Ecs::Ecs::GetComponentById<TransoformComponent>(a.ownderId);
+		TransoformComponent& bTransform = *Ecs::Ecs::GetComponentById<TransoformComponent>(b.ownderId);
+
+		v3 fromAToB = bTransform.pos - aTransform.pos;
 
 		f32 x_overlap, y_overlap;
-		if (GetOverlap(abox, bbox, fromAToB, x_overlap, y_overlap))
+		if (GetOverlap(aBox, bBox, v2(fromAToB.x, fromAToB.y), x_overlap, y_overlap))
 		{
 			if (x_overlap > y_overlap)
 			{
@@ -191,14 +202,17 @@ namespace Craft { namespace Physic {
 
 		RigidBody2DComponent& a = *manifold.A;
 		RigidBody2DComponent& b = *manifold.B;
+		TransoformComponent& aTransform = *Ecs::Ecs::GetComponentById<TransoformComponent>(a.ownderId);
+		TransoformComponent& bTransform = *Ecs::Ecs::GetComponentById<TransoformComponent>(b.ownderId);
 
 		f32 mass_sum = a.invertMass + b.invertMass;
 		f32 penetration = manifold.penetration;
 		v2 collisionNormal = manifold.normal;
 		v2 correction = collisionNormal * ((max(penetration - slop, 0.0f) / (mass_sum)) * percentOfReduce);
-
-		a.pos -= correction * a.invertMass;
-		b.pos += correction * b.invertMass;
+		
+		//todo: usseles complexity to transform from v2() to v3()?? need fix.
+		aTransform.pos -= v3(correction * a.invertMass, aTransform.pos.z);
+		bTransform.pos += v3(correction * b.invertMass, aTransform.pos.z);
 	}
 
 	bool CirclevsCicle(Circle& a, Circle& b)
