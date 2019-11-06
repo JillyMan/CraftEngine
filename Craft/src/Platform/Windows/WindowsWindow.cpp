@@ -185,45 +185,12 @@ namespace Craft {
 		m_EventCallback(event);
 	}
 
-	void OnKeyPressed(WindowsWindow* window, u64 vkCode)
-	{
-		window->m_InputHandler->OnKeyPressed(vkCode);
-		window->OnEvent(KeyPressedEvent(vkCode, 0));
-	}
-
-	void OnKeyReleased(WindowsWindow* window, u64 vkCode)
-	{
-		window->m_InputHandler->OnKeyReleased(vkCode);
-		window->OnEvent(KeyReleasedEvent(vkCode));
-	}
-
-	void OnResizeWindow(WindowsWindow* window, u32 width, u32 height)
-	{
-		window->OnEvent(WindowResizeEvent(width, height));
-	}
-
-	void OnMouseMove(WindowsWindow* window, s32 x, s32 y)
-	{	
-		window->m_InputHandler->SetMousePosition(x, y);
-		window->OnEvent(MouseMovedEvent(x, y));
-	}
-
-	void OnMouseWheel(WindowsWindow* window, s32 zDelta) 
-	{
-	//	window->m_InputHandler->SetMouseWheelPos(xPos, yPos);
-		window->OnEvent(MouseScrollWheelEvent(zDelta));
-	}
-
 	void OnMouseButtonPressed(WindowsWindow* window, u32 button)
 	{	
-//		window->m_InputHandler->OnMouseKeyPressed(button);
-		window->OnEvent(MouseButtonPressedEvent(button));
 	}
 
 	void OnMouseButtonReleased(WindowsWindow* window, u32 button)
 	{
-//		window->m_InputHandler->OnMouseKeyReleased(button);
-		window->OnEvent(MouseButtonReleasedEvent(button));
 	}
 
 	void OnWindowClose(WindowsWindow* window)
@@ -253,19 +220,21 @@ namespace Craft {
 			case WM_KEYUP:
 			case WM_KEYDOWN:
 			{
-				u64 VKCode = wParam;
-				bool WasDown = ((lParam & (1 << 30)) != 0);
-				bool IsDown = ((lParam & (1 << 31)) == 0);
+				u64 vkCode = wParam;
+				bool wasDown = ((lParam & (1 << 30)) != 0);
+				bool isDown = ((lParam & (1 << 31)) == 0);
 
-				if (IsDown != WasDown)
+				if (isDown != wasDown)
 				{
-					if (IsDown)
+					if (isDown)
 					{
-						OnKeyPressed(window, VKCode);
+						window->m_InputHandler->OnKeyPressed(vkCode);
+						window->OnEvent(KeyPressedEvent(vkCode, 0));
 					}
-					else if (WasDown)
+					else
 					{
-						OnKeyReleased(window, VKCode);
+						window->m_InputHandler->OnKeyReleased(vkCode);
+						window->OnEvent(KeyReleasedEvent(vkCode));
 					}
 				}
 
@@ -273,33 +242,44 @@ namespace Craft {
 			}
 			case WM_MOUSEMOVE:
 			{
-				OnMouseMove(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				s32 x = GET_X_LPARAM(lParam);
+				s32 y = GET_Y_LPARAM(lParam);
+
+				window->m_InputHandler->SetMousePosition(x, y);
+				window->OnEvent(MouseMovedEvent(x, y));
 				break;
 			}
 			case WM_MOUSEWHEEL: 
 			{
-				CR_INFO("Scrool");
-
 				s32 zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+//				window->m_InputHandler->SetMouseWheelPos(xPos, yPos);
+				window->OnEvent(MouseScrollWheelEvent(zDelta));
 
-				OnMouseWheel(window, zDelta);
 				break;
 			}
 			case WM_LBUTTONDOWN:
 			case WM_MBUTTONDOWN:
 			case WM_RBUTTONDOWN:
+			{
+				u64 button = wParam;
+				window->m_InputHandler->OnMouseKeyPressed(button);
+				window->OnEvent(MouseButtonPressedEvent(button));
+				break;
+			}
 			case WM_LBUTTONUP:
 			case WM_RBUTTONUP:
 			case WM_MBUTTONUP:
 			{
-				CR_CORE_INFO("mouse button click");
+				u64 button = wParam;
+				window->m_InputHandler->OnMouseKeyReleased(button);
+				window->OnEvent(MouseButtonReleasedEvent(button));
 				break;
 			}
 			case WM_SIZE:
 			{
 				if (window != nullptr)
 				{
-					OnResizeWindow(window, LOWORD(lParam), HIWORD(lParam));
+					window->OnEvent(WindowResizeEvent(LOWORD(lParam), HIWORD(lParam)));
 				}
 				break;
 			}
