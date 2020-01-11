@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Craft.h>
-#include <Craft\InputHandler.h>
+#include <Craft\Core\InputHandler.h>
 #include <Craft\Graphics\Renderer.h>
 #include <Craft\Graphics\RendererAPI.h>
 #include <Craft\Graphics\RenderCommand.h>
 
 #include <Craft\Graphics\Cameras\Camera.h>
-#include <Craft\Graphics\Cameras\FPSCamera.h>
+#include <Craft\Graphics\Cameras\FPSCameraController.h>
 
 #include <Craft\Graphics\Texture.h>
 #include <Craft\Graphics\Image\ImageLoader.h>
@@ -36,7 +36,7 @@ private:
 
 	std::vector<Shape*> m_Shapes;
 
-	Camera* m_Camera;
+	FPSCameraController* m_Camera;
 
 	f32 timer = 0.0f;
 	RotationKind rotKind;
@@ -75,7 +75,7 @@ public:
 		v3 cameraUp = v3(0.0f, 1.0f, 0.0f);
 
 		v2 lasMousePos = v2(DEFAULT_WINDOW_WIDTH / 2, DEFAULT_WINDOW_HEIGHT / 2);
-		m_Camera = new FPSCamera(0.005f,
+		m_Camera = new FPSCameraController(5.0f,
 			cameraPos, cameraFront, cameraUp, lasMousePos,
 			mat4::Perspective(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE));
 
