@@ -5,7 +5,7 @@
 //#include "Layers/Sample3DLayer.h"
 
 /*
-	todo: Shader: make local cache for names location
+	todo (Optimization): Shader: make local cache for names location
 */
 
 class Sandbox : public Craft::Application

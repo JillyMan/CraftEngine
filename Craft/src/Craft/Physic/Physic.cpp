@@ -28,7 +28,7 @@ namespace Craft { namespace Physic {
 	InternalFunction void ResolveCollision(Manifold& manifold);
 	InternalFunction void PositionCorrection(Manifold& manifold);
 	InternalFunction bool CirclevsCicle(Circle& a, Circle& b);
-	InternalFunction void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*> bodies);
+	InternalFunction void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*>& bodies);
 
 	void Craft::Physic::Init()
 	{
@@ -80,13 +80,13 @@ namespace Craft { namespace Physic {
 		return collider;
 	}
 
-	void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*> bodies)
+	void AddRigidBody(Craft::Physic::RigidBody2DComponent* body, Container<Craft::Physic::RigidBody2DComponent*>& bodies)
 	{
 		bodies.push_back(body);
 
-		for (int i = 0; i < Bodies.size() - 1; ++i)
+		for (int i = 0; i < bodies.size() - 1; ++i)
 		{
-			RigidBodyPair pair = { body, Bodies[i] };
+			RigidBodyPair pair = { body, bodies[i] };
 			RigidBodyPairs.emplace_back(pair);
 		}
 	}

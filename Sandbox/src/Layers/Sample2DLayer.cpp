@@ -54,14 +54,12 @@ void Sample2DLayer::GraphicsInit() {
 void Sample2DLayer::PlayerInit() 
 {
 	Craft::TransoformComponent* playerTransform = new TransoformComponent();
-	playerTransform = {};
 	Physic::RigidBody2DComponent* m_PlayerBody = Physic::CreateRigidBody(1.0f, 1.0f);
 	Physic::BoxCollider2DComponent* boxPlayerCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
 	m_PlayerController = new PlayerController(m_PlayerBody, playerTransform, 54);
 
 #pragma region BoxCreate
 	Craft::TransoformComponent* boxTransform = new TransoformComponent();
-	*boxTransform = {};
 	boxTransform->pos = v3(-0.5f, -0.5f, 0.0f);
 	m_Block = Physic::CreateRigidBody(1.0f, 100.0f);
 	Physic::BoxCollider2DComponent* boxCollider = Physic::CreateBoxCollider2D(v2(0.0f, 0.0f), v2(1.0f, 1.0f));
@@ -97,10 +95,10 @@ void Sample2DLayer::OnRender()
 	Craft::mat4 transofrm = Craft::mat4::Translate(v3(m_PlayerController->GetPosition(), 0.0f)) * scaleMat;
 	Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
 
-	m_Shader->SetUniform3f("u_color", v3(1.0f, 0.0f, 0.0f));
-	scaleMat = Craft::mat4::Scale(Craft::v3(m_ScaleRatio));
-	transofrm = Craft::mat4::Translate(v3(m_Block->pos, 0.0f)) * scaleMat;
-	Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
+	//m_Shader->SetUniform3f("u_color", v3(1.0f, 0.0f, 0.0f));
+	//scaleMat = Craft::mat4::Scale(Craft::v3(m_ScaleRatio));
+	//transofrm = Craft::mat4::Translate(v3(m_Block->, 0.0f)) * scaleMat;
+	//Craft::Graphics::Renderer::Submit(m_VertexArray, m_Shader, transofrm);
 }
 
 void Sample2DLayer::OnUpdate(f32 dt)
@@ -108,7 +106,7 @@ void Sample2DLayer::OnUpdate(f32 dt)
 	m_Camera.Update(dt);
 	m_PlayerController->Update(dt);
 
-	SystemsUpdate(dt);
+	//SystemsUpdate(dt);
 }
 
 void Sample2DLayer::SystemsUpdate(f32 dt)
