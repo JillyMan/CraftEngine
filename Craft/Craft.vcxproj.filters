@@ -133,9 +133,6 @@
     <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h">
       <Filter>Craft\Graphics\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h">
-      <Filter>Craft\Graphics\Primitives</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h">
       <Filter>Craft\Graphics\Primitives</Filter>
     </ClInclude>
@@ -247,6 +244,9 @@
     <ClInclude Include="src\Craft\Graphics\Cameras\FPSCameraController.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Primitives\TriangleMesh.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Drawable.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Cubee.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -345,5 +345,7 @@
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Physic\Physic.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\Cubee.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\TriangleMesh.cpp" />
   </ItemGroup>
 </Project>

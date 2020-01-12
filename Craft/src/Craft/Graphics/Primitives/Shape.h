@@ -5,7 +5,6 @@
 #include <Craft/Graphics/Texture.h>
 #include <Craft/Graphics/VertexArray.h>
 #include <Craft/Graphics/Image/Image.h>
-#include <Craft/Graphics/Primitives/Mesh.h>
 
 namespace Craft { namespace Graphics {
 	

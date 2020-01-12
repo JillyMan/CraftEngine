@@ -17,12 +17,12 @@ namespace Craft { namespace Graphics {
 
 	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray)
 	{
-		glDrawElements(GL_TRIANGLES, vertexArray->GetCountIndices(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, 0);
 	}
 
 	void OpenGLRendererAPI::DrawArrays(VertexArray* vertexArray)
 	{
-		glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetCountVertices());
+		//glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetCountVertices());
 	}
 
 	void OpenGLRendererAPI::ZTest(bool enabled)

@@ -130,12 +130,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\Layers\Sample3DLayer.h" />
+    <ClInclude Include="src\Layers\Scene3D.h" />
     <ClInclude Include="src\Scripts\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\Layers\Scene3D.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>

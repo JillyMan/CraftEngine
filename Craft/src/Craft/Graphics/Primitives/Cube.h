@@ -94,6 +94,4 @@ namespace Craft { namespace Graphics {
 		}
 	};
 
-
-
 } }

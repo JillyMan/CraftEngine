@@ -37,9 +37,10 @@ namespace Craft { namespace Graphics {
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray() :
-		m_VertexCount(0),
 		m_BufferId(0),
-		m_VertexBuffers()
+		m_VertexBuffers(),
+		m_VertexBufferIndex(0),
+		m_IndexBuffer(nullptr)
 	{
 		glCreateVertexArrays(1, &m_BufferId);
 	}
@@ -75,12 +76,11 @@ namespace Craft { namespace Graphics {
 		const BufferLayout& layout = buffer->GetLayout();
 		u32 bufferSize = buffer->GetCount();
 		u32 stride = layout.GetStride();
-		u32 index = 0;
 
 		for (auto& element : layout)
 		{
 			glVertexAttribPointer(
-				index,
+				m_VertexBufferIndex,
 				element.GetComponentCount(),
 				FromVertexDataTypeToOpenGLType(element.DataType),
 				element.Normalized ? GL_TRUE : GL_FALSE,
@@ -88,11 +88,10 @@ namespace Craft { namespace Graphics {
 				(GLvoid*)element.Offset
 			);
 
-			glEnableVertexAttribArray(index++);
+			glEnableVertexAttribArray(m_VertexBufferIndex++);
 		}
 
 		m_VertexBuffers.push_back(buffer);
-		m_VertexCount += buffer->GetCount();
 	}
 
 	void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* buffer)

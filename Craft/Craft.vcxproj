@@ -164,9 +164,11 @@
     <ClInclude Include="src\Craft\Graphics\Image\ImageHeaders.h" />
     <ClInclude Include="src\Craft\Graphics\Image\ImageLoader.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Cube.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Mesh.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Cubee.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\Drawable.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Shape.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Sprite.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\TriangleMesh.h" />
     <ClInclude Include="src\Craft\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Craft\Graphics\Renderer.h" />
     <ClInclude Include="src\Craft\Graphics\RendererAPI.h" />
@@ -214,6 +216,8 @@
     <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp" />
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLContext.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\Cubee.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\TriangleMesh.cpp" />
     <ClCompile Include="src\Craft\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\Craft\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Craft\Graphics\RendererAPI.cpp" />

@@ -16,11 +16,13 @@
       <Filter>Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\Scripts\PlayerController.h" />
+    <ClInclude Include="src\Layers\Scene3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp" />
+    <ClCompile Include="src\Layers\Scene3D.cpp" />
   </ItemGroup>
 </Project>

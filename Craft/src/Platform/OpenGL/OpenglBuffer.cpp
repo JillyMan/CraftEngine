@@ -23,6 +23,12 @@ namespace Craft { namespace Graphics {
 		return new OpenGLVertexBuffer(vertices, size);
 	}
 
+	VertexBuffer* VertexBuffer::Create(f32* values, s32 size, BufferElement& element) {
+		OpenGLVertexBuffer* result = new OpenGLVertexBuffer(values, size);
+		result->SetLayout(BufferLayout(std::vector<BufferElement> { element } ));
+		return result;
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size) :
 		m_Size(size), m_Layout()
 	{
