@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Craft\Graphics\Buffer.h"
-
+#include <Craft/Graphics/Core/Buffer.h>
 
 namespace Craft
 {

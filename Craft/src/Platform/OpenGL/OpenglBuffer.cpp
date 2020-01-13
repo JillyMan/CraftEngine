@@ -1,5 +1,6 @@
 #include "crpch.h"
-#include <Platform/OpenGL/OpenglBuffer.h>
+
+#include "OpenglBuffer.h"
 
 namespace Craft { namespace Graphics {
 

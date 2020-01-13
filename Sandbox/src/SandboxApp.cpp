@@ -6,7 +6,11 @@
 #include "Layers/Scene3D.h"
 
 /*
-	todo: Shader: make local cache for names location
+	TODO:
+		- Shader: make local cache for names location
+		- automatic load avaliable opengl version. 
+			(use glGetString(type) with params like GL_VERSION, GL_SHADING_LANGUAGE_VERSION)
+		- make precompiled shaders.
 */
 
 class Sandbox : public Craft::Application

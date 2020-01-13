@@ -4,11 +4,11 @@
 
 namespace Craft { namespace Graphics {
 
-	class Cubee : public TriangleMesh {
+	class Cube : public TriangleMesh {
 
 	public:
-		Cubee(f32 side);
-		virtual ~Cubee();
+		Cube(f32 side);
+		virtual ~Cube() {}
 	};
 
 } }

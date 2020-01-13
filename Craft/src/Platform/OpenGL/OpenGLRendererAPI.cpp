@@ -1,7 +1,7 @@
 #include "crpch.h"
 
-#include <Platform/OpenGL/OpenGL.h>
-#include <Platform/OpenGL/OpenGLRendererAPI.h>
+#include "OpenGL.h"
+#include "OpenGLRendererAPI.h"
 
 namespace Craft { namespace Graphics {
 
@@ -35,5 +35,9 @@ namespace Craft { namespace Graphics {
 		{
 			glDisable(GL_DEPTH_TEST);
 		}
+	}
+	
+	void OpenGLRendererAPI::SetViewPort(s32 x, s32 y, s32 w, s32 h) {
+		glViewport(x, y, w, h);
 	}
 } }

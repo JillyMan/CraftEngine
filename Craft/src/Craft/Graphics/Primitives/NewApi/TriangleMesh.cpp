@@ -12,8 +12,8 @@ namespace Craft { namespace Graphics {
 		std::vector<f32>* texCoords, 
 		std::vector<f32>* tangents
 	) {
-		if (indices == nullptr || points == nullptr || normals == nullptr) {
-			CR_CORE_WARN("Must have data for indices, points, and normals");
+		if (indices == nullptr || points == nullptr) {
+			CR_CORE_WARN("Must have data for indices, points");
 			return;
 		}
 		
@@ -28,14 +28,17 @@ namespace Craft { namespace Graphics {
 			points->size(),
 			BufferElement("Points", VertexDataType::Float3));
 
-		normalsBuffer = VertexBuffer::Create(
-			normals->data(),
-			normals->size(),
-			BufferElement("Normals", VertexDataType::Float3));
-
 		m_VertexArray->AddVertexBuffer(pointsBuffer);
-		m_VertexArray->AddVertexBuffer(normalsBuffer);
-		
+		m_VertexArray->SetIndexBuffer(indexBuffer);
+
+		if (normals) {
+			normalsBuffer = VertexBuffer::Create(
+				normals->data(),
+				normals->size(),
+				BufferElement("Normals", VertexDataType::Float3));
+			m_VertexArray->AddVertexBuffer(normalsBuffer);
+		}
+
 		if (texCoords) {
 			texCoordsBuffer = VertexBuffer::Create(
 				texCoords->data(),
@@ -49,8 +52,14 @@ namespace Craft { namespace Graphics {
 		}
 	}
 
+	TriangleMesh::~TriangleMesh() {
+		DeleteBuffers();
+	}
+
 	void TriangleMesh::DeleteBuffers() {
-		delete m_VertexArray;
+		if (m_VertexArray) {
+			delete m_VertexArray;
+		}
 	}
 
 	void TriangleMesh::Render() {

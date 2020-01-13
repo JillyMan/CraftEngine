@@ -1,7 +1,7 @@
 #include "crpch.h"
 
-#include <Platform/OpenGL/OpenGL.h>
-#include <Platform/OpenGL/OpenGLContext.h>
+#include "OpenGL.h"
+#include "OpenGLContext.h"
 
 namespace Craft { namespace Graphics {
 

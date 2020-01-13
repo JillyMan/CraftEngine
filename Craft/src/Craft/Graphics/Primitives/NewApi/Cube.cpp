@@ -1,9 +1,9 @@
 #include "crpch.h"
-#include "Cubee.h"
+#include "Cube.h"
 
 namespace Craft { namespace Graphics {
 
-	Cubee::Cubee(f32 side) {
+	Cube::Cube(f32 side) {
 		f32 side2 = side / 2.0;
 
 		std::vector<f32> p = {
@@ -62,9 +62,4 @@ namespace Craft { namespace Graphics {
 		
 		InitBuffers(&el, &p, &n, &tex);
 	}
-	
-	Cubee::~Cubee() {
-		DeleteBuffers();
-	}
-
 } }

@@ -1,6 +1,6 @@
-#include <Platform\OpenGL\OpenGL.h>
-#include <Craft\Graphics\Texture.h>
-#include <Craft\Graphics\Image\ImageLoader.h>
+#include <Platform/OpenGL/OpenGL.h>
+#include <Craft/Graphics/Core/Texture.h>
+#include <Craft/Graphics/Image/ImageLoader.h>
 
 namespace Craft { namespace Graphics {
 

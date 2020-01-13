@@ -9,7 +9,7 @@
 #include <Craft\Graphics\Cameras\Camera.h>
 #include <Craft\Graphics\Cameras\FPSCameraController.h>
 
-#include <Craft\Graphics\Texture.h>
+#include <Craft\Graphics\Core\Texture.h>
 #include <Craft\Graphics\Image\ImageLoader.h>
 
 #include <Craft\Graphics\Primitives\Cube.h>

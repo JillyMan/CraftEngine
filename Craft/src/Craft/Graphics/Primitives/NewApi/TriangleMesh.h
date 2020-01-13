@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Drawable.h"
-#include "Craft/Graphics/Buffer.h"
-#include "Craft/Graphics/VertexArray.h"
+#include <Craft/Graphics/Core/Buffer.h>
+#include <Craft/Graphics/Core/VertexArray.h>
 
 namespace Craft { namespace Graphics {
 
@@ -25,7 +25,7 @@ namespace Craft { namespace Graphics {
 		virtual void DeleteBuffers();
 
 	public: 
-		virtual ~TriangleMesh() {};
+		virtual ~TriangleMesh();
 		virtual void Render();
 
 		VertexArray* GetVertexArray() const { return m_VertexArray; }

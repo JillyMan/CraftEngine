@@ -32,6 +32,11 @@ namespace Craft { namespace Graphics {
 			s_RendererAPI->ZTest(enabled);
 		}
 
+		inline static void SetViewPort(s32 x, s32 y, s32 w, s32 h)
+		{
+			s_RendererAPI->SetViewPort(x, y, w, h);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
 	};

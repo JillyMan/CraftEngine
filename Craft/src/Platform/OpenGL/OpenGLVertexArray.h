@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Craft\Graphics\VertexArray.h"
+#include <Craft/Graphics/Core/VertexArray.h>
 
 namespace Craft { namespace Graphics {
 

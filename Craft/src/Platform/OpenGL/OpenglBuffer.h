@@ -1,7 +1,7 @@
 #pragma once
 
 #include "OpenGL.h"
-#include "Craft\Graphics\Buffer.h"
+#include <Craft/Graphics/Core/Buffer.h>
 
 namespace Craft { namespace Graphics {
 

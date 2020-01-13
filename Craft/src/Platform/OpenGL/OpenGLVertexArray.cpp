@@ -1,7 +1,7 @@
 #include "crpch.h"
 
-#include <Platform/OpenGL/OpenGL.h>
-#include <Platform/OpenGL/OpenGLVertexArray.h>
+#include "OpenGL.h"
+#include "OpenGLVertexArray.h"
 
 namespace Craft { namespace Graphics {
 

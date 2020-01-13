@@ -1,8 +1,9 @@
 #pragma once
 
-#include <Platform/OpenGL/OpenGL.h>
 #include <Craft/Math/Vectors.h>
-#include <Craft/Graphics/Shader.h>
+#include <Craft/Graphics/Core/Shader.h>
+
+#include <Platform/OpenGL/OpenGL.h>
 
 namespace Craft { namespace Graphics {
 

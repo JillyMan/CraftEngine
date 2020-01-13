@@ -97,9 +97,6 @@
     <ClInclude Include="src\Craft\Event\MouseEvent.h">
       <Filter>Craft\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Buffer.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
@@ -148,17 +145,8 @@
     <ClInclude Include="src\Craft\Graphics\RendererAPI.h">
       <Filter>Craft\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Shader.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Shaders\ShaderFactory.h">
       <Filter>Craft\Graphics\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Texture.h">
-      <Filter>Craft\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\VertexArray.h">
-      <Filter>Craft\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Craft\ImGui\ImGuiLayer.h">
       <Filter>Craft\ImGui</Filter>
@@ -244,9 +232,24 @@
     <ClInclude Include="src\Craft\Graphics\Cameras\FPSCameraController.h">
       <Filter>Craft\Graphics\Cameras</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Primitives\TriangleMesh.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Drawable.h" />
-    <ClInclude Include="src\Craft\Graphics\Primitives\Cubee.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Drawable.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\TriangleMesh.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\TexturedSprite.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Cube.h" />
+    <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Rectangle.h" />
+    <ClInclude Include="src\Craft\Event\EventMap.h" />
+    <ClInclude Include="src\Craft\Graphics\Core\Buffer.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Core\VertexArray.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Core\Texture.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Core\Shader.h">
+      <Filter>Craft\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -345,7 +348,8 @@
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Physic\Physic.cpp" />
     <ClCompile Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Primitives\Cubee.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Primitives\TriangleMesh.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\TriangleMesh.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\Cube.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\Rectangle.cpp" />
   </ItemGroup>
 </Project>

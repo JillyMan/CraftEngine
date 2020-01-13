@@ -1,6 +1,6 @@
 #include "crpch.h"
 
-#include <Platform/OpenGL/OpenGLShader.h>
+#include "OpenGLShader.h"
 
 namespace Craft { namespace Graphics {
 	
