@@ -11,6 +11,9 @@
 		- automatic load avaliable opengl version. 
 			(use glGetString(type) with params like GL_VERSION, GL_SHADING_LANGUAGE_VERSION)
 		- make precompiled shaders.
+		- glGetShaderiv (.., GL_INFO_LOG_LENGTH, &...); - get len of shader compile status
+		- in a future make more flaxible shader class like: 
+			ShaderProgram { attachShader(source, type) - e.x. }
 */
 
 class Sandbox : public Craft::Application

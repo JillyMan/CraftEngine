@@ -82,9 +82,13 @@ namespace Craft { namespace Graphics {
 
 	GLint OpenGLShader::GetLocation(GLuint program, const char* name)
 	{
-		GLint location = glGetUniformLocation(m_ProgramId, name);
-		CR_ASSERT(location != -1, "Position not found");
-		return location;
+		auto pos = m_UniformLocations.find(name);
+		if (pos == m_UniformLocations.end()) {
+			GLint location = glGetUniformLocation(m_ProgramId, name);
+			CR_ASSERT(location != -1, "Position not found");
+			m_UniformLocations[name] = location;
+		}
+		return m_UniformLocations[name];
 	}
 
 	void OpenGLShader::ErrorCode(GLuint object, GLint status)

@@ -11,6 +11,7 @@ namespace Craft { namespace Graphics {
 	{
 	private:
 		GLuint m_ProgramId;
+		std::map<std::string, s32> m_UniformLocations;
 
 	public:
 		OpenGLShader(const char* vertexShader, const char* fragmentShader);

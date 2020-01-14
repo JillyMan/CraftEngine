@@ -18,31 +18,34 @@ Scene3D::Scene3D(Craft::v2 dimension) : m_Dimension(dimension) {
 		mat4::Perspective(75.0f, m_Dimension.x / m_Dimension.y, 0.1f, 100.0f));
 
 	m_Cube = new Craft::Graphics::Cube(1.0f);
-	m_Rect = new Craft::Graphics::Rectangle(Craft::v2(2.0f));
+	m_Rect = new Craft::Graphics::Rectangle(Craft::v2(1.0f));
 
 	const char* vertexShader = R"(
 #version 460 core
 layout (location = 0) in vec3 pos;
 
-uniform mat4 model;
-uniform mat4 proj;
+uniform mat4 u_Model = mat4(1.0f);
+uniform mat4 u_Proj = mat4(1.0f);
+uniform mat4 rot = mat4(1.0f);
 
-out vec4 inColor;
+uniform vec3 u_Color;
+
+out vec4 o_Color;
 
 void main() {
-	gl_Position = vec4(pos, 1.0f);
-	inColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	gl_Position = rot * vec4(pos, 1.0f);
+	o_Color = vec4(u_Color, 1.0f);
 }
 )";
 
 	const char* fragmentShader = R"(
 #version 460 core
 
-in vec4 inColor;
+in vec4 o_Color;
 out vec4 color;
 
 void main() {
-	color = inColor;
+	color = o_Color;
 }
 )";
 
@@ -58,14 +61,18 @@ void Scene3D::OnEvent(Craft::Event& event) {
 	dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(Scene3D::OnResizeWindow));
 }
 
+float rotate;
 void Scene3D::OnUpdate(f32 deltaTime) {
-
+	rotate += sinf(deltaTime);
 }
+
 void Scene3D::OnRender() {
 	Craft::Graphics::RenderCommand::SetClearColor(Craft::v4(0.0f, 1.0f, 0.0f, 1.0f));
 	Craft::Graphics::RenderCommand::Clear();
 
 	m_Shader->Use();
+	m_Shader->SetUniform3f("u_Color", Craft::v3(1.0f, 0.5f, 0.0f));
+	m_Shader->SetUniformMatrix4fv("rot", Craft::mat4::Rotate(rotate, Craft::v3(0.0f, 0.0f, 1.0f)));
 	//m_Cube->Render();
 	m_Rect->Render();
 }
