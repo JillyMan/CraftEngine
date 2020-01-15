@@ -17,35 +17,40 @@ Scene3D::Scene3D(Craft::v2 dimension) : m_Dimension(dimension) {
 		cameraPos, cameraFront, cameraUp, lasMousePos,
 		mat4::Perspective(75.0f, m_Dimension.x / m_Dimension.y, 0.1f, 100.0f));
 
-	m_Cube = new Craft::Graphics::Cube(1.0f);
+	//m_Cube = new Craft::Graphics::Cube(1.0f);
 	m_Rect = new Craft::Graphics::Rectangle(Craft::v2(1.0f));
 
 	const char* vertexShader = R"(
 #version 460 core
 layout (location = 0) in vec3 pos;
+layout (location = 1) in vec2 texCoord;
 
-uniform mat4 u_Model = mat4(1.0f);
-uniform mat4 u_Proj = mat4(1.0f);
-uniform mat4 rot = mat4(1.0f);
+uniform mat4 u_Transform = mat4(1.0f);
 
-uniform vec3 u_Color;
-
-out vec4 o_Color;
+out vec2 TextureCoord;
 
 void main() {
-	gl_Position = rot * vec4(pos, 1.0f);
-	o_Color = vec4(u_Color, 1.0f);
+	gl_Position = u_Transform * vec4(pos, 1.0f);
+	TextureCoord = texCoord;
 }
 )";
 
 	const char* fragmentShader = R"(
 #version 460 core
+layout (location = 0) out vec4 FragColor;
 
-in vec4 o_Color;
-out vec4 color;
+in vec2 TextureCoord;
+
+uniform vec4 InnerColor;
+uniform vec4 OuterColor;
+uniform float RadiusInner;
+uniform float RadiusOuter;
 
 void main() {
-	color = o_Color;
+	float dx = TextureCoord.x - 0.5;
+	float dy = TextureCoord.y - 0.5;
+	float dist = sqrt(dx * dx + dy * dy);
+	FragColor = mix(InnerColor, OuterColor, smoothstep(RadiusInner, RadiusOuter, dist));
 }
 )";
 
@@ -71,8 +76,12 @@ void Scene3D::OnRender() {
 	Craft::Graphics::RenderCommand::Clear();
 
 	m_Shader->Use();
-	m_Shader->SetUniform3f("u_Color", Craft::v3(1.0f, 0.5f, 0.0f));
-	m_Shader->SetUniformMatrix4fv("rot", Craft::mat4::Rotate(rotate, Craft::v3(0.0f, 0.0f, 1.0f)));
+	m_Shader->SetUniform4f("OuterColor", Craft::v4(0.0f));
+	m_Shader->SetUniform4f("InnerColor", Craft::v4(1.0f, 1.0f, 0.75f, 1.0f));
+	m_Shader->SetUniform1f("RadiusInner", 0.25f);
+	m_Shader->SetUniform1f("RadiusOuter", 0.45f);
+
+	m_Shader->SetUniformMatrix4fv("u_Transform", Craft::mat4::Rotate(rotate, Craft::v3(0.0f, 0.0f, 1.0f)));
 	//m_Cube->Render();
 	m_Rect->Render();
 }

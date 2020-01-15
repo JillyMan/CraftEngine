@@ -35,7 +35,7 @@ namespace Craft { namespace Graphics {
 	{
 		glCreateBuffers(1, &m_BufferId);
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, GL_STATIC_DRAW);
 		Unbind();
 	}
 

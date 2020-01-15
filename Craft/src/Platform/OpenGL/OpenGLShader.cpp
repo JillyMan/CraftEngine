@@ -104,7 +104,7 @@ namespace Craft { namespace Graphics {
 				if (!success)
 				{
 					glGetShaderInfoLog(object, 512, NULL, info);
-					CR_WARN(info);
+					CR_ERROR(info);
 				}
 				break;
 			}
@@ -114,7 +114,7 @@ namespace Craft { namespace Graphics {
 				if (!success)
 				{
 					glGetProgramInfoLog(object, 512, NULL, info);
-					CR_WARN(info);
+					CR_ERROR(info);
 				}
 				break;
 			}

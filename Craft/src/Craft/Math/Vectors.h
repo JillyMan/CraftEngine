@@ -98,9 +98,9 @@ namespace Craft
 			f32 e[4];
 		};
 
-		v4() 
+		v4(f32 val = 0.0f)
 		{
-			x = y = z = w = 0;
+			x = y = z = w = val;
 		}
 
 		v4(f32 x, f32 y, f32 z, f32 w) :

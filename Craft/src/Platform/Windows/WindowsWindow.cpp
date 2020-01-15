@@ -278,10 +278,7 @@ namespace Craft {
 			}
 			case WM_MOUSEWHEEL: 
 			{
-				CR_INFO("Scrool");
-
 				s32 zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-
 				OnMouseWheel(window, zDelta);
 				break;
 			}
@@ -292,7 +289,7 @@ namespace Craft {
 			case WM_RBUTTONUP:
 			case WM_MBUTTONUP:
 			{
-				CR_CORE_INFO("mouse button click");
+				CR_CORE_INFO("IMPLEMEMT MOUSE CLICK!!!!");
 				break;
 			}
 			case WM_SIZE:
