@@ -113,8 +113,13 @@ namespace Craft { namespace Graphics {
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &shaderInputs);
 		CR_CORE_INFO("MAX shader inputs: %d", shaderInputs);
 
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(MessageCallback, 0);
+		if (m_InitData.DebugMode) {
+			glEnable(GL_DEBUG_OUTPUT);
+			glDebugMessageCallback(MessageCallback, nullptr);
+
+			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE,
+				GL_DONT_CARE, 0, NULL, GL_TRUE);
+		}
 	}
 
 	void OpengGLContext::SwapBuffers()

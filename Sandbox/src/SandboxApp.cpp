@@ -7,18 +7,18 @@
 
 /*
 	TODO:
-		- make precompiled shaders.
-		- glGetShaderiv (.., GL_INFO_LOG_LENGTH, &...); - get len of shader compile status
+		- glGetShaderiv (.., GL_INFO_LOG_LENGTH, &...); - get len of shader compile status 
+			- also try to add common mechanism for getting opengl status.
 
-		- automatic load avaliable opengl version. 
+		- Automatic load avaliable opengl version. 
 			(use glGetString(type) with params like GL_VERSION, GL_SHADING_LANGUAGE_VERSION)
 
-		- in a future make more flaxible shader class like: 
-			ShaderProgram { attachShader(source, type) - e.x. }
+		- Make precompiled shaders.
 
-		- thins about rewrite abstraction for buffers.
-		- make more safity binding of vertex attr's to shader in attr's.
-		- add to log info __FILE__ and Position info
+
+		- Thins about rewrite abstraction for buffers.
+		- Make more safity binding of vertex attr's to shader in attr's.
+		- Add to log info __FILE__ and Position info
 */
 
 class Sandbox : public Craft::Application

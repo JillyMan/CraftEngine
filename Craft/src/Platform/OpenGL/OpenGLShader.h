@@ -14,12 +14,15 @@ namespace Craft { namespace Graphics {
 		std::map<std::string, s32> m_UniformLocations;
 
 	public:
-		OpenGLShader(const char* vertexShader, const char* fragmentShader);
+		OpenGLShader();
 
 		virtual ~OpenGLShader();
 
 		virtual void Use() override;
 		virtual void Unuse() override;
+
+		virtual void Link();
+		virtual void AttachShader(const char* shader, ShaderType shaderType);
 
 		virtual void SetUniform1i(const char* name, s32 value) override;
 
@@ -31,6 +34,8 @@ namespace Craft { namespace Graphics {
 
 	private:
 		GLint GetLocation(GLuint program, const char* name);
-		void ErrorCode(GLuint object, GLint status);
+
+		GLboolean ValidateShader(GLint shaderId);
+		GLboolean ValidataProgram();
 	};
 }}

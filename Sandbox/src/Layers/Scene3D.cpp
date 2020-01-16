@@ -54,7 +54,11 @@ void main() {
 }
 )";
 
-	m_Shader = new Craft::Graphics::OpenGLShader(vertexShader, fragmentShader);
+	m_Shader = new Craft::Graphics::OpenGLShader();
+	m_Shader->AttachShader(vertexShader, Craft::Graphics::ShaderType::Vertex);
+	m_Shader->AttachShader(fragmentShader, Craft::Graphics::ShaderType::Fragment);
+	m_Shader->Link();
+
 }
 
 Scene3D::~Scene3D() {

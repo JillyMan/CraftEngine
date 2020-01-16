@@ -98,6 +98,7 @@ namespace Craft {
 		Graphics::GLInitData setting; 
 		setting.VSync = m_Setting.IsVSync;
 		setting.Handle = m_WindowHandle;
+		setting.DebugMode = true;
 		m_GraphicsContext = new Graphics::OpengGLContext(setting);
 //--------------------
 		m_GraphicsContext->Init();
@@ -215,14 +216,14 @@ namespace Craft {
 	}
 
 	void OnMouseButtonPressed(WindowsWindow* window, u32 button)
-	{	
-//		window->m_InputHandler->OnMouseKeyPressed(button);
+	{
+		window->m_InputHandler->OnMouseKeyPressed(button);
 		window->OnEvent(MouseButtonPressedEvent(button));
 	}
 
 	void OnMouseButtonReleased(WindowsWindow* window, u32 button)
 	{
-//		window->m_InputHandler->OnMouseKeyReleased(button);
+		window->m_InputHandler->OnMouseKeyReleased(button);
 		window->OnEvent(MouseButtonReleasedEvent(button));
 	}
 
