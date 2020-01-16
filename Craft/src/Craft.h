@@ -17,10 +17,10 @@
 
 //-Graphics
 
-#include "Craft/Graphics/Buffer.h"
-#include "Craft/Graphics/VertexArray.h"
-#include "Craft/Graphics/Texture.h"
-#include "Craft/Graphics/Shader.h"
+#include "Craft/Graphics/Core/Buffer.h"
+#include "Craft/Graphics/Core/VertexArray.h"
+#include "Craft/Graphics/Core/Texture.h"
+#include "Craft/Graphics/Core/Shader.h"
 #include "Craft/Graphics/Renderer.h"
 #include "Craft/Graphics/RenderCommand.h"
 

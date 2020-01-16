@@ -4,11 +4,23 @@
 
 namespace Craft { namespace Graphics {
 
+	enum class ShaderType {
+		Vertex,
+		Fragment,
+		Geometry,
+		Compute,
+		TessControl,
+		TessEvaluation,
+	};
+
 	class Shader
 	{
 	public:
 		virtual void Use() = 0;
 		virtual void Unuse() = 0;
+
+		virtual void Link() = 0;
+		virtual void AttachShader(const char* shader, ShaderType shaderType) = 0;
 
 		virtual void SetUniform1i(const char* name, s32 value) = 0;
 

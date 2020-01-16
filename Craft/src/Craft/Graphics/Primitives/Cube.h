@@ -15,7 +15,7 @@ namespace Craft { namespace Graphics {
 			Shape(pos, image)
 		{
 			InitTextureCube();
-			m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
+			m_Shader = new OpenGLShader(GetVertexWithTextureShader(), GetFragmentWithTextureShader());
 		}
 
 		Cube(v3& pos, v4& color) :
@@ -93,7 +93,5 @@ namespace Craft { namespace Graphics {
 			);
 		}
 	};
-
-
 
 } }

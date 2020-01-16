@@ -146,6 +146,7 @@ namespace Craft { namespace Graphics {
 		virtual const BufferLayout& GetLayout() = 0;
 
 		static VertexBuffer* Create(f32* vertices, s32 size);
+		static VertexBuffer* Create(f32* values, s32 size, BufferElement& element);
 	};
 
 	class IndexBuffer
