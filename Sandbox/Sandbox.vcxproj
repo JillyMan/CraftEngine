@@ -127,7 +127,7 @@
   <ItemGroup>
     <ClInclude Include="src\Layers\Constants.h" />
     <ClInclude Include="src\Layers\Sample2DLayer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\Layers\Sample3DLayer.h" />
     <ClInclude Include="src\Layers\Scene3D.h" />
@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Layers\Scene3D.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />

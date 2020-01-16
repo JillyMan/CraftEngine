@@ -71,7 +71,11 @@ namespace Craft { namespace Graphics {
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 
-			m_Shader = new OpenGLShader(GetSimpleVertexShader(), GetFragmentWithTextureShader());
+			m_Shader = new OpenGLShader();
+			m_Shader->AttachShader(GetSimpleVertexShader(), ShaderType::Vertex);
+			m_Shader->AttachShader(GetFragmentWithTextureShader(), ShaderType::Fragment);
+			m_Shader->Link();
+
 		}
 
 		void InitVertices(f32 w, f32 h)
@@ -104,7 +108,10 @@ namespace Craft { namespace Graphics {
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 		
-			m_Shader = new OpenGLShader(GetVertexWithTextureShader(), GetFragmentWithTextureShader());
+			m_Shader = new OpenGLShader();
+			m_Shader->AttachShader(GetVertexWithTextureShader(), ShaderType::Vertex);
+			m_Shader->AttachShader(GetFragmentWithTextureShader(), ShaderType::Fragment);
+			m_Shader->Link();
 		}
 	};
 

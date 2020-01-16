@@ -151,7 +151,7 @@ void Craft::Physic::ResolveCollision(Manifold& manifold)
 	RigidBody& b = *manifold.B;
 	Craft::v2& normal = manifold.normal;
 
-	Craft::v2 velFromAToB = b.pos - a.pos;
+	Craft::v2 velFromAToB = b.vel - a.vel;
 	f32 velAlongNormal = Dot(velFromAToB, normal);
 	
 	if (velAlongNormal > 0)
