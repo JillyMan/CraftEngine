@@ -1,7 +1,7 @@
 #include "crpch.h"
 
-#include <Platform/OpenGL/OpenGL.h>
-#include <Platform/OpenGL/OpenGLRendererAPI.h>
+#include "OpenGL.h"
+#include "OpenGLRendererAPI.h"
 
 namespace Craft { namespace Graphics {
 
@@ -17,12 +17,12 @@ namespace Craft { namespace Graphics {
 
 	void OpenGLRendererAPI::DrawIndexed(VertexArray* vertexArray)
 	{
-		glDrawElements(GL_TRIANGLES, vertexArray->GetCountIndices(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, 0);
 	}
 
 	void OpenGLRendererAPI::DrawArrays(VertexArray* vertexArray)
 	{
-		glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetCountVertices());
+		//glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetCountVertices());
 	}
 
 	void OpenGLRendererAPI::ZTest(bool enabled)
@@ -35,5 +35,9 @@ namespace Craft { namespace Graphics {
 		{
 			glDisable(GL_DEPTH_TEST);
 		}
+	}
+	
+	void OpenGLRendererAPI::SetViewPort(s32 x, s32 y, s32 w, s32 h) {
+		glViewport(x, y, w, h);
 	}
 } }

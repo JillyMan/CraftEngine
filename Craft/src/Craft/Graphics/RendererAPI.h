@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Craft\Math\Vectors.h"
-#include "VertexArray.h"
+#include <Craft/Math/Vectors.h>
+#include <Craft/Graphics/Core/VertexArray.h>
 
 namespace Craft { namespace Graphics {
 	class RendererAPI
@@ -13,8 +13,9 @@ namespace Craft { namespace Graphics {
 			OpenGL = 1
 		};
 
-		virtual void SetClearColor(const v4& color) = 0;
 		virtual void Clear() = 0;
+		virtual void SetClearColor(const v4& color) = 0;
+		virtual void SetViewPort(s32 x, s32 y, s32 w, s32 h) = 0;
 
 		virtual void DrawIndexed(VertexArray* vertexArray) = 0;
 		virtual void DrawArrays(VertexArray* vertexArray) = 0;

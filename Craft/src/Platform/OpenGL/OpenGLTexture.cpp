@@ -1,6 +1,6 @@
 #include <crpch.h>
 
-#include <Platform/OpenGL/OpenGLTexture.h>
+#include "OpenGLTexture.h"
 
 namespace Craft { namespace Graphics {
 

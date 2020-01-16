@@ -6,6 +6,13 @@ namespace Craft { namespace Graphics {
 
 	static HDC WindowDC;
 
+	int AvailableVersion[] = {
+		4, 6,
+		4, 5,
+		4, 4,
+		4, 3
+	};
+
 	static void InitOpenGLExtensions(void)
 	{
 		WNDCLASS tempWindowClass = {};
@@ -90,16 +97,24 @@ namespace Craft { namespace Graphics {
 		DescribePixelFormat(WindowDC, pixelFormat, sizeof(pfd), &pfd);
 		CR_ASSERT(SetPixelFormat(WindowDC, pixelFormat, &pfd), "Failed to set opengl pixel format")
 
-		int gl46Attribs[] = {
-			WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
-			WGL_CONTEXT_MINOR_VERSION_ARB, 6,
-			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-			0
-		};
+		BOOL isContextInit = FALSE;
+		for (int i = 0; i < ArrayCount(AvailableVersion); i += 2) {
+			int major = AvailableVersion[i];
+			int minor = AvailableVersion[i+1];
 
-		HGLRC glContext = wglCreateContextAttribsARB(WindowDC, 0, gl46Attribs);
-		CR_ASSERT(glContext, "Failed create opengl 4.6 context");
-		CR_ASSERT(wglMakeCurrent(WindowDC, glContext), "Failed to activate opengl 4.6 rendering context");
+			int gl46Attribs[] = {
+				WGL_CONTEXT_MAJOR_VERSION_ARB, major,
+				WGL_CONTEXT_MINOR_VERSION_ARB, minor,
+				WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+				0
+			};
+			HGLRC glContext = wglCreateContextAttribsARB(WindowDC, 0, gl46Attribs);
+			isContextInit = wglMakeCurrent(WindowDC, glContext);
+		
+			if (isContextInit) break;
+		}
+
+		CR_ASSERT(isContextInit, "Failed to activate opengl rendering context. (required version >= 4.3)");
 
 		return true;
 	}

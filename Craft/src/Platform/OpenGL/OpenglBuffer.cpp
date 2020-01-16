@@ -1,5 +1,6 @@
 #include "crpch.h"
-#include <Platform/OpenGL/OpenglBuffer.h>
+
+#include "OpenglBuffer.h"
 
 namespace Craft { namespace Graphics {
 
@@ -23,12 +24,18 @@ namespace Craft { namespace Graphics {
 		return new OpenGLVertexBuffer(vertices, size);
 	}
 
+	VertexBuffer* VertexBuffer::Create(f32* values, s32 size, BufferElement& element) {
+		OpenGLVertexBuffer* result = new OpenGLVertexBuffer(values, size);
+		result->SetLayout(BufferLayout(std::vector<BufferElement> { element } ));
+		return result;
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size) :
 		m_Size(size), m_Layout()
 	{
 		glCreateBuffers(1, &m_BufferId);
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, GL_STATIC_DRAW);
 		Unbind();
 	}
 

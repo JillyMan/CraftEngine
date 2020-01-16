@@ -13,8 +13,8 @@ namespace Craft { namespace Graphics {
 		virtual void AddVertexBuffer(VertexBuffer* buffer) = 0;
 		virtual void SetIndexBuffer(IndexBuffer* buffer) = 0;
 
-		virtual u32 GetCountIndices() = 0;
-		virtual u32 GetCountVertices() = 0;
+		virtual IndexBuffer* GetIndexBuffer() = 0;
+		virtual std::vector<VertexBuffer*> GetVertexBuffers() = 0;
 
 		static VertexArray* Create();
 	};

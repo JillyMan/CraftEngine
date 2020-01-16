@@ -4,8 +4,8 @@
 #include <Craft/Graphics/Cameras/Camera.h>
 #include <Craft/Graphics/Primitives/Shape.h>
 
-#include <Craft/Graphics/Shader.h>
-#include <Craft/Graphics/VertexArray.h>
+#include <Craft/Graphics/Core/Shader.h>
+#include <Craft/Graphics/Core/VertexArray.h>
 
 #include <Craft/Math/Matrix.h>
 

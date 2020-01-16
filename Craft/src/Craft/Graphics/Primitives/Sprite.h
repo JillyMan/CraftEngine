@@ -26,10 +26,10 @@ namespace Craft { namespace Graphics {
 		virtual void BeginDraw() override
 		{
 			m_Shader->Use();
-			//m_Texture->Bind(0);
-			//String name(TEXTURE_STRING);
-			//name.append("0");
-			//m_Shader->SetUniform1i(name.c_str(), 0);
+			m_Texture->Bind(0);
+			String name(TEXTURE_STRING);
+			name.append("0");
+			m_Shader->SetUniform1i(name.c_str(), 0);
 
 			m_Shader->SetUniform4f(U_COLOR_STRING, m_Color);
 			m_Shader->SetUniformMatrix4fv(MODEL_MATRIX_STRING, m_ModelMatrix);
@@ -71,7 +71,7 @@ namespace Craft { namespace Graphics {
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 
-			m_Shader = new OpenGLShader(GetSimpleVertexShader(), GetFragmentColorShader());
+			m_Shader = new OpenGLShader(GetSimpleVertexShader(), GetFragmentWithTextureShader());
 		}
 
 		void InitVertices(f32 w, f32 h)
@@ -104,7 +104,7 @@ namespace Craft { namespace Graphics {
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 		
-			m_Shader = new OpenGLShader(GetVertexShader(), GetFragmentShader());
+			m_Shader = new OpenGLShader(GetVertexWithTextureShader(), GetFragmentWithTextureShader());
 		}
 	};
 

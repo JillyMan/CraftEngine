@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Craft\Graphics\Image\Image.h>
+#include <Craft/Graphics/Image/Image.h>
 
 namespace Craft { namespace Graphics {
 	//Specify bihevior when texture coords out of range

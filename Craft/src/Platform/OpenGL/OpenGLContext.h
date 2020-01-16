@@ -8,6 +8,7 @@ namespace Craft { namespace Graphics {
 	struct GLInitData
 	{
 		bool VSync;
+		bool DebugMode;
 		WindowHandle Handle;
 	};
 
