@@ -37,10 +37,10 @@ namespace Craft
 	}
 
 	//When Result unused, need call free(data);
-	s8* FileSystem::ReadFromFile(String& fileName, u64& size)
+	u8* FileSystem::ReadFromFile(String& fileName, u64& size)
 	{
 		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-		s8* Result = nullptr;
+		u8* Result = nullptr;
 
 		if (FileHandle)
 		{
@@ -48,8 +48,8 @@ namespace Craft
 			if (FileSize)
 			{	
 				//TODO (use another allocator)
-				Result = (s8*)malloc(FileSize);
-
+				Result = (u8*)malloc(FileSize);
+				memchr(Result, 0, FileSize);
 				DWORD BytesRead;
 				if (ReadFile(FileHandle, Result, FileSize, &BytesRead, 0) && 
 					FileSize == BytesRead)
@@ -73,7 +73,7 @@ namespace Craft
 		return Result;
 	}
 	
-	bool FileSystem::WriteToFile(String& fileName, s8* buffer, u64 bytesToWrite)
+	bool FileSystem::WriteToFile(String& fileName, u8* buffer, u64 bytesToWrite)
 	{
 		HANDLE FileHandle = CreateFile(fileName.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
 		BOOL Result = FALSE;

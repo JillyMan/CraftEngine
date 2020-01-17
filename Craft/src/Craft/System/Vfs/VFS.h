@@ -2,19 +2,17 @@
 
 #include <Craft/Graphics/Image/ImageLoader.h>
 
-namespace Craft { namespace Vfs {
+namespace Craft { namespace System {
 	class Vfs {
 	private:
 		String m_Root;
 
 	public:
-		Vfs(String root) : m_Root(root)
-		{
-		}
+		Vfs(String root);
 
-		Image* GetImage(String path)
-		{
-			return ImageLoader::LoadBMPImage(m_Root + path);
-		}
+		Image* GetImage(String& path);
+		String LoadFileString(String& path);
+	private:
+		String GetFullPath(String& path) const { return m_Root + path; }
 	};
 } }

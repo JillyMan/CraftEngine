@@ -25,4 +25,8 @@
     <ClCompile Include="src\SandboxApp.cpp" />
     <ClCompile Include="src\Layers\Scene3D.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\diffuser.frag" />
+    <None Include="src\Shaders\diffuse.vert" />
+  </ItemGroup>
 </Project>
