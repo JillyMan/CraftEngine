@@ -28,5 +28,6 @@
   <ItemGroup>
     <None Include="src\Shaders\diffuser.frag" />
     <None Include="src\Shaders\diffuse.vert" />
+    <None Include="src\Shaders\diffuse.frag" />
   </ItemGroup>
 </Project>

@@ -211,20 +211,20 @@ namespace Craft {
 
 	void OnMouseWheel(WindowsWindow* window, s32 zDelta) 
 	{
-	//	window->m_InputHandler->SetMouseWheelPos(xPos, yPos);
+		//window->m_InputHandler->SetMouseWheelPos(xPos, yPos);
 		window->OnEvent(MouseScrollWheelEvent(zDelta));
 	}
 
-	void OnMouseButtonPressed(WindowsWindow* window, u32 button)
+	void OnMouseButtonPressed(WindowsWindow* window, s32 x, s32 y, u32 button)
 	{
 		window->m_InputHandler->OnMouseKeyPressed(button);
-		window->OnEvent(MouseButtonPressedEvent(button));
+		window->OnEvent(MouseButtonPressedEvent(x, y, button));
 	}
 
-	void OnMouseButtonReleased(WindowsWindow* window, u32 button)
+	void OnMouseButtonReleased(WindowsWindow* window, s32 x, s32 y, u32 button)
 	{
 		window->m_InputHandler->OnMouseKeyReleased(button);
-		window->OnEvent(MouseButtonReleasedEvent(button));
+		window->OnEvent(MouseButtonReleasedEvent(x, y, button));
 	}
 
 	void OnWindowClose(WindowsWindow* window)
@@ -284,13 +284,24 @@ namespace Craft {
 				break;
 			}
 			case WM_LBUTTONDOWN:
+			{
+				OnMouseButtonPressed(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), VK_LBUTTON);
+				break;
+			}
+			case WM_LBUTTONUP: {
+				OnMouseButtonReleased(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), VK_LBUTTON);
+				break;
+			}
 			case WM_MBUTTONDOWN:
 			case WM_RBUTTONDOWN:
-			case WM_LBUTTONUP:
-			case WM_RBUTTONUP:
-			case WM_MBUTTONUP:
 			{
-				CR_CORE_INFO("IMPLEMEMT MOUSE CLICK!!!!");
+				OnMouseButtonPressed(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), wParam);
+				break;
+			}
+			case WM_MBUTTONUP:
+			case WM_RBUTTONUP:
+			{
+				OnMouseButtonReleased(window, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), wParam);
 				break;
 			}
 			case WM_SIZE:

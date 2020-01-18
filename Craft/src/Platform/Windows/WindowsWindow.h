@@ -53,8 +53,8 @@ namespace Craft
 
 		friend void OnMouseMove(WindowsWindow* window, s32 x, s32 y);
 		friend void OnMouseWheel(WindowsWindow* window, s32 zDelta);
-		friend void OnMouseButtonPressed(WindowsWindow* window, u32 button);
-		friend void OnMouseButtonReleased(WindowsWindow* window, u32 button);
+		friend void OnMouseButtonPressed(WindowsWindow* window, s32 x, s32 y, u32 button);
+		friend void OnMouseButtonReleased(WindowsWindow* window, s32 x, s32 y, u32 button);
 
 		friend LRESULT CALLBACK WindowProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		bool WindowClassInit();

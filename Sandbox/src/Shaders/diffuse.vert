@@ -7,6 +7,7 @@ out vec3 LightIntensity;
 uniform vec3 Ld;
 uniform vec3 Kd;
 uniform vec4 LightPosition;
+uniform float AmbientStrength = 1.0f;
 
 uniform mat4 ViewMatrix = mat4(1.0f);
 uniform mat4 ModelMatrix = mat4(1.0f);
@@ -26,9 +27,10 @@ void main() {
 	mat3 NormalMatrix = mat3_emu(ModelViewMatrix);
 
 	vec4 vertexInCameraSpace = ModelViewMatrix * vec4(VertPosition, 1.0f);
-	vec3 s = normalize(vec3((ModelViewMatrix * LightPosition) - vertexInCameraSpace));
+	vec3 s = normalize(vec3(LightPosition - vertexInCameraSpace));
 	vec3 n = normalize(NormalMatrix * VertNormal);
-	LightIntensity = Ld * Kd * max(dot(s, n), 0.0f);
+	LightIntensity = AmbientStrength * (Ld * Kd * max(dot(s, n), 0.0f));
+
 
 	gl_Position = ModelViewProjection * vec4(VertPosition, 1.0f);
 }

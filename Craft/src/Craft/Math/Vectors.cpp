@@ -129,6 +129,12 @@ namespace Craft
 		return a;
 	}
 
+	v2 Normalize(v2& a)
+	{
+		f32 len = Length(a);
+		return a / len;
+	}
+
 	v2 Lerp(Craft::v2& start, Craft::v2& end, f32 t)
 	{
 		return v2 (
