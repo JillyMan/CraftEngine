@@ -14,7 +14,10 @@ namespace Craft
 
 	struct mat4
 	{
-		f32 e[16];
+		union {
+			f32 e[16];
+			f32 rows[4][4];
+		};
 
 		mat4()
 		{

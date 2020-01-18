@@ -54,11 +54,21 @@ namespace Craft
 		s32 m_ZDelta;
 	};
 
-	class CRAFT_API MouseMovedEvent : public Event
+	class CRAFT_API MouseEvent : public Event {
+	public:
+		MouseEvent(s32 x, s32 y) {
+			this->x = x;
+			this->y = y;
+		}
+	
+		s32 x, y;
+	};
+
+	class CRAFT_API MouseMovedEvent : public MouseEvent
 	{
 	public:
-		MouseMovedEvent(s32 x, s32 y) :
-			x(x), y(y)
+		MouseMovedEvent(s32 x, s32 y) : 
+			MouseEvent(x, y)
 		{
 		}
 		
@@ -71,12 +81,10 @@ namespace Craft
 			ss << "Mouse button moved: (" << x << ", " << y << ")";
 			return ss.str();
 		}
-
-		s32 x, y;
 	};
 
 
-	class CRAFT_API MouseButtonEvent : public Event
+	class CRAFT_API MouseButtonEvent : public MouseEvent
 	{
 	public:
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
@@ -84,7 +92,8 @@ namespace Craft
 		inline s32 GetMouseButton() { return m_Button; }
 
 	protected: 
-		MouseButtonEvent(s32 button) : 
+		MouseButtonEvent(s32 x, s32 y, s32 button) : 
+			MouseEvent(x, y),
 			m_Button(button)
 		{
 		}
@@ -97,8 +106,8 @@ namespace Craft
 	{
 	public:
 		
-		MouseButtonPressedEvent(s32 button) :
-			MouseButtonEvent(button)
+		MouseButtonPressedEvent(s32 x, s32 y, s32 button) :
+			MouseButtonEvent(x, y, button)
 		{
 		}
 
@@ -115,8 +124,8 @@ namespace Craft
 	class CRAFT_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(s32 button) :
-			MouseButtonEvent(button)
+		MouseButtonReleasedEvent(s32 x, s32 y, s32 button) :
+			MouseButtonEvent(x, y, button)
 		{
 		}
 

@@ -143,7 +143,11 @@ namespace Craft
 		{
 			m_MainWindow->ToogleFullScreenMode();
 		}
-
+#ifdef CR_DEBUG
+		if (e.GetKeyCode() == VK_ESCAPE) {
+			OnWindowClose(WindowCloseEvent());
+		}
+#endif
 		return true;
 	}
 

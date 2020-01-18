@@ -81,8 +81,9 @@ namespace crlogger
 		{
 			std::stringstream ss;
 
-			char buffer[512];
-			sprintf_s(buffer, 512, msg, args...);
+			//!IMPORTANT: fix this hardcoded buffer.
+			char buffer[1024];
+			sprintf_s(buffer, 1024, msg, args...);
 
 			ss << "[" << LogNames[level] << "] " << m_Name << " : " << buffer << "\n";
 

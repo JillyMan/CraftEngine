@@ -127,7 +127,7 @@
   <ItemGroup>
     <ClInclude Include="src\Layers\Constants.h" />
     <ClInclude Include="src\Layers\Sample2DLayer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\Layers\Sample3DLayer.h" />
     <ClInclude Include="src\Layers\Scene3D.h" />
@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Layers\Scene3D.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
@@ -144,6 +144,15 @@
     <ProjectReference Include="..\Craft\Craft.vcxproj">
       <Project>{5597FB0C-C1AB-23BE-8A2D-C71DF60020EF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shaders\diffuse.frag" />
+    <None Include="src\Shaders\diffuse.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="src\Shaders\diffuser.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

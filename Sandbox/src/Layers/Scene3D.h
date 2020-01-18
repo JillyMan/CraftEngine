@@ -1,23 +1,36 @@
 #pragma once
 
-#include <Craft/Math/Math.h>
 #include <Craft/Core/Layer.h>
+#include <Craft/Math/Math.h>
 #include <Craft/Event/EventMap.h>
 
+#include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Core/Shader.h>
-#include <Craft/Graphics/Primitives/NewApi/Cube.h>
-#include <Craft/Graphics/Primitives/NewApi/Rectangle.h>
-#include <Craft/Graphics/Cameras/FPSCameraController.h>
+#include <Craft/Graphics/Primitives/NewApi/Map.h>
+
+#include <Craft/System/Vfs/Vfs.h>
+
+using namespace Craft;
 
 class Scene3D : public Craft::Layer {
 private:
-	Craft::v2 m_Dimension;
-	Craft::FPSCameraController* m_Camera;
+	v2 m_Dimension;
+	mat4 view;
+	mat4 model;
+	mat4 projection;
+	v4 lightPos;
 
-	Craft::v3 m_CubePos = Craft::v3();
-	Craft::Graphics::TriangleMesh* m_Cube;
-	Craft::Graphics::Rectangle* m_Rect;
-	Craft::Graphics::Shader* m_Shader;
+	Graphics::Torus m_Torus;
+	Graphics::Cube m_Cube;
+	Graphics::Rectangle* m_Rect;
+	Graphics::Shader* m_Shader;
+
+private:
+	v2 dv;
+	f32 AmbientStrength = 1.0f;
+
+private:
+	System::Vfs m_Vfs;
 
 public:
 	Scene3D(Craft::v2 m_Dimension);
@@ -29,6 +42,14 @@ public:
 	void OnDebugRender() override;
 
 private:
-	bool OnResizeWindow(Craft::WindowResizeEvent& event);
 
+	void SetMatrices(v2 dim);
+	bool OnMouseMove(Craft::MouseMovedEvent& event);
+
+	bool m_IsRotating = false;
+	v2 m_StartRotatePos;
+	bool OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event);
+	bool OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event);
+
+	bool OnResizeWindow(Craft::WindowResizeEvent& event);
 };

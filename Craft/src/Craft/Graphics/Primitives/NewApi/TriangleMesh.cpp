@@ -20,6 +20,9 @@ namespace Craft { namespace Graphics {
 		m_NumberOfVertices = indices->size();
 
 		m_VertexArray = VertexArray::Create();
+		//Remember: need bind here because EBO will not connect to m_VertexArray in other way.
+		m_VertexArray->Bind();
+
 		IndexBuffer* indexBuffer = IndexBuffer::Create(indices->data(), indices->size());
 		VertexBuffer *pointsBuffer, *normalsBuffer, *texCoordsBuffer, *tangentsBuffer;
 
@@ -63,6 +66,7 @@ namespace Craft { namespace Graphics {
 	}
 
 	void TriangleMesh::Render() {
+		m_VertexArray->Bind();
 		RenderCommand::DrawIndexed(m_VertexArray);
 	}
 

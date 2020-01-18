@@ -44,6 +44,11 @@ namespace Craft
 				f32 _Ignored3;
 			};
 
+			struct {
+				f32 _Ignored1;
+				v2 yz;
+			};
+
 			f32 e[3];
 		};
 
@@ -131,6 +136,7 @@ namespace Craft
 	v2 operator -= (v2& a, v2& b);
 	v2 operator += (v2& a, v2& b);
 
+	v2 Normalize(v2& a);
 	f32 Length(v2& a);
 	f32 Dot(v2& a, v2& b);
 

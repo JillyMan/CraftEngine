@@ -17,10 +17,7 @@ namespace Craft { namespace Graphics {
         OpenGLShader::OpenGLShader()
         {
             m_ProgramId = glCreateProgram();
-
-			if (!m_ProgramId) {
-                CR_CORE_ERROR("Can't create shader program");
-            }
+			CR_ASSERT(m_ProgramId, "Can't create shader program");
         }
         
         OpenGLShader::~OpenGLShader()
@@ -73,7 +70,7 @@ namespace Craft { namespace Graphics {
 				}
 
 				String msg = "An error occurred in shader compilation: " + logString;
-				CR_CORE_ERROR(msg);
+				CR_ASSERT(false, msg);
 		
 				return GL_FALSE;
 			}
@@ -100,8 +97,7 @@ namespace Craft { namespace Graphics {
 				}
 
 				String msg = "An error occured in when program has been link" + logString;
-				CR_CORE_ERROR(msg);
-
+				CR_ASSERT(false, msg);
 				return true;
 			}
 
@@ -150,7 +146,7 @@ namespace Craft { namespace Graphics {
             auto pos = m_UniformLocations.find(name);
             if (pos == m_UniformLocations.end()) {
                 GLint location = glGetUniformLocation(m_ProgramId, name);
-                CR_ASSERT(location != -1, "Position not found");
+                CR_ASSERT(location != -1, "Position with name: [%s] not found", name);
                 m_UniformLocations[name] = location;
             }
             return m_UniformLocations[name];

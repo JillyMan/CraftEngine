@@ -2,23 +2,15 @@
 
 //#include "Layers/Sample2DLayer.h"
 //#include "Layers/Sample3DLayer.h"
-#include "Craft/ImGui/ImGuiLayer.h"
 #include "Layers/Scene3D.h"
 
 /*
 	TODO:
-		- glGetShaderiv (.., GL_INFO_LOG_LENGTH, &...); - get len of shader compile status 
-			- also try to add common mechanism for getting opengl status.
-
-		- Automatic load avaliable opengl version. 
-			(use glGetString(type) with params like GL_VERSION, GL_SHADING_LANGUAGE_VERSION)
+		- Make more FLEXIBLE mechanism binding of vertex attr.
 
 		- Make precompiled shaders.
-
-
-		- Thins about rewrite abstraction for buffers.
-		- Make more safity binding of vertex attr's to shader in attr's.
-		- Add to log info __FILE__ and Position info
+		- Think about rewrite abstraction for buffers.
+		- Add to log info __FILE__ and Position info, FIX LOG SIZE BUFFER.
 */
 
 class Sandbox : public Craft::Application

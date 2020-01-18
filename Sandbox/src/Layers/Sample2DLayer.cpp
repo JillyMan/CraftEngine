@@ -48,7 +48,10 @@ void Sample2DLayer::GraphicsInit() {
 	m_VertexArray->AddVertexBuffer(vertexBuffer);
 	m_VertexArray->SetIndexBuffer(indexBuffer);
 
-	m_Shader = new Craft::Graphics::OpenGLShader(Craft::Graphics::GetSimpleVertexShader(), Craft::Graphics::GetFragmentColorShader());
+	m_Shader = new Craft::Graphics::OpenGLShader();
+	m_Shader->AttachShader(Craft::Graphics::GetSimpleVertexShader(), Craft::Graphics::ShaderType::Vertex);
+	m_Shader->AttachShader(Craft::Graphics::GetFragmentColorShader(), Craft::Graphics::ShaderType::Fragment);
+	m_Shader->Link();
 }
 
 void Sample2DLayer::PlayerInit() 

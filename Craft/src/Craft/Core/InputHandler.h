@@ -29,7 +29,7 @@ namespace Craft { namespace Input {
 		void OnMouseKeyPressed(u32 keyCode);
 		void OnMouseKeyReleased(u32 keyCode);
 
-		static void GetMousePosition(s32& x, s32 y);
+		static void GetMousePosition(s32& x, s32& y);
 		void SetMousePosition(s32 x, s32 y);
 };
 } }

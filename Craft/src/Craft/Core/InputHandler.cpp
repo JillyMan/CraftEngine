@@ -59,7 +59,7 @@ namespace Craft { namespace Input {
 		}
 	}
 
-	void InputHandler::GetMousePosition(s32& x, s32 y)
+	void InputHandler::GetMousePosition(s32& x, s32& y)
 	{
 		x = s_MouseX;
 		y = s_MouseY;
