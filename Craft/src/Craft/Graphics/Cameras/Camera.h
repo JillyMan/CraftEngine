@@ -46,6 +46,10 @@ namespace Craft
 			RecalculateViewMatrix();
 		}
 
+		inline void SetView(mat4 viewMat) {
+			m_ViewMatrix = viewMat;
+		}
+
 		static Camera* CreatePerspectiveCamera(f32 fov, f32 aspectRatio, f32 near, f32 far, v3& position = v3(), f32 speed = 0.0f);
 		static Camera* CreateOrthographicCamera(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far, v3& position = v3(), f32 speed = 0.1f);
 	};

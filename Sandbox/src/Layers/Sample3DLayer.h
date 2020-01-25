@@ -75,9 +75,9 @@ public:
 		v3 cameraUp = v3(0.0f, 1.0f, 0.0f);
 
 		v2 lasMousePos = v2(DEFAULT_WINDOW_WIDTH / 2, DEFAULT_WINDOW_HEIGHT / 2);
-		m_Camera = new FPSCameraController(5.0f,
-			cameraPos, cameraFront, cameraUp, lasMousePos,
-			mat4::Perspective(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE));
+		//m_Camera = new FPSCameraController(5.0f,
+		//	cameraPos, cameraFront, cameraUp, lasMousePos,
+		//	mat4::Perspective(FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE));
 
 		Craft::Image* smile = m_Vfs->GetImage(PathToSmileImage);
 		Craft::Image* image = m_Vfs->GetImage(PathToTileSheets);
