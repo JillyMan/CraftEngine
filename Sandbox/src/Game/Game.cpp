@@ -1,6 +1,6 @@
 #include "crpch.h"
 
-#include "Scene3D.h"
+#include "Game.h"
 #include <Platform/OpenGL/OpenGLShader.h>
 #include <Craft/Graphics/Renderer.h>
 #include <Craft/Graphics/RenderCommand.h>
@@ -9,7 +9,7 @@
 
 using namespace Craft;
 
-Scene3D::Scene3D(Craft::v2 dimension) :
+Game::Game(Craft::v2 dimension) :
 	m_Cube(0.5f),
 	m_Dimension(dimension),
 	m_Torus(0.7f, 0.3f, 30.0f, 30.0f), 
@@ -39,26 +39,26 @@ Scene3D::Scene3D(Craft::v2 dimension) :
 	Craft::Graphics::RenderCommand::ZTest(true);
 }
 
-Scene3D::~Scene3D() {
+Game::~Game() {
 
 }
 
-void Scene3D::OnEvent(Craft::Event& event) {
+void Game::OnEvent(Craft::Event& event) {
 	m_CameraController->OnEvent(event);
 
 	Craft::EventDispatcher dispatcher(event);
-	dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(Scene3D::OnResizeWindow));
-	dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(Scene3D::OnKeyoardButtonPressed));
-	dispatcher.Dispatch<Craft::MouseButtonPressedEvent>(BIND_EVENT_FN(Scene3D::OnMouseButtonPressed));
-	dispatcher.Dispatch<Craft::MouseButtonReleasedEvent>(BIND_EVENT_FN(Scene3D::OnMouseButtonReleased));
-	dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(Scene3D::OnMouseMove));
+	dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(Game::OnResizeWindow));
+	dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(Game::OnKeyoardButtonPressed));
+	dispatcher.Dispatch<Craft::MouseButtonPressedEvent>(BIND_EVENT_FN(Game::OnMouseButtonPressed));
+	dispatcher.Dispatch<Craft::MouseButtonReleasedEvent>(BIND_EVENT_FN(Game::OnMouseButtonReleased));
+	dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(Game::OnMouseMove));
 }
 
-void Scene3D::OnUpdate(f32 deltaTime) {
+void Game::OnUpdate(f32 deltaTime) {
 	m_CameraController->OnUpdate(deltaTime);
 }
 
-void Scene3D::OnRender() {
+void Game::OnRender() {
 	Craft::Graphics::RenderCommand::SetClearColor(Craft::v4(0.0f, 0.0f, 0.0f, 1.0f));
 	Craft::Graphics::RenderCommand::Clear();
 
@@ -75,14 +75,14 @@ void Scene3D::OnRender() {
 	m_Torus.Render();
 }
 
-void Scene3D::OnDebugRender() {
+void Game::OnDebugRender() {
 	ImGui::Begin("2D game settings");
 	ImGui::SliderFloat("Ambient", &AmbientStrength, 0.0f, 1.0f);
 	ImGui::SliderFloat("RotateSpeed", &RotateSpeed, 0.0f, 20.0f);
 	ImGui::End();
 }
 
-void Scene3D::SetMatrices(v2 dim) {
+void Game::SetMatrices(v2 dim) {
 	model = (mat4::Identity());
 	projection = (mat4::Perspective(70.0f, dim.x / dim.y, 0.3f, 100.0f));
 	view = (mat4::LookAt(v3(0.0f, 0.0f, 2.0f), v3(0.0f, 0.0f, 0.0f), v3(0.0f, 1.0f, 0.0f)));
@@ -90,7 +90,7 @@ void Scene3D::SetMatrices(v2 dim) {
 	model *= mat4::Rotate(35.0f, v3(0.0f, 1.0f, 0.0f));
 }
 
-bool Scene3D::OnMouseMove(Craft::MouseMovedEvent& event) {
+bool Game::OnMouseMove(Craft::MouseMovedEvent& event) {
 	v2 newPos(event.x, event.y);
 
 	if (m_IsRotating) {
@@ -116,7 +116,7 @@ bool Scene3D::OnMouseMove(Craft::MouseMovedEvent& event) {
 	return false;
 }
 
-bool Scene3D::OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event) {
+bool Game::OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event) {
 	if (VK_LBUTTON == event.GetMouseButton()) {
 		m_IsRotating = true;
 		m_StartRotatePos = v2(event.x, event.y);
@@ -126,16 +126,16 @@ bool Scene3D::OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event) {
 	return false;
 }
 
-bool Scene3D::OnKeyoardButtonPressed(Craft::KeyPressedEvent& event) {
+bool Game::OnKeyoardButtonPressed(Craft::KeyPressedEvent& event) {
 	return false;
 }
 
-bool Scene3D::OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event) {
+bool Game::OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event) {
 	m_IsRotating = !(VK_LBUTTON == event.GetMouseButton());
 	return m_IsRotating;
 }
 
-bool Scene3D::OnResizeWindow(Craft::WindowResizeEvent& event) {
+bool Game::OnResizeWindow(Craft::WindowResizeEvent& event) {
 	Craft::Graphics::RenderCommand::SetViewPort(0, 0, event.GetWidth(), event.GetHeight());
 	return true;
 }

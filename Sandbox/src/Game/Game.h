@@ -14,7 +14,7 @@
 
 using namespace Craft;
 
-class Scene3D : public Craft::Layer {
+class Game : public Craft::Layer {
 private:
 	v2 m_Dimension;
 	mat4 view;
@@ -38,8 +38,8 @@ private:
 	System::Vfs m_Vfs;
 
 public:
-	Scene3D(Craft::v2 m_Dimension);
-	~Scene3D();
+	Game(Craft::v2 m_Dimension);
+	~Game();
 
 	void OnEvent(Craft::Event& event) override;
 	void OnUpdate(f32 deltaTime) override;

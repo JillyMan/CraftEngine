@@ -2,12 +2,11 @@
 
 //#include "Layers/Sample2DLayer.h"
 //#include "Layers/Sample3DLayer.h"
-#include "Layers/Scene3D.h"
+#include "Game/Game.h"
 
 /*
 	TODO:
 		- Make more FLEXIBLE mechanism binding of vertex attr.
-
 		- Make precompiled shaders.
 		- Think about rewrite abstraction for buffers.
 		- Add to log info __FILE__ and Position info, FIX LOG SIZE BUFFER.
@@ -20,7 +19,7 @@ public:
 	{
 		//PushLayer(new Sample2DLayer());
 		//PushLayer(new Sample3DLayer());
-		PushLayer(new Scene3D(Craft::v2(setting.Width, setting.Height)));
+		PushLayer(new Game(Craft::v2(setting.Width, setting.Height)));
 	}
 
 	virtual ~Sandbox()
