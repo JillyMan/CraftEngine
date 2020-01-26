@@ -4,6 +4,8 @@
 #include <Craft/Math/Math.h>
 #include <Craft/Event/EventMap.h>
 
+#include <Craft/Graphics/Tools/Camera/Controllers/OrthoCameraContorller.h>
+
 #include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Core/Shader.h>
 #include <Craft/Graphics/Primitives/NewApi/Map.h>
@@ -26,8 +28,11 @@ private:
 	Graphics::Shader* m_Shader;
 
 private:
-	v2 dv;
+	CameraController* m_CameraController;
+
+private:
 	f32 AmbientStrength = 1.0f;
+	f32 RotateSpeed = 10.0f;
 
 private:
 	System::Vfs m_Vfs;
@@ -50,6 +55,7 @@ private:
 	v2 m_StartRotatePos;
 	bool OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event);
 	bool OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event);
+	bool OnKeyoardButtonPressed(Craft::KeyPressedEvent& event);
 
 	bool OnResizeWindow(Craft::WindowResizeEvent& event);
 };

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Craft/Graphics/RenderCommand.h>
-#include <Craft/Graphics/Cameras/Camera.h>
 #include <Craft/Graphics/Primitives/Shape.h>
+#include <Craft/Graphics/Tools/Camera/Camera.h>
 
 #include <Craft/Graphics/Core/Shader.h>
 #include <Craft/Graphics/Core/VertexArray.h>

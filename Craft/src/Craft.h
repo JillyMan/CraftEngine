@@ -24,7 +24,8 @@
 #include "Craft/Graphics/Renderer.h"
 #include "Craft/Graphics/RenderCommand.h"
 
-#include "Craft/Graphics/Cameras/OrthoCameraContorller.h"
+#include "Craft/Graphics/Tools/Camera/Controllers/FPSCameraController.h"
+#include "Craft/Graphics/Tools/Camera/Controllers/OrthoCameraContorller.h"
 
 //--------------------------------------
 #include "Craft/Core/EntryPoint.h"

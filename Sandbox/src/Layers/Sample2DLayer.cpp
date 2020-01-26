@@ -90,7 +90,7 @@ void Sample2DLayer::OnDebugRender()
 void Sample2DLayer::OnRender()
 {
 	Craft::Graphics::RenderCommand::Clear();
-	Craft::Graphics::Renderer::BeginScene(m_Camera.GetCamera());
+	Craft::Graphics::Renderer::BeginScene(*m_Camera.GetCamera());
 
 	m_Shader->Use();
 	m_Shader->SetUniform3f("u_color", m_Color);
@@ -107,7 +107,7 @@ void Sample2DLayer::OnRender()
 
 void Sample2DLayer::OnUpdate(f32 dt)
 {
-	m_Camera.Update(dt);
+	m_Camera.OnUpdate(dt);
 	m_PlayerController->Update(dt);
 
 	SystemsUpdate(dt);
@@ -136,7 +136,7 @@ bool Sample2DLayer::OnKeyDown(Craft::KeyPressedEvent& event)
 	
 	if (event.GetKeyCode() == 'F') 
 	{
-		m_Camera.GetCamera().SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
+		m_Camera.GetCamera()->SetPosition(Craft::v3(0.0, 0.0f, 1.0f));
 	}
 	return false;
 }
