@@ -4,7 +4,7 @@
 #include <Craft/Math/Math.h>
 #include <Craft/Event/EventMap.h>
 
-#include <Craft/Graphics/Cameras/FPSCameraController.h>
+#include <Craft/Graphics/Tools/Camera/Controllers/OrthoCameraContorller.h>
 
 #include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Core/Shader.h>
@@ -28,7 +28,7 @@ private:
 	Graphics::Shader* m_Shader;
 
 private:
-	FPSCameraController* m_CameraController;
+	CameraController* m_CameraController;
 
 private:
 	f32 AmbientStrength = 1.0f;

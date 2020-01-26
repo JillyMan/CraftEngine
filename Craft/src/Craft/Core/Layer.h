@@ -5,7 +5,17 @@
 
 namespace Craft
 {
-	class CRAFT_API Layer
+	class EventListener {
+	public:
+		virtual void OnEvent(Event& event) = 0;
+	};
+
+	class UpdateListener {
+	public:
+		virtual void OnUpdate(f32 dt) = 0;
+	};
+
+	class CRAFT_API Layer : public EventListener, public UpdateListener
 	{
 		bool m_Visible;
 
@@ -16,7 +26,7 @@ namespace Craft
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 
-		virtual void OnEvent(Event& event) {}
+		virtual void OnEvent(Event& event) override {}
 		virtual void OnUpdate(f32 deltaTime) {}
 		virtual void OnRender() {}
 		virtual void OnDebugRender() {};

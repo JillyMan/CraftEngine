@@ -18,9 +18,8 @@ Scene3D::Scene3D(Craft::v2 dimension) :
 	v3 CamPos = v3(0.0f, 0.0f, -2.0f);
 	v3 CamFront = v3(0.0f, 0.0f, -1.0f);
 	v3 CamUp = v3(0.0f, 1.0f, 0.0f);
-	
-	v2 lasMousePos = v2(dimension.x / 2, dimension.y / 2);
-	m_CameraController = new FPSCameraController(5.0f, CamPos, CamFront, CamUp, lasMousePos);
+
+	m_CameraController = new OrthoCameraController(dimension.x / dimension.y);
 
 	SetMatrices(dimension);
 
@@ -45,17 +44,18 @@ Scene3D::~Scene3D() {
 }
 
 void Scene3D::OnEvent(Craft::Event& event) {
+	m_CameraController->OnEvent(event);
+
 	Craft::EventDispatcher dispatcher(event);
 	dispatcher.Dispatch<Craft::WindowResizeEvent>(BIND_EVENT_FN(Scene3D::OnResizeWindow));
 	dispatcher.Dispatch<Craft::KeyPressedEvent>(BIND_EVENT_FN(Scene3D::OnKeyoardButtonPressed));
 	dispatcher.Dispatch<Craft::MouseButtonPressedEvent>(BIND_EVENT_FN(Scene3D::OnMouseButtonPressed));
 	dispatcher.Dispatch<Craft::MouseButtonReleasedEvent>(BIND_EVENT_FN(Scene3D::OnMouseButtonReleased));
 	dispatcher.Dispatch<Craft::MouseMovedEvent>(BIND_EVENT_FN(Scene3D::OnMouseMove));
-
 }
 
 void Scene3D::OnUpdate(f32 deltaTime) {
-	m_CameraController->Update(deltaTime);
+	m_CameraController->OnUpdate(deltaTime);
 }
 
 void Scene3D::OnRender() {
@@ -113,10 +113,6 @@ bool Scene3D::OnMouseMove(Craft::MouseMovedEvent& event) {
 		return true;
 	}
 
-	if (Input::InputHandler::IsKeyPressed('R')) {
-		m_CameraController->OnMouseEvent(newPos.x, newPos.y);
-	}
-
 	return false;
 }
 
@@ -131,13 +127,6 @@ bool Scene3D::OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event) {
 }
 
 bool Scene3D::OnKeyoardButtonPressed(Craft::KeyPressedEvent& event) {
-	if ('R' == event.GetKeyCode()) {
-		s32 x, y;
-		Input::InputHandler::GetMousePosition(x, y);
-		m_CameraController->SetLastPos(x, y);
-		return true;
-	}
-
 	return false;
 }
 
@@ -150,4 +139,3 @@ bool Scene3D::OnResizeWindow(Craft::WindowResizeEvent& event) {
 	Craft::Graphics::RenderCommand::SetViewPort(0, 0, event.GetWidth(), event.GetHeight());
 	return true;
 }
-

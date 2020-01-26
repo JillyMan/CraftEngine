@@ -97,15 +97,6 @@
     <ClInclude Include="src\Craft\Event\MouseEvent.h">
       <Filter>Craft\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\Camera.h">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\OrthographicCamera.h">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Craft\Graphics\Cameras\PerspectiveCamera.h">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\CraftGL\CraftGL.h">
       <Filter>Craft\Graphics\CraftGL</Filter>
     </ClInclude>
@@ -228,10 +219,6 @@
     </ClInclude>
     <ClInclude Include="src\crpch.h" />
     <ClInclude Include="src\Craft\Physic\Physic.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.h" />
-    <ClInclude Include="src\Craft\Graphics\Cameras\FPSCameraController.h">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Drawable.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\TriangleMesh.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\TexturedSprite.h" />
@@ -252,6 +239,20 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Torus.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\NewApi\Map.h" />
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\Camera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\OrthographicCamera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\PerspectiveCamera.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\FPSCameraController.h">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\OrthoCameraContorller.h" />
+    <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\CameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -265,15 +266,6 @@
     </ClCompile>
     <ClCompile Include="src\Craft\Core\Log.cpp">
       <Filter>Craft\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Cameras\Camera.cpp">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Cameras\OrthographicCamera.cpp">
-      <Filter>Craft\Graphics\Cameras</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Craft\Graphics\Cameras\PerspectiveCamera.cpp">
-      <Filter>Craft\Graphics\Cameras</Filter>
     </ClCompile>
     <ClCompile Include="src\Craft\Graphics\CraftGL\CraftGLBuffer.cpp">
       <Filter>Craft\Graphics\CraftGL</Filter>
@@ -349,11 +341,21 @@
     </ClCompile>
     <ClCompile Include="src\crpch.cpp" />
     <ClCompile Include="src\Craft\Physic\Physic.cpp" />
-    <ClCompile Include="src\Craft\Graphics\Cameras\OrthoCameraContorller.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\TriangleMesh.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\Cube.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\Rectangle.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\NewApi\Torus.cpp" />
     <ClCompile Include="src\Craft\System\Vfs\Vfs.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Tools\Camera\Camera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Tools\Camera\OrthographicCamera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Tools\Camera\PerspectiveCamera.cpp">
+      <Filter>Craft\Graphics\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Craft\Graphics\Tools\Camera\Controllers\OrthoCameraContorller.cpp" />
+    <ClCompile Include="src\Craft\Graphics\Tools\Camera\Controllers\FPSCameraController.cpp" />
   </ItemGroup>
 </Project>

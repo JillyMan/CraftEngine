@@ -1,36 +1,36 @@
 #include "crpch.h"
 
-#include "Craft/Core/InputHandler.h"
 #include "OrthoCameraContorller.h"
+#include <Craft/Core/InputHandler.h>
 
 namespace Craft 
 {
-	OrthoCameraController::OrthoCameraController(f32 aspectRation) : 
-		m_AspectRation(aspectRation), 
-		m_Camera(-m_AspectRation* m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel)
+	OrthoCameraController::OrthoCameraController(f32 aspectRation, f32 sensivity) :
+		m_AspectRation(aspectRation),
+		CameraController(sensivity, Camera::CreateOrthographicCamera(-aspectRation * m_ZoomLevel, aspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel))
 	{
 	}
 	
-	void OrthoCameraController::Update(f32 dt)
+	void OrthoCameraController::OnUpdate(f32 dt)
 	{
 		if (Input::InputHandler::IsKeyPressed('W'))
 		{
-			m_CemeraPos.y -= m_CameraSpeed * dt;
+			m_CemeraPos.y -= m_Sensitivity * dt;
 		}
 		if (Input::InputHandler::IsKeyPressed('S'))
 		{
-			m_CemeraPos.y += m_CameraSpeed * dt;
+			m_CemeraPos.y += m_Sensitivity * dt;
 		}
 		if (Craft::Input::InputHandler::IsKeyPressed('A'))
 		{
-			m_CemeraPos.x += m_CameraSpeed * dt;
+			m_CemeraPos.x += m_Sensitivity * dt;
 		}
 		if (Craft::Input::InputHandler::IsKeyPressed('D'))
 		{
-			m_CemeraPos.x -= m_CameraSpeed * dt;
+			m_CemeraPos.x -= m_Sensitivity * dt;
 		}
 
-		m_Camera.SetPosition(m_CemeraPos);
+		m_Camera->SetPosition(m_CemeraPos);
 	}
 
 	void OrthoCameraController::OnEvent(Event& e)
@@ -43,7 +43,7 @@ namespace Craft
 	bool OrthoCameraController::OnResizeWindow(WindowResizeEvent& e)
 	{
 		m_AspectRation = (f32)e.GetWidth() / (f32)e.GetHeight();
-		m_Camera.SetProjection(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_Camera->SetProjectionMatrix(mat4::Ortho(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f));
 		return true;
 	}
 
@@ -53,7 +53,7 @@ namespace Craft
 		dir = dir / abs(dir);
 		m_ZoomLevel -= dir * 0.25f;
 		m_ZoomLevel = max(m_ZoomLevel, 0.25f);
-		m_Camera.SetProjection(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_Camera->SetProjectionMatrix(mat4::Ortho(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f));
 		return true;
 	}
 }

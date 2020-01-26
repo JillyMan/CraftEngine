@@ -7,7 +7,7 @@
 #include <Craft/Core/Layer.h>
 #include <Craft/Graphics/Primitives/Shape.h>
 
-#include <Craft/Graphics/Cameras/OrthoCameraContorller.h>
+#include <Craft/Graphics/Tools/Camera/Controllers/OrthoCameraContorller.h>
 
 #include <Craft/Physic/Physic.h>
 

@@ -27,7 +27,7 @@ void main() {
 	mat3 NormalMatrix = mat3_emu(ModelViewMatrix);
 
 	vec4 vertexInCameraSpace = ModelViewMatrix * vec4(VertPosition, 1.0f);
-	vec3 s = normalize(vec3(LightPosition - vertexInCameraSpace));
+	vec3 s = normalize((LightPosition - vertexInCameraSpace).xyz);
 	vec3 n = normalize(NormalMatrix * VertNormal);
 	LightIntensity = AmbientStrength * (Ld * Kd * max(dot(s, n), 0.0f));
 
