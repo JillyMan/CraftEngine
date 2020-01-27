@@ -16,18 +16,27 @@
       <Filter>Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\Scripts\PlayerController.h" />
-    <ClInclude Include="src\Layers\Scene3D.h" />
+    <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Game\Core\Components\GameObject.h" />
+    <ClInclude Include="src\Game\Core\World\Terrain.h" />
+    <ClInclude Include="src\Game\Core\World\World.h" />
+    <ClInclude Include="src\Game\Core\Components\Abstractions\GraphicsComponent.h" />
+    <ClInclude Include="src\Game\Core\Components\Abstractions\AnimationComponent.h" />
+    <ClInclude Include="src\Game\Core\Components\Abstractions\InputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp" />
-    <ClCompile Include="src\Layers\Scene3D.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\Core\World\Terrain.cpp" />
+    <ClCompile Include="src\Game\Core\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Shaders\diffuser.frag" />
     <None Include="src\Shaders\diffuse.vert" />
     <None Include="src\Shaders\diffuse.frag" />
+    <None Include="src\Game\Core\Components\PlayerInputComponent.h" />
   </ItemGroup>
 </Project>

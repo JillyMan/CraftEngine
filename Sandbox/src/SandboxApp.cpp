@@ -6,6 +6,7 @@
 
 /*
 	TODO:
+		- Make absulute path for - #include "" (in Game folder check this).
 		- Make more FLEXIBLE mechanism binding of vertex attr.
 		- Make precompiled shaders.
 		- Think about rewrite abstraction for buffers.
