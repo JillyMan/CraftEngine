@@ -3,8 +3,8 @@
 #include "../GameObject.h"
 #include <Craft.h>
 
-class IAnimationComponent {
+class AnimationComponent {
 public:
-	virtual ~IAnimationComponent() { }
+	virtual ~AnimationComponent() { }
 	virtual void Animate(GameObject& obj, f32 dt) = 0;
 };

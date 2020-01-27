@@ -23,6 +23,8 @@
     <ClInclude Include="src\Game\Core\Components\Abstractions\GraphicsComponent.h" />
     <ClInclude Include="src\Game\Core\Components\Abstractions\AnimationComponent.h" />
     <ClInclude Include="src\Game\Core\Components\Abstractions\InputComponent.h" />
+    <ClInclude Include="src\Game\Core\Components\TransformComponent.h" />
+    <ClInclude Include="src\Game\Core\Components\ConcreteComponents\GraphicsComponents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
@@ -37,6 +39,6 @@
     <None Include="src\Shaders\diffuser.frag" />
     <None Include="src\Shaders\diffuse.vert" />
     <None Include="src\Shaders\diffuse.frag" />
-    <None Include="src\Game\Core\Components\PlayerInputComponent.h" />
+    <None Include="src\Game\Core\Components\ConcreteComponents\PlayerInputComponent.h" />
   </ItemGroup>
 </Project>
