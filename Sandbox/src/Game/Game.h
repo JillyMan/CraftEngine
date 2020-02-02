@@ -11,6 +11,8 @@
 #include <Craft/Graphics/Primitives/NewApi/Map.h>
 
 #include <Craft/System/Vfs/Vfs.h>
+#include "Prefab/LightSource.h"
+#include "Core/Components/TransformComponent.h"
 
 using namespace Craft;
 
@@ -22,17 +24,19 @@ private:
 	mat4 projection;
 	v4 lightPos;
 
-	Graphics::Torus m_Torus;
 	Graphics::Cube m_Cube;
-	Graphics::Rectangle* m_Rect;
+	Graphics::Torus m_Torus;
 	Graphics::Shader* m_Shader;
 
 private:
+	f32 RotateSpeed = 10.0f;
 	CameraController* m_CameraController;
 
 private:
-	f32 AmbientStrength = 1.0f;
-	f32 RotateSpeed = 10.0f;
+	Graphics::Cube m_LightMesh;
+	Transform m_LightTransform;
+	LigthSource m_LightSource;
+	Graphics::Shader* m_LightShader;
 
 private:
 	System::Vfs m_Vfs;
@@ -48,14 +52,15 @@ public:
 
 private:
 
+	void SetLights();
 	void SetMatrices(v2 dim);
 	bool OnMouseMove(Craft::MouseMovedEvent& event);
 
 	bool m_IsRotating = false;
 	v2 m_StartRotatePos;
-	bool OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event);
-	bool OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event);
-	bool OnKeyoardButtonPressed(Craft::KeyPressedEvent& event);
 
 	bool OnResizeWindow(Craft::WindowResizeEvent& event);
+	bool OnKeyoardButtonPressed(Craft::KeyPressedEvent& event);
+	bool OnMouseButtonPressed(Craft::MouseButtonPressedEvent& event);
+	bool OnMouseButtonReleased(Craft::MouseButtonReleasedEvent& event);
 };

@@ -25,6 +25,7 @@
     <ClInclude Include="src\Game\Core\Components\Abstractions\InputComponent.h" />
     <ClInclude Include="src\Game\Core\Components\TransformComponent.h" />
     <ClInclude Include="src\Game\Core\Components\ConcreteComponents\GraphicsComponents.h" />
+    <ClInclude Include="src\Game\Prefab\LightSource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\Sample2DLayer.cpp">
@@ -40,5 +41,7 @@
     <None Include="src\Shaders\diffuse.vert" />
     <None Include="src\Shaders\diffuse.frag" />
     <None Include="src\Game\Core\Components\ConcreteComponents\PlayerInputComponent.h" />
+    <None Include="src\Shaders\colored.frag" />
+    <None Include="src\Shaders\colored.vert" />
   </ItemGroup>
 </Project>

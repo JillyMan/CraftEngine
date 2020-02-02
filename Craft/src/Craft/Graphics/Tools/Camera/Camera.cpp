@@ -6,10 +6,11 @@
 
 namespace Craft
 {
-	Camera::Camera(mat4& projectionMatrix, v3& position, f32 cameraSpeed) :
+	Camera::Camera(mat4& projectionMatrix, v3& position) :
 		m_Position(position),
 		m_ProjectionMatrix(projectionMatrix)
 	{
+		RecalculateViewMatrix();
 	}
 
 	Camera* Camera::CreatePerspectiveCamera(f32 fov, f32 aspectRatio, f32 _near, f32 _far, v3& position)

@@ -18,11 +18,11 @@ namespace Craft
 		v3 m_RotateAxis = { 0.0f, 0.0f, 1.0f };
 		f32 m_Rotation = 0.0f;
 
-		mat4 m_ViewMatrix;
+		mat4 m_ViewMatrix = mat4::Identity();
 		mat4 m_ProjectionMatrix;
 
 	protected:
-		Camera(mat4& projectionMatrix, v3& position = v3(), f32 cameraSpeed = 0.0f);
+		Camera(mat4& projectionMatrix, v3& position = v3());
 		virtual void RecalculateViewMatrix();
 
 	public:

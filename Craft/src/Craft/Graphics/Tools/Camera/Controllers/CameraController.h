@@ -34,5 +34,4 @@ namespace Craft {
 		virtual void OnUpdate(f32 dt) override = 0;
 		virtual void OnEvent(Event& event) override = 0;
 	};
-
 }

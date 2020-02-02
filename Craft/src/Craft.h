@@ -2,9 +2,9 @@
 
 #include "Craft/Core/Log.h"
 #include "Craft/Core/Application.h"
+#include "Craft/Core/InputHandler.h"
 			   
-#include "Craft/Event/KeyEvent.h"
-#include "Craft/Event/MouseEvent.h"
+#include "Craft/Event/EventMap.h"
 #include "Craft/Window/Window.h"
 			   
 #include "Craft/Math/Math.h"
@@ -16,7 +16,6 @@
 #include "Craft/ImGui/ImGuiLayer.h"
 
 //-Graphics
-
 #include "Craft/Graphics/Core/Buffer.h"
 #include "Craft/Graphics/Core/VertexArray.h"
 #include "Craft/Graphics/Core/Texture.h"

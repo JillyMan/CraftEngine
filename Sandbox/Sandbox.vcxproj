@@ -134,6 +134,7 @@
     <ClInclude Include="src\Game\Core\World\Terrain.h" />
     <ClInclude Include="src\Game\Core\World\World.h" />
     <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Game\Prefab\LightSource.h" />
     <ClInclude Include="src\Layers\Constants.h" />
     <ClInclude Include="src\Layers\Sample2DLayer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -157,6 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Game\Core\Components\ConcreteComponents\PlayerInputComponent.h" />
+    <None Include="src\Shaders\colored.frag" />
+    <None Include="src\Shaders\colored.vert" />
     <None Include="src\Shaders\diffuse.frag" />
     <None Include="src\Shaders\diffuse.vert">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

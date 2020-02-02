@@ -7,7 +7,15 @@ namespace Craft
 {
 	OrthoCameraController::OrthoCameraController(f32 aspectRation, f32 sensivity) :
 		m_AspectRation(aspectRation),
-		CameraController(sensivity, Camera::CreateOrthographicCamera(-aspectRation * m_ZoomLevel, aspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel))
+		CameraController(
+			sensivity, 
+			Camera::CreateOrthographicCamera(
+				-m_AspectRation * m_ZoomLevel, 
+				m_AspectRation * m_ZoomLevel, 
+				-m_ZoomLevel, 
+				m_ZoomLevel
+			)
+		)
 	{
 	}
 	
@@ -50,7 +58,6 @@ namespace Craft
 	bool OrthoCameraController::OnMouseScrollEvent(MouseScrollWheelEvent& e)
 	{
 		f32 dir = e.GetZDelta();
-		dir = dir / abs(dir);
 		m_ZoomLevel -= dir * 0.25f;
 		m_ZoomLevel = max(m_ZoomLevel, 0.25f);
 		m_Camera->SetProjectionMatrix(mat4::Ortho(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f));

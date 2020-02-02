@@ -280,7 +280,7 @@ namespace Craft {
 			case WM_MOUSEWHEEL: 
 			{
 				s32 zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-				OnMouseWheel(window, zDelta);
+				OnMouseWheel(window, zDelta/abs(zDelta));
 				break;
 			}
 			case WM_LBUTTONDOWN:

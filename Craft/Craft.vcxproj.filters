@@ -253,6 +253,7 @@
     </ClInclude>
     <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\OrthoCameraContorller.h" />
     <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\CameraController.h" />
+    <ClInclude Include="src\Prefabs\Lights\SourceLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
