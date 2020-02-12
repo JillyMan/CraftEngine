@@ -8,7 +8,7 @@ namespace Craft { namespace Graphics {
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(f32* vertices, s32 size);
+		OpenGLVertexBuffer(f32* vertices, s32 size, bool isDynamic = false);
 		~OpenGLVertexBuffer();
 
 		virtual void Bind() override;

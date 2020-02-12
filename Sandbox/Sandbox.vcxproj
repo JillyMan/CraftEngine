@@ -135,20 +135,12 @@
     <ClInclude Include="src\Game\Core\World\World.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Game\Prefab\LightSource.h" />
-    <ClInclude Include="src\Layers\Constants.h" />
-    <ClInclude Include="src\Layers\Sample2DLayer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="src\Layers\Sample3DLayer.h" />
     <ClInclude Include="src\Scripts\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Core\World\Terrain.cpp" />
     <ClCompile Include="src\Game\Core\World\World.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
-    <ClCompile Include="src\Layers\Sample2DLayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp" />
   </ItemGroup>
   <ItemGroup>

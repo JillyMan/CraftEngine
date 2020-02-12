@@ -30,12 +30,12 @@ namespace Craft { namespace Graphics {
 		return result;
 	}
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size) :
+	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, s32 size, bool isDynamic) :
 		m_Size(size), m_Layout()
 	{
 		glCreateBuffers(1, &m_BufferId);
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size * sizeof(f32), vertices, isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 		Unbind();
 	}
 

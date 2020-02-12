@@ -10,6 +10,7 @@
 using namespace Craft;
 
 Game::Game(Craft::v2 dimension) :
+	rectMesh(0.5f),
 	m_Cube(0.5f),
 	m_LightMesh(0.2f),
 	m_Torus(0.7f, 0.3f, 30.0f, 30.0f),
@@ -32,27 +33,32 @@ void Game::SetMatrices(v2 dim) {
 }
 
 void Game::SetLights() {
-	m_LightTransform.Pos = v3(1.0f, 0.0f, 0.0f);
-	m_LightSource.Ambient = 0.5f;
-	m_LightSource.Color = v3(1.0f, 0.5f, 1.0f);
+	//m_LightTransform.Pos = v3(1.0f, 0.0f, 0.0f);
+	//m_LightSource.Ambient = 0.5f;
+	//m_LightSource.Color = v3(1.0f, 0.5f, 1.0f);
 
-	m_LightShader = new Craft::Graphics::OpenGLShader();
-	m_LightShader->AttachShader(m_Vfs.LoadFileString(String("colored.vert")).c_str(), Craft::Graphics::ShaderType::Vertex);
-	m_LightShader->AttachShader(m_Vfs.LoadFileString(String("colored.frag")).c_str(), Craft::Graphics::ShaderType::Fragment);
-	m_LightShader->Link();
-	m_LightShader->Use();
-	m_LightShader->SetUniform3f("Color", m_LightSource.Color);
-	m_LightShader->Unuse();
+	//m_LightShader = new Craft::Graphics::OpenGLShader();
+	//m_LightShader->AttachShader(m_Vfs.LoadFileString(String("colored.vert")).c_str(), Craft::Graphics::ShaderType::Vertex);
+	//m_LightShader->AttachShader(m_Vfs.LoadFileString(String("colored.frag")).c_str(), Craft::Graphics::ShaderType::Fragment);
+	//m_LightShader->Link();
+	//m_LightShader->Use();
+	//m_LightShader->SetUniform3f("Color", m_LightSource.Color);
+	//m_LightShader->Unuse();
 
-	m_Shader = new Craft::Graphics::OpenGLShader();
-	m_Shader->AttachShader(m_Vfs.LoadFileString(String("diffuse.vert")).c_str(), Craft::Graphics::ShaderType::Vertex);
-	m_Shader->AttachShader(m_Vfs.LoadFileString(String("diffuse.frag")).c_str(), Craft::Graphics::ShaderType::Fragment);
-	m_Shader->Link();
-	m_Shader->Use();
-	//m_Shader->SetUniform3f("Kd", v3(1.0f, 1.0f, 1.0f));
-	//m_Shader->SetUniform3f("LightColor", m_LightSource.Color);
-	//m_Shader->SetUniform3f("LightPosition", m_LightTransform.Pos);
-	m_Shader->Unuse();
+	//m_Shader = new Craft::Graphics::OpenGLShader();
+	//m_Shader->AttachShader(m_Vfs.LoadFileString(String("diffuse.vert")).c_str(), Craft::Graphics::ShaderType::Vertex);
+	//m_Shader->AttachShader(m_Vfs.LoadFileString(String("diffuse.frag")).c_str(), Craft::Graphics::ShaderType::Fragment);
+	//m_Shader->Link();
+	//m_Shader->Use();
+	////m_Shader->SetUniform3f("Kd", v3(1.0f, 1.0f, 1.0f));
+	////m_Shader->SetUniform3f("LightColor", m_LightSource.Color);
+	////m_Shader->SetUniform3f("LightPosition", m_LightTransform.Pos);
+	//m_Shader->Unuse();
+
+	rectShader = new Craft::Graphics::OpenGLShader();
+	rectShader->AttachShader(m_Vfs.LoadFileString(String("colored.vert")).c_str(), Craft::Graphics::ShaderType::Vertex);
+	rectShader->AttachShader(m_Vfs.LoadFileString(String("colored.frag")).c_str(), Craft::Graphics::ShaderType::Fragment);
+	rectShader->Link();
 }
 
 Game::~Game() {
@@ -90,30 +96,56 @@ void Game::OnRender() {
 	Craft::Graphics::RenderCommand::SetClearColor(Craft::v4(0.0f, 0.0f, 0.0f, 1.0f));
 	Craft::Graphics::RenderCommand::Clear();
 
-	m_LightShader->Use();
+	rectShader->Use();
+	rectShader->SetUniformMatrix4fv("ViewMatrix", m_CameraController->GetCamera()->GetViewMatrix());
+	rectShader->SetUniformMatrix4fv("ProjectionMatrix", m_CameraController->GetCamera()->GetProjectionMatrix());
 
-	m_LightShader->SetUniformMatrix4fv("ModelMatrix", m_LightTransform.ToModelMatrix());
-	m_LightShader->SetUniformMatrix4fv("ViewMatrix", m_CameraController->GetCamera()->GetViewMatrix());
-	m_LightShader->SetUniformMatrix4fv("ProjectionMatrix", m_CameraController->GetCamera()->GetProjectionMatrix());
-	m_LightMesh.Render();
+	f32 tileSize = 0.5f;
+
+	int w = world.GetWidth();
+	int h = world.GetHeight();
+
+	f32 startX = 0 - w * 0.5f;
+	f32 startY = 0 - h * 0.5f;
+
+	for (int y = 0; y < h; ++y) {
+		f32 yy = (startY + y) * tileSize;
+		for (int x = 0; x < w; ++x) {
+			const Terrain& terrain = world.GetTile(x, y);
+			v4 color = terrain.GetColor();
+
+			f32 xx = (startX + x) * tileSize;
+
+			rectShader->SetUniform4f("Color", color);
+			rectShader->SetUniformMatrix4fv("ModelMatrix", mat4::Translate(v3(xx, yy, 0.0f)));
+			rectMesh.Render();
+		}
+	}
+
+	//m_LightShader->Use();
+
+	//m_LightShader->SetUniformMatrix4fv("ModelMatrix", m_LightTransform.ToModelMatrix());
+	//m_LightShader->SetUniformMatrix4fv("ViewMatrix", m_CameraController->GetCamera()->GetViewMatrix());
+	//m_LightShader->SetUniformMatrix4fv("ProjectionMatrix", m_CameraController->GetCamera()->GetProjectionMatrix());
+	//m_LightMesh.Render();
 
 
-	m_Shader->Use();
-	m_Shader->SetUniformMatrix4fv("ModelMatrix", model);
-	m_Shader->SetUniformMatrix4fv("ViewMatrix", m_CameraController->GetCamera()->GetViewMatrix());
-	m_Shader->SetUniformMatrix4fv("ProjectionMatrix", m_CameraController->GetCamera()->GetProjectionMatrix());
+	//m_Shader->Use();
+	//m_Shader->SetUniformMatrix4fv("ModelMatrix", model);
+	//m_Shader->SetUniformMatrix4fv("ViewMatrix", m_CameraController->GetCamera()->GetViewMatrix());
+	//m_Shader->SetUniformMatrix4fv("ProjectionMatrix", m_CameraController->GetCamera()->GetProjectionMatrix());
 
-	m_Shader->SetUniform3f("LightColor", m_LightSource.Color);
-	m_Shader->SetUniform3f("LightPosition", m_LightTransform.Pos);
-	m_Shader->SetUniform1f("AmbientStrength", m_LightSource.Ambient);
-	m_Shader->SetUniform3f("ObjectColor", v3(1.0f, 1.0f, 0.0f));
-	m_Cube.Render();
-	m_Torus.Render();
+	//m_Shader->SetUniform3f("LightColor", m_LightSource.Color);
+	//m_Shader->SetUniform3f("LightPosition", m_LightTransform.Pos);
+	//m_Shader->SetUniform1f("AmbientStrength", m_LightSource.Ambient);
+	//m_Shader->SetUniform3f("ObjectColor", v3(1.0f, 1.0f, 0.0f));
+	//m_Cube.Render();
+	//m_Torus.Render();
 
-	m_Shader->SetUniform3f("ObjectColor", v3(0.0f, 1.0f, 0.0f));
-	m_Shader->SetUniformMatrix4fv("ModelMatrix", mat4::Translate(v3(-3.0f, 0.0f, 0.0f)) * model);
-	m_Cube.Render();
-	m_Torus.Render();
+	//m_Shader->SetUniform3f("ObjectColor", v3(0.0f, 1.0f, 0.0f));
+	//m_Shader->SetUniformMatrix4fv("ModelMatrix", mat4::Translate(v3(-3.0f, 0.0f, 0.0f)) * model);
+	//m_Cube.Render();
+	//m_Torus.Render();
 }
 
 void Game::OnDebugRender() {

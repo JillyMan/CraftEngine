@@ -6,15 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Layers\Constants.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Layers\Sample2DLayer.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Layers\Sample3DLayer.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Scripts\PlayerController.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Game\Core\Components\GameObject.h" />
@@ -28,9 +19,6 @@
     <ClInclude Include="src\Game\Prefab\LightSource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Layers\Sample2DLayer.cpp">
-      <Filter>Layers</Filter>
-    </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Game\Core\World\Terrain.cpp" />

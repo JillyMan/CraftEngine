@@ -152,6 +152,8 @@
     <ClInclude Include="src\Craft\Event\KeyEvent.h" />
     <ClInclude Include="src\Craft\Event\MouseEvent.h" />
     <ClInclude Include="src\Craft\Graphics\Core\Buffer.h" />
+    <ClInclude Include="src\Craft\Graphics\SpriteBatch.h" />
+    <ClInclude Include="src\Craft\Graphics\SpriteBatchItem.h" />
     <ClInclude Include="src\Craft\Graphics\Tools\Camera\Camera.h" />
     <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\CameraController.h" />
     <ClInclude Include="src\Craft\Graphics\Tools\Camera\Controllers\FPSCameraController.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="src\Craft\Core\InputHandler.cpp" />
     <ClCompile Include="src\Craft\Core\LayerStack.cpp" />
     <ClCompile Include="src\Craft\Core\Log.cpp" />
+    <ClCompile Include="src\Craft\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="src\Craft\Graphics\Tools\Camera\Camera.cpp" />
     <ClCompile Include="src\Craft\Graphics\Tools\Camera\Controllers\FPSCameraController.cpp" />
     <ClCompile Include="src\Craft\Graphics\Tools\Camera\Controllers\OrthoCameraContorller.cpp" />

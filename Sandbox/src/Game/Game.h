@@ -14,6 +14,8 @@
 #include "Prefab/LightSource.h"
 #include "Core/Components/TransformComponent.h"
 
+#include "Core/World/World.h"
+
 using namespace Craft;
 
 class Game : public Craft::Layer {
@@ -40,6 +42,11 @@ private:
 
 private:
 	System::Vfs m_Vfs;
+
+private:
+	Graphics::Rectangle rectMesh;
+	Graphics::Shader* rectShader;
+	World world;
 
 public:
 	Game(Craft::v2 m_Dimension);

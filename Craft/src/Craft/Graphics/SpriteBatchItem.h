@@ -18,7 +18,6 @@ namespace Craft { namespace Graphics {
 
         void Set(f32 x, f32 y, f32 w, f32 h, v2 textureBL, v2 textureTR, f32 depth)
         {
-
         }
     };
 

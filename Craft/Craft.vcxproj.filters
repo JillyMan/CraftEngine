@@ -245,6 +245,8 @@
     <ClInclude Include="src\Craft\Graphics\Primitives\TexturedSprite.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\Torus.h" />
     <ClInclude Include="src\Craft\Graphics\Primitives\TriangleMesh.h" />
+    <ClInclude Include="src\Craft\Graphics\SpriteBatch.h" />
+    <ClInclude Include="src\Craft\Graphics\SpriteBatchItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Craft\Core\Application.cpp">
@@ -349,5 +351,6 @@
     <ClCompile Include="src\Craft\Graphics\Primitives\Rectangle.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\Torus.cpp" />
     <ClCompile Include="src\Craft\Graphics\Primitives\TriangleMesh.cpp" />
+    <ClCompile Include="src\Craft\Graphics\SpriteBatch.cpp" />
   </ItemGroup>
 </Project>

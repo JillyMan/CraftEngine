@@ -6,8 +6,8 @@ uniform mat4 ViewMatrix = mat4(1.0f);
 uniform mat4 ModelMatrix = mat4(1.0f);
 uniform mat4 ProjectionMatrix = mat4(1.0f);
 
-uniform vec3 Color;
-out vec3 FragColor;
+uniform vec4 Color;
+out vec4 FragColor;
 
 void main() {
     FragColor = Color;

@@ -17,6 +17,7 @@ namespace Craft
 			)
 		)
 	{
+		m_Camera->SetProjectionMatrix(mat4::Ortho(-m_AspectRation * m_ZoomLevel, m_AspectRation * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, -1.0f, 1.0f));
 	}
 	
 	void OrthoCameraController::OnUpdate(f32 dt)
