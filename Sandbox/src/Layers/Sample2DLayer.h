@@ -5,7 +5,6 @@
 #include <Craft/Event/ApplicationEvent.h>
 
 #include <Craft/Core/Layer.h>
-#include <Craft/Graphics/Primitives/Shape.h>
 
 #include <Craft/Graphics/Tools/Camera/Controllers/OrthoCameraContorller.h>
 

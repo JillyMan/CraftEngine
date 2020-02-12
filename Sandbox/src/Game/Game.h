@@ -8,7 +8,7 @@
 
 #include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Core/Shader.h>
-#include <Craft/Graphics/Primitives/NewApi/Map.h>
+#include <Craft/Graphics/Primitives/Map.h>
 
 #include <Craft/System/Vfs/Vfs.h>
 #include "Prefab/LightSource.h"

@@ -5,7 +5,8 @@
 #include <Craft/Graphics/RenderCommand.h>
 #include <Craft/Core/InputHandler.h>
 #include <Craft/Graphics/Renderer.h>
-#include <Craft/Graphics/Primitives/Sprite.h>
+#include <Craft/Graphics/Shaders/ShaderFactory.h>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 #include <imgui.h>
 

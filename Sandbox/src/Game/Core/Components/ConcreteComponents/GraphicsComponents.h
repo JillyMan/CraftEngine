@@ -19,7 +19,7 @@ public:
 	}
 
 	virtual void Draw(GameObject& obj) override {
-		Transform2D& transform = obj.Transform;
+		//Transform2D& transform = obj.Transform;
 		Craft::mat4& modelMatrix = transform.ToModelMatrix();
 		/*
 			Renderer.Begin(Camera, shader);

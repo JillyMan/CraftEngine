@@ -13,12 +13,12 @@ namespace Craft { namespace Graphics {
 		Data.m_ProjectionMatrix = camera.GetProjectionMatrix();
 	}
 
-	void Renderer::Submit(Shape& shape)
+	void Renderer::Submit(TriangleMesh& shape)
 	{
-		shape.SetViewMatrix(Data.m_ViewMatrix);
-		shape.SetProjectionMatrix(Data.m_ProjectionMatrix);
+		//shape.SetViewMatrix(Data.m_ViewMatrix);
+		//shape.SetProjectionMatrix(Data.m_ProjectionMatrix);
 
-		shape.BeginDraw();
+		//shape.Render();
 
 		RenderCommand::DrawIndexed(shape.GetVertexArray());
 	}

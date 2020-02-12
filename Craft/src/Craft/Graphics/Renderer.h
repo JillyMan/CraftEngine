@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Craft/Graphics/RenderCommand.h>
-#include <Craft/Graphics/Primitives/Shape.h>
+#include <Craft/Graphics/Primitives/TriangleMesh.h>
 #include <Craft/Graphics/Tools/Camera/Camera.h>
 
 #include <Craft/Graphics/Core/Shader.h>
@@ -15,7 +15,7 @@ namespace Craft { namespace Graphics {
 	{
 	public:
 		static void BeginScene(Camera& camera);
-		static void Submit(Shape& shape);
+		static void Submit(TriangleMesh& mesh);
 		static void Submit(VertexArray* vertexArray, Shader* shader, Craft::mat4& transform);
 
 	private:

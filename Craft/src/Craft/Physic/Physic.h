@@ -12,8 +12,13 @@ namespace Craft { namespace Physic {
 
 	struct AABB
 	{
-		v2 min;
-		v2 max;
+		union {
+			struct {
+				v2 min;
+				v2 max;
+			};
+			v2 points[4];
+		};
 	};
 
 	struct Circle
