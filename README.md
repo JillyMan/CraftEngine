@@ -1,1 +1,1 @@
-# CraftEngine - custom top-down game engine
+# CraftEngine
